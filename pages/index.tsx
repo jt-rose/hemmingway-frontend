@@ -7,7 +7,7 @@ const Index = () => {
     axios
       .post("https://hemmingway.herokuapp.com/graphql", {
         query: `{
-            me {
+            user(id: 76) {
               name
             }
           }`,
