@@ -7,7 +7,7 @@ const Index = () => {
     axios
       .post("https://hemmingway.herokuapp.com/graphql", {
         query: `mutation {
-             createUser(name: "jeff", email: "jeffrose@fake.com", password: "password") {
+             createUser(name: "jeff123", email: "jeffrose2@fake.com", password: "password") {
                name
                email
                id
