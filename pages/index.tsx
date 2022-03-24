@@ -6,7 +6,7 @@ const Index = () => {
   useEffect(() => {
     axios
       .post("https://hemmingway.herokuapp.com/graphql", {
-        mutation: `{
+        query: `mutation {
              createUser(name: "jeff", email: "jeffrose@fake.com", password: "password") {
                name
                email
