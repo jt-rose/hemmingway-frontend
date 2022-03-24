@@ -6,13 +6,11 @@ const Index = () => {
   useEffect(() => {
     axios
       .post("https://hemmingway.herokuapp.com/graphql", {
-        query: `mutation {
-             createUser(name: "jeff123", email: "jeffrose2@fake.com", password: "password") {
-               name
-               email
-               id
-             }
-           }`,
+        query: `users(first: 3) { 
+          name
+          id
+          email
+        }`,
       })
       .then((response) => console.log(response));
   }, []);
