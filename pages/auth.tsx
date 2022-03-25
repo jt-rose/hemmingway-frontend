@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Auth = () => {
-  //const [token, setToken] = useState<string| null>(null)
+  const [token, setToken] = useState<string | null>("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,12 +35,34 @@ const Auth = () => {
           password: loginPassword,
         },
       })
-      .then((response) => console.log(response));
+      .then((response) => setToken(response.data.data.login));
+  };
+
+  const me = () => {
+    axios
+      .post(
+        "https://hemmingway.herokuapp.com/graphql",
+        {
+          query: ` { me {
+              name
+              email
+              id
+          }}`,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then((response) => console.log("me: ", response));
   };
 
   return (
     <div>
       <h1>Auth Testing</h1>
+      <p>Token: {token}</p>
       <h3>Register</h3>
       <label htmlFor="register-name">name</label>
       <input
@@ -80,6 +102,7 @@ const Auth = () => {
         onChange={(e) => setLoginPassword(e.target.value)}
       />
       <button onClick={login}>Login</button>
+      <button onClick={me}>Me Query</button>
       <button>Logout</button>
     </div>
   );
