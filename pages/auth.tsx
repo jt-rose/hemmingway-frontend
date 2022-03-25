@@ -27,11 +27,7 @@ const Auth = () => {
   const login = () => {
     axios
       .post("https://hemmingway.herokuapp.com/graphql", {
-        query: `mutation Login($email: String!, $password: String!){ login(email: $email, password: $password, device: "web") { 
-          name
-          id
-          email
-        }
+        query: `mutation Login($email: String!, $password: String!){ login(email: $email, password: $password, device: "web") 
       }`,
         operationName: "Login",
         variables: {
