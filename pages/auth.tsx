@@ -80,7 +80,7 @@ const Auth = () => {
       />
       <label htmlFor="register-password">password</label>
       <input
-        type="text"
+        type="password"
         id="register-password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
@@ -96,7 +96,7 @@ const Auth = () => {
       />
       <label htmlFor="register-login-password">login password</label>
       <input
-        type="text"
+        type="password"
         id="register-login-password"
         value={loginPassword}
         onChange={(e) => setLoginPassword(e.target.value)}
