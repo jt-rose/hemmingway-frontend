@@ -103,7 +103,7 @@ const Auth = () => {
       />
       <button onClick={login}>Login</button>
       <button onClick={me}>Me Query</button>
-      <button>Logout</button>
+      <button onClick={() => setToken("")}>Logout</button>
     </div>
   );
 };
