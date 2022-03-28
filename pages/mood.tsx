@@ -1,5 +1,11 @@
+import { Layout } from "components/Layout";
+
 const Mood = () => {
-  return <h1>Home</h1>;
+  return (
+    <Layout>
+      <h1>Mood</h1>
+    </Layout>
+  );
 };
 
 export default Mood;

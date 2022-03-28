@@ -1,5 +1,11 @@
+import { Layout } from "components/Layout";
+
 const Meals = () => {
-  return <h1>Home</h1>;
+  return (
+    <Layout>
+      <h1>Meals</h1>
+    </Layout>
+  );
 };
 
 export default Meals;

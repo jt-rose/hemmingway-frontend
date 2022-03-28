@@ -1,5 +1,11 @@
+import { Layout } from "components/Layout";
+
 const Settings = () => {
-  return <h1>Home</h1>;
+  return (
+    <Layout>
+      <h1>Settings</h1>
+    </Layout>
+  );
 };
 
 export default Settings;

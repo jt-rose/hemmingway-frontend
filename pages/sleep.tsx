@@ -1,5 +1,11 @@
+import { Layout } from "components/Layout";
+
 const Sleep = () => {
-  return <h1>Home</h1>;
+  return (
+    <Layout>
+      <h1>Sleep</h1>
+    </Layout>
+  );
 };
 
 export default Sleep;
