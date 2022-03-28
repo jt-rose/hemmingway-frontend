@@ -1,6 +1,9 @@
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import { AppProps } from "next/app";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 function handleExitComplete() {
   if (typeof window !== "undefined") {
@@ -11,7 +14,7 @@ function handleExitComplete() {
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <AnimatePresence exitBeforeEnter onExitComplete={handleExitComplete}>
         <Component {...pageProps} key={router.route} />
       </AnimatePresence>
@@ -31,7 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
       `}
       </style>
-    </>
+    </QueryClientProvider>
   );
 }
 
