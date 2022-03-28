@@ -5,5 +5,4 @@ const endpoint =
     ? "https://hemmingway.herokuapp.com/graphql"
     : "http://localhost:8000/graphql";
 
-console.log(endpoint);
 export const client = new GraphQLClient(endpoint);
