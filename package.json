@@ -10,11 +10,13 @@
     "framer-motion": "latest",
     "next": "latest",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-query": "^3.34.19"
   },
   "devDependencies": {
     "@types/node": "^17.0.14",
     "@types/react": "^17.0.38",
+    "@types/react-query": "^1.2.9",
     "typescript": "^4.5.5"
   }
 }
