@@ -1,0 +1,22 @@
+query User {
+  user(id: 1) {
+    name
+    email
+    id
+    weight_goals {
+      id
+    }
+    user_weights {
+      id
+    }
+    daily_steps_goals {
+      id
+    }
+    daily_distance_goals {
+      id
+    }
+    pop_goals {
+      id
+    }
+  }
+}

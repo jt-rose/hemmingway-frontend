@@ -741,6 +741,11 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', name: string, id: string, email: string, exercises: Array<{ __typename?: 'Exercise', name: string, id: string }> } };
 
+export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', name: string, email: string, id: string, weight_goals: Array<{ __typename?: 'WeightGoal', id: string }>, user_weights: Array<{ __typename?: 'UserWeight', id: string }>, daily_steps_goals: Array<{ __typename?: 'DailyStepsGoal', id: string }>, daily_distance_goals: Array<{ __typename?: 'DailyDistanceGoal', id: string }>, pop_goals: Array<{ __typename?: 'PopGoal', id: string }> } | null };
+
 
 export const MeDocument = `
     query Me {
@@ -767,5 +772,43 @@ export const useMeQuery = <
     useQuery<MeQuery, TError, TData>(
       variables === undefined ? ['Me'] : ['Me', variables],
       fetcher<MeQuery, MeQueryVariables>(client, MeDocument, variables, headers),
+      options
+    );
+export const UserDocument = `
+    query User {
+  user(id: 1) {
+    name
+    email
+    id
+    weight_goals {
+      id
+    }
+    user_weights {
+      id
+    }
+    daily_steps_goals {
+      id
+    }
+    daily_distance_goals {
+      id
+    }
+    pop_goals {
+      id
+    }
+  }
+}
+    `;
+export const useUserQuery = <
+      TData = UserQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: UserQueryVariables,
+      options?: UseQueryOptions<UserQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<UserQuery, TError, TData>(
+      variables === undefined ? ['User'] : ['User', variables],
+      fetcher<UserQuery, UserQueryVariables>(client, UserDocument, variables, headers),
       options
     );

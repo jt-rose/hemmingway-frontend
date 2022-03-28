@@ -1,10 +1,10 @@
 import { Layout } from "components/Layout";
 import React from "react";
-import { useMeQuery } from "src/generated/graphql-hooks";
+import { useUserQuery } from "src/generated/graphql-hooks";
 import { client } from "utils/client";
 
 const Home = () => {
-  const { data } = useMeQuery(client);
+  const { data, error, isLoading } = useUserQuery(client);
 
   console.log("data: ", data);
 
@@ -12,6 +12,8 @@ const Home = () => {
     <Layout>
       <h1>Home</h1>
       <p>Data: {`${data}`}</p>
+      <p>error: {`${error}`}</p>
+      <p>loading: {`${isLoading}`}</p>
     </Layout>
   );
 };
