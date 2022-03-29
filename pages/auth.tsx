@@ -11,7 +11,7 @@ const Auth = () => {
 
   useEffect(() => {
     axios
-      .post("https://hemmingway.herokuapp.com/graphql", {
+      .post("http://localhost:8000/graphql", {
         query: `{ users(first: 3) { 
           data {
             name
@@ -26,7 +26,7 @@ const Auth = () => {
 
   const login = () => {
     axios
-      .post("https://hemmingway.herokuapp.com/graphql", {
+      .post("http://localhost:8000/graphql", {
         query: `mutation Login($email: String!, $password: String!){ login(email: $email, password: $password, device: "web") 
       }`,
         operationName: "Login",
@@ -41,7 +41,7 @@ const Auth = () => {
   const me = () => {
     axios
       .post(
-        "https://hemmingway.herokuapp.com/graphql",
+        "http://localhost:8000/graphql",
         {
           query: ` { me {
               name
