@@ -2,7 +2,7 @@ import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { initClient } from "../utils/client";
 
 const queryClient = new QueryClient();
@@ -18,7 +18,18 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   const gqlClient = initClient(token);
-  console.log(gqlClient);
+
+  useEffect(() => {
+    const storedToken = window.localStorage.getItem("token");
+    console.log(storedToken);
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("token", token);
+  }, [token]);
 
   return (
     <QueryClientProvider client={queryClient}>
