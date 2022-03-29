@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 import { RequestInit } from 'graphql-request/dist/types.dom';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useMutation, useQuery, UseMutationOptions, UseQueryOptions } from 'react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -253,11 +253,9 @@ export type MutationCreateSleepHabitArgs = {
 
 
 export type MutationCreateUserArgs = {
-  daily_calorie_goal: Scalars['Int'];
   email: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
-  weight_in_lbs: Scalars['Int'];
 };
 
 
@@ -493,11 +491,16 @@ export type Query = {
   daily_distance_goals?: Maybe<DailyDistanceGoalPaginator>;
   daily_steps_goals?: Maybe<DailyStepsGoalPaginator>;
   exercises?: Maybe<ExercisePaginator>;
+  exercisesByDate: Array<Exercise>;
   me: User;
   meals?: Maybe<MealPaginator>;
+  mealsByDate: Array<Meal>;
+  moodByDate: Array<Mood>;
   moods?: Maybe<MoodPaginator>;
+  popGoalsByDate: Array<PopGoal>;
   pop_goals?: Maybe<PopGoalPaginator>;
   sleepHabits?: Maybe<SleepHabitPaginator>;
+  sleepHabitsByDate: Array<SleepHabit>;
   user?: Maybe<User>;
   users?: Maybe<UserPaginator>;
   weight_goals?: Maybe<WeightGoalPaginator>;
@@ -523,15 +526,35 @@ export type QueryExercisesArgs = {
 };
 
 
+export type QueryExercisesByDateArgs = {
+  date_of_exercise: Scalars['Date'];
+};
+
+
 export type QueryMealsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   page?: InputMaybe<Scalars['Int']>;
 };
 
 
+export type QueryMealsByDateArgs = {
+  date_of_meal: Scalars['Date'];
+};
+
+
+export type QueryMoodByDateArgs = {
+  date_of_mood: Scalars['Date'];
+};
+
+
 export type QueryMoodsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   page?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryPopGoalsByDateArgs = {
+  date_of_pop_goal: Scalars['Date'];
 };
 
 
@@ -544,6 +567,11 @@ export type QueryPop_GoalsArgs = {
 export type QuerySleepHabitsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   page?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QuerySleepHabitsByDateArgs = {
+  date_of_sleep: Scalars['Date'];
 };
 
 
@@ -736,27 +764,299 @@ export type WeightGoalPaginator = {
   paginatorInfo: PaginatorInfo;
 };
 
+export type LoginMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login: string };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', name: string, id: string, email: string, exercises: Array<{ __typename?: 'Exercise', name: string, id: string }> } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', name: string, id: string, email: string } };
+
+export type DeleteDailyDistanceGoalMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteDailyDistanceGoalMutation = { __typename?: 'Mutation', deleteDailyDistanceGoal: boolean };
+
+export type SetDailyDistanceGoalMutationVariables = Exact<{
+  input: DailyDistanceGoalInput;
+}>;
+
+
+export type SetDailyDistanceGoalMutation = { __typename?: 'Mutation', setDailyDistanceGoal: { __typename?: 'DailyDistanceGoal', id: string, note?: string | null, goal_start_date: any, daily_goal_in_miles: number, active: boolean } };
+
+export type UpdateDailyDistanceGoalMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: DailyDistanceGoalInput;
+}>;
+
+
+export type UpdateDailyDistanceGoalMutation = { __typename?: 'Mutation', updateDailyDistanceGoal: { __typename?: 'DailyDistanceGoal', id: string, note?: string | null, goal_start_date: any, daily_goal_in_miles: number, active: boolean } };
+
+export type DeleteDailyStepsGoalMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteDailyStepsGoalMutation = { __typename?: 'Mutation', deleteDailyStepsGoal: boolean };
+
+export type SetDailyStepsGoalMutationVariables = Exact<{
+  input: DailyStepsGoalInput;
+}>;
+
+
+export type SetDailyStepsGoalMutation = { __typename?: 'Mutation', setDailyStepsGoal: { __typename?: 'DailyStepsGoal', id: string, note?: string | null, goal_start_date: any, daily_goal_in_steps: number, active: boolean } };
+
+export type UpdateDailyStepsGoalMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: DailyStepsGoalInput;
+}>;
+
+
+export type UpdateDailyStepsGoalMutation = { __typename?: 'Mutation', updateDailyStepsGoal: { __typename?: 'DailyStepsGoal', id: string, note?: string | null, goal_start_date: any, daily_goal_in_steps: number, active: boolean } };
+
+export type CreateExerciseMutationVariables = Exact<{
+  input: ExerciseInput;
+}>;
+
+
+export type CreateExerciseMutation = { __typename?: 'Mutation', createExercise?: { __typename?: 'Exercise', id: string, name: string, date_of_exercise: any, minutes: number, calories: number, steps?: number | null, distance_in_miles?: number | null } | null };
+
+export type DeleteExerciseMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteExerciseMutation = { __typename?: 'Mutation', deleteExercise: boolean };
+
+export type ExercisesQueryVariables = Exact<{
+  page: Scalars['Int'];
+}>;
+
+
+export type ExercisesQuery = { __typename?: 'Query', exercises?: { __typename?: 'ExercisePaginator', data: Array<{ __typename?: 'Exercise', id: string, name: string, date_of_exercise: any, minutes: number, calories: number, steps?: number | null, distance_in_miles?: number | null }>, paginatorInfo: { __typename?: 'PaginatorInfo', currentPage: number, lastPage: number, hasMorePages: boolean, total: number } } | null };
+
+export type ExercisesByDateQueryVariables = Exact<{
+  date_of_exercise: Scalars['Date'];
+}>;
+
+
+export type ExercisesByDateQuery = { __typename?: 'Query', exercisesByDate: Array<{ __typename?: 'Exercise', id: string, name: string, date_of_exercise: any, minutes: number, calories: number, steps?: number | null, distance_in_miles?: number | null }> };
+
+export type UpdateExerciseMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: ExerciseInput;
+}>;
+
+
+export type UpdateExerciseMutation = { __typename?: 'Mutation', updateExercise?: { __typename?: 'Exercise', id: string, name: string, date_of_exercise: any, minutes: number, calories: number, steps?: number | null, distance_in_miles?: number | null } | null };
+
+export type CreateMealMutationVariables = Exact<{
+  input: MealInput;
+}>;
+
+
+export type CreateMealMutation = { __typename?: 'Mutation', createMeal: { __typename?: 'Meal', id: string, name: string, date_of_meal: any, category: MealCategory, calories: number } };
+
+export type DeleteMealMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteMealMutation = { __typename?: 'Mutation', deleteMeal: boolean };
+
+export type MealByDateQueryVariables = Exact<{
+  date_of_meal: Scalars['Date'];
+}>;
+
+
+export type MealByDateQuery = { __typename?: 'Query', mealsByDate: Array<{ __typename?: 'Meal', id: string, name: string, date_of_meal: any, category: MealCategory, calories: number }> };
+
+export type UpdateMealMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: MealInput;
+}>;
+
+
+export type UpdateMealMutation = { __typename?: 'Mutation', updateMeal: { __typename?: 'Meal', id: string, name: string, date_of_meal: any, category: MealCategory, calories: number } };
+
+export type CreateMoodMutationVariables = Exact<{
+  input: MoodInput;
+}>;
+
+
+export type CreateMoodMutation = { __typename?: 'Mutation', createMood: { __typename?: 'Mood', id: string, note?: string | null, date_of_mood: any, meditated: boolean, stress_level: Stress_Level, mood_type: Mood_Type } };
+
+export type DeleteMoodMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteMoodMutation = { __typename?: 'Mutation', deleteMood: boolean };
+
+export type MoodByDateQueryVariables = Exact<{
+  date_of_mood: Scalars['Date'];
+}>;
+
+
+export type MoodByDateQuery = { __typename?: 'Query', moodByDate: Array<{ __typename?: 'Mood', id: string, note?: string | null, date_of_mood: any, meditated: boolean, stress_level: Stress_Level, mood_type: Mood_Type }> };
+
+export type UpdateMoodMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: MoodInput;
+}>;
+
+
+export type UpdateMoodMutation = { __typename?: 'Mutation', updateMood: { __typename?: 'Mood', id: string, note?: string | null, date_of_mood: any, meditated: boolean, stress_level: Stress_Level, mood_type: Mood_Type } };
+
+export type CreatePopGoalMutationVariables = Exact<{
+  input: PopGoalInput;
+}>;
+
+
+export type CreatePopGoalMutation = { __typename?: 'Mutation', createPopGoal: { __typename?: 'PopGoal', id: string, goal_amount: number, goal_type?: Goal_Type | null, date_of_goal: any } };
+
+export type DeletePopGoalMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeletePopGoalMutation = { __typename?: 'Mutation', deletePopGoal: boolean };
+
+export type CreateSleepHabitMutationVariables = Exact<{
+  input: SleepHabitInput;
+}>;
+
+
+export type CreateSleepHabitMutation = { __typename?: 'Mutation', createSleepHabit: { __typename?: 'SleepHabit', id: string, quality: SleepQuality, amount: SleepAmount, date_of_sleep: any, note: string } };
+
+export type DeleteSleepHabitMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteSleepHabitMutation = { __typename?: 'Mutation', deleteSleepHabit: boolean };
+
+export type SleepHabitsByDateQueryVariables = Exact<{
+  date_of_sleep: Scalars['Date'];
+}>;
+
+
+export type SleepHabitsByDateQuery = { __typename?: 'Query', sleepHabitsByDate: Array<{ __typename?: 'SleepHabit', id: string, quality: SleepQuality, amount: SleepAmount, date_of_sleep: any, note: string }> };
+
+export type UpdateSleepHabitMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: SleepHabitInput;
+}>;
+
+
+export type UpdateSleepHabitMutation = { __typename?: 'Mutation', updateSleepHabit: { __typename?: 'SleepHabit', id: string, quality: SleepQuality, amount: SleepAmount, date_of_sleep: any, note: string } };
 
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', name: string, email: string, id: string, weight_goals: Array<{ __typename?: 'WeightGoal', id: string }>, user_weights: Array<{ __typename?: 'UserWeight', id: string }>, daily_steps_goals: Array<{ __typename?: 'DailyStepsGoal', id: string }>, daily_distance_goals: Array<{ __typename?: 'DailyDistanceGoal', id: string }>, pop_goals: Array<{ __typename?: 'PopGoal', id: string }> } | null };
 
+export type DeleteUserMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
 
+
+export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: { __typename?: 'User', id: string, name: string, email: string } | null };
+
+export type RegisterMutationVariables = Exact<{
+  name: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type RegisterMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: string, name: string, email: string } };
+
+export type UpdateUserMutationVariables = Exact<{
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  email: Scalars['String'];
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, name: string, email: string } };
+
+export type DeleteUserWeightMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteUserWeightMutation = { __typename?: 'Mutation', deleteUserWeight: boolean };
+
+export type SetUserWeightMutationVariables = Exact<{
+  input: UserWeightInput;
+}>;
+
+
+export type SetUserWeightMutation = { __typename?: 'Mutation', setUserWeight: { __typename?: 'UserWeight', id: string, weight_in_lbs: number, date_of_weight: any, note?: string | null } };
+
+export type UpdateUserWeightMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: UserWeightInput;
+}>;
+
+
+export type UpdateUserWeightMutation = { __typename?: 'Mutation', updateUserWeight: { __typename?: 'UserWeight', id: string, weight_in_lbs: number, date_of_weight: any, note?: string | null } };
+
+export type DeleteWeightGoalMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type DeleteWeightGoalMutation = { __typename?: 'Mutation', deleteWeightGoal: boolean };
+
+export type SetWeightGoalMutationVariables = Exact<{
+  input: WeightGoalInput;
+}>;
+
+
+export type SetWeightGoalMutation = { __typename?: 'Mutation', setWeightGoal: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean } };
+
+export type UpdateWeightGoalMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: WeightGoalInput;
+}>;
+
+
+export type UpdateWeightGoalMutation = { __typename?: 'Mutation', updateWeightGoal: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean } };
+
+
+export const LoginDocument = `
+    mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password, device: "web")
+}
+    `;
+export const useLoginMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
+      ['Login'],
+      (variables?: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(client, LoginDocument, variables, headers)(),
+      options
+    );
 export const MeDocument = `
     query Me {
   me {
     name
     id
     email
-    exercises {
-      name
-      id
-    }
   }
 }
     `;
@@ -772,6 +1072,587 @@ export const useMeQuery = <
     useQuery<MeQuery, TError, TData>(
       variables === undefined ? ['Me'] : ['Me', variables],
       fetcher<MeQuery, MeQueryVariables>(client, MeDocument, variables, headers),
+      options
+    );
+export const DeleteDailyDistanceGoalDocument = `
+    mutation DeleteDailyDistanceGoal($id: ID!) {
+  deleteDailyDistanceGoal(id: $id)
+}
+    `;
+export const useDeleteDailyDistanceGoalMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteDailyDistanceGoalMutation, TError, DeleteDailyDistanceGoalMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteDailyDistanceGoalMutation, TError, DeleteDailyDistanceGoalMutationVariables, TContext>(
+      ['DeleteDailyDistanceGoal'],
+      (variables?: DeleteDailyDistanceGoalMutationVariables) => fetcher<DeleteDailyDistanceGoalMutation, DeleteDailyDistanceGoalMutationVariables>(client, DeleteDailyDistanceGoalDocument, variables, headers)(),
+      options
+    );
+export const SetDailyDistanceGoalDocument = `
+    mutation SetDailyDistanceGoal($input: DailyDistanceGoalInput!) {
+  setDailyDistanceGoal(input: $input) {
+    id
+    note
+    goal_start_date
+    daily_goal_in_miles
+    active
+  }
+}
+    `;
+export const useSetDailyDistanceGoalMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SetDailyDistanceGoalMutation, TError, SetDailyDistanceGoalMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SetDailyDistanceGoalMutation, TError, SetDailyDistanceGoalMutationVariables, TContext>(
+      ['SetDailyDistanceGoal'],
+      (variables?: SetDailyDistanceGoalMutationVariables) => fetcher<SetDailyDistanceGoalMutation, SetDailyDistanceGoalMutationVariables>(client, SetDailyDistanceGoalDocument, variables, headers)(),
+      options
+    );
+export const UpdateDailyDistanceGoalDocument = `
+    mutation UpdateDailyDistanceGoal($id: ID!, $input: DailyDistanceGoalInput!) {
+  updateDailyDistanceGoal(id: $id, input: $input) {
+    id
+    note
+    goal_start_date
+    daily_goal_in_miles
+    active
+  }
+}
+    `;
+export const useUpdateDailyDistanceGoalMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateDailyDistanceGoalMutation, TError, UpdateDailyDistanceGoalMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateDailyDistanceGoalMutation, TError, UpdateDailyDistanceGoalMutationVariables, TContext>(
+      ['UpdateDailyDistanceGoal'],
+      (variables?: UpdateDailyDistanceGoalMutationVariables) => fetcher<UpdateDailyDistanceGoalMutation, UpdateDailyDistanceGoalMutationVariables>(client, UpdateDailyDistanceGoalDocument, variables, headers)(),
+      options
+    );
+export const DeleteDailyStepsGoalDocument = `
+    mutation DeleteDailyStepsGoal($id: ID!) {
+  deleteDailyStepsGoal(id: $id)
+}
+    `;
+export const useDeleteDailyStepsGoalMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteDailyStepsGoalMutation, TError, DeleteDailyStepsGoalMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteDailyStepsGoalMutation, TError, DeleteDailyStepsGoalMutationVariables, TContext>(
+      ['DeleteDailyStepsGoal'],
+      (variables?: DeleteDailyStepsGoalMutationVariables) => fetcher<DeleteDailyStepsGoalMutation, DeleteDailyStepsGoalMutationVariables>(client, DeleteDailyStepsGoalDocument, variables, headers)(),
+      options
+    );
+export const SetDailyStepsGoalDocument = `
+    mutation SetDailyStepsGoal($input: DailyStepsGoalInput!) {
+  setDailyStepsGoal(input: $input) {
+    id
+    note
+    goal_start_date
+    daily_goal_in_steps
+    active
+  }
+}
+    `;
+export const useSetDailyStepsGoalMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SetDailyStepsGoalMutation, TError, SetDailyStepsGoalMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SetDailyStepsGoalMutation, TError, SetDailyStepsGoalMutationVariables, TContext>(
+      ['SetDailyStepsGoal'],
+      (variables?: SetDailyStepsGoalMutationVariables) => fetcher<SetDailyStepsGoalMutation, SetDailyStepsGoalMutationVariables>(client, SetDailyStepsGoalDocument, variables, headers)(),
+      options
+    );
+export const UpdateDailyStepsGoalDocument = `
+    mutation UpdateDailyStepsGoal($id: ID!, $input: DailyStepsGoalInput!) {
+  updateDailyStepsGoal(id: $id, input: $input) {
+    id
+    note
+    goal_start_date
+    daily_goal_in_steps
+    active
+  }
+}
+    `;
+export const useUpdateDailyStepsGoalMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateDailyStepsGoalMutation, TError, UpdateDailyStepsGoalMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateDailyStepsGoalMutation, TError, UpdateDailyStepsGoalMutationVariables, TContext>(
+      ['UpdateDailyStepsGoal'],
+      (variables?: UpdateDailyStepsGoalMutationVariables) => fetcher<UpdateDailyStepsGoalMutation, UpdateDailyStepsGoalMutationVariables>(client, UpdateDailyStepsGoalDocument, variables, headers)(),
+      options
+    );
+export const CreateExerciseDocument = `
+    mutation CreateExercise($input: ExerciseInput!) {
+  createExercise(input: $input) {
+    id
+    name
+    date_of_exercise
+    minutes
+    calories
+    steps
+    distance_in_miles
+  }
+}
+    `;
+export const useCreateExerciseMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateExerciseMutation, TError, CreateExerciseMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateExerciseMutation, TError, CreateExerciseMutationVariables, TContext>(
+      ['CreateExercise'],
+      (variables?: CreateExerciseMutationVariables) => fetcher<CreateExerciseMutation, CreateExerciseMutationVariables>(client, CreateExerciseDocument, variables, headers)(),
+      options
+    );
+export const DeleteExerciseDocument = `
+    mutation DeleteExercise($id: ID!) {
+  deleteExercise(id: $id)
+}
+    `;
+export const useDeleteExerciseMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteExerciseMutation, TError, DeleteExerciseMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteExerciseMutation, TError, DeleteExerciseMutationVariables, TContext>(
+      ['DeleteExercise'],
+      (variables?: DeleteExerciseMutationVariables) => fetcher<DeleteExerciseMutation, DeleteExerciseMutationVariables>(client, DeleteExerciseDocument, variables, headers)(),
+      options
+    );
+export const ExercisesDocument = `
+    query Exercises($page: Int!) {
+  exercises(page: $page) {
+    data {
+      id
+      name
+      date_of_exercise
+      minutes
+      calories
+      steps
+      distance_in_miles
+    }
+    paginatorInfo {
+      currentPage
+      lastPage
+      hasMorePages
+      total
+    }
+  }
+}
+    `;
+export const useExercisesQuery = <
+      TData = ExercisesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ExercisesQueryVariables,
+      options?: UseQueryOptions<ExercisesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ExercisesQuery, TError, TData>(
+      ['Exercises', variables],
+      fetcher<ExercisesQuery, ExercisesQueryVariables>(client, ExercisesDocument, variables, headers),
+      options
+    );
+export const ExercisesByDateDocument = `
+    query ExercisesByDate($date_of_exercise: Date!) {
+  exercisesByDate(date_of_exercise: $date_of_exercise) {
+    id
+    name
+    date_of_exercise
+    minutes
+    calories
+    steps
+    distance_in_miles
+  }
+}
+    `;
+export const useExercisesByDateQuery = <
+      TData = ExercisesByDateQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ExercisesByDateQueryVariables,
+      options?: UseQueryOptions<ExercisesByDateQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ExercisesByDateQuery, TError, TData>(
+      ['ExercisesByDate', variables],
+      fetcher<ExercisesByDateQuery, ExercisesByDateQueryVariables>(client, ExercisesByDateDocument, variables, headers),
+      options
+    );
+export const UpdateExerciseDocument = `
+    mutation UpdateExercise($id: ID!, $input: ExerciseInput!) {
+  updateExercise(id: $id, input: $input) {
+    id
+    name
+    date_of_exercise
+    minutes
+    calories
+    steps
+    distance_in_miles
+  }
+}
+    `;
+export const useUpdateExerciseMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateExerciseMutation, TError, UpdateExerciseMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateExerciseMutation, TError, UpdateExerciseMutationVariables, TContext>(
+      ['UpdateExercise'],
+      (variables?: UpdateExerciseMutationVariables) => fetcher<UpdateExerciseMutation, UpdateExerciseMutationVariables>(client, UpdateExerciseDocument, variables, headers)(),
+      options
+    );
+export const CreateMealDocument = `
+    mutation CreateMeal($input: MealInput!) {
+  createMeal(input: $input) {
+    id
+    name
+    date_of_meal
+    category
+    calories
+  }
+}
+    `;
+export const useCreateMealMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateMealMutation, TError, CreateMealMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateMealMutation, TError, CreateMealMutationVariables, TContext>(
+      ['CreateMeal'],
+      (variables?: CreateMealMutationVariables) => fetcher<CreateMealMutation, CreateMealMutationVariables>(client, CreateMealDocument, variables, headers)(),
+      options
+    );
+export const DeleteMealDocument = `
+    mutation DeleteMeal($id: ID!) {
+  deleteMeal(id: $id)
+}
+    `;
+export const useDeleteMealMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteMealMutation, TError, DeleteMealMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteMealMutation, TError, DeleteMealMutationVariables, TContext>(
+      ['DeleteMeal'],
+      (variables?: DeleteMealMutationVariables) => fetcher<DeleteMealMutation, DeleteMealMutationVariables>(client, DeleteMealDocument, variables, headers)(),
+      options
+    );
+export const MealByDateDocument = `
+    query MealByDate($date_of_meal: Date!) {
+  mealsByDate(date_of_meal: $date_of_meal) {
+    id
+    name
+    date_of_meal
+    category
+    calories
+  }
+}
+    `;
+export const useMealByDateQuery = <
+      TData = MealByDateQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: MealByDateQueryVariables,
+      options?: UseQueryOptions<MealByDateQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<MealByDateQuery, TError, TData>(
+      ['MealByDate', variables],
+      fetcher<MealByDateQuery, MealByDateQueryVariables>(client, MealByDateDocument, variables, headers),
+      options
+    );
+export const UpdateMealDocument = `
+    mutation UpdateMeal($id: ID!, $input: MealInput!) {
+  updateMeal(id: $id, input: $input) {
+    id
+    name
+    date_of_meal
+    category
+    calories
+  }
+}
+    `;
+export const useUpdateMealMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateMealMutation, TError, UpdateMealMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateMealMutation, TError, UpdateMealMutationVariables, TContext>(
+      ['UpdateMeal'],
+      (variables?: UpdateMealMutationVariables) => fetcher<UpdateMealMutation, UpdateMealMutationVariables>(client, UpdateMealDocument, variables, headers)(),
+      options
+    );
+export const CreateMoodDocument = `
+    mutation CreateMood($input: MoodInput!) {
+  createMood(input: $input) {
+    id
+    note
+    date_of_mood
+    meditated
+    stress_level
+    mood_type
+  }
+}
+    `;
+export const useCreateMoodMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateMoodMutation, TError, CreateMoodMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateMoodMutation, TError, CreateMoodMutationVariables, TContext>(
+      ['CreateMood'],
+      (variables?: CreateMoodMutationVariables) => fetcher<CreateMoodMutation, CreateMoodMutationVariables>(client, CreateMoodDocument, variables, headers)(),
+      options
+    );
+export const DeleteMoodDocument = `
+    mutation DeleteMood($id: ID!) {
+  deleteMood(id: $id)
+}
+    `;
+export const useDeleteMoodMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteMoodMutation, TError, DeleteMoodMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteMoodMutation, TError, DeleteMoodMutationVariables, TContext>(
+      ['DeleteMood'],
+      (variables?: DeleteMoodMutationVariables) => fetcher<DeleteMoodMutation, DeleteMoodMutationVariables>(client, DeleteMoodDocument, variables, headers)(),
+      options
+    );
+export const MoodByDateDocument = `
+    query MoodByDate($date_of_mood: Date!) {
+  moodByDate(date_of_mood: $date_of_mood) {
+    id
+    note
+    date_of_mood
+    meditated
+    stress_level
+    mood_type
+  }
+}
+    `;
+export const useMoodByDateQuery = <
+      TData = MoodByDateQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: MoodByDateQueryVariables,
+      options?: UseQueryOptions<MoodByDateQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<MoodByDateQuery, TError, TData>(
+      ['MoodByDate', variables],
+      fetcher<MoodByDateQuery, MoodByDateQueryVariables>(client, MoodByDateDocument, variables, headers),
+      options
+    );
+export const UpdateMoodDocument = `
+    mutation UpdateMood($id: ID!, $input: MoodInput!) {
+  updateMood(id: $id, input: $input) {
+    id
+    note
+    date_of_mood
+    meditated
+    stress_level
+    mood_type
+  }
+}
+    `;
+export const useUpdateMoodMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateMoodMutation, TError, UpdateMoodMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateMoodMutation, TError, UpdateMoodMutationVariables, TContext>(
+      ['UpdateMood'],
+      (variables?: UpdateMoodMutationVariables) => fetcher<UpdateMoodMutation, UpdateMoodMutationVariables>(client, UpdateMoodDocument, variables, headers)(),
+      options
+    );
+export const CreatePopGoalDocument = `
+    mutation CreatePopGoal($input: PopGoalInput!) {
+  createPopGoal(input: $input) {
+    id
+    goal_amount
+    goal_type
+    date_of_goal
+  }
+}
+    `;
+export const useCreatePopGoalMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreatePopGoalMutation, TError, CreatePopGoalMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreatePopGoalMutation, TError, CreatePopGoalMutationVariables, TContext>(
+      ['CreatePopGoal'],
+      (variables?: CreatePopGoalMutationVariables) => fetcher<CreatePopGoalMutation, CreatePopGoalMutationVariables>(client, CreatePopGoalDocument, variables, headers)(),
+      options
+    );
+export const DeletePopGoalDocument = `
+    mutation DeletePopGoal($id: ID!) {
+  deletePopGoal(id: $id)
+}
+    `;
+export const useDeletePopGoalMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeletePopGoalMutation, TError, DeletePopGoalMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeletePopGoalMutation, TError, DeletePopGoalMutationVariables, TContext>(
+      ['DeletePopGoal'],
+      (variables?: DeletePopGoalMutationVariables) => fetcher<DeletePopGoalMutation, DeletePopGoalMutationVariables>(client, DeletePopGoalDocument, variables, headers)(),
+      options
+    );
+export const CreateSleepHabitDocument = `
+    mutation CreateSleepHabit($input: SleepHabitInput!) {
+  createSleepHabit(input: $input) {
+    id
+    quality
+    amount
+    date_of_sleep
+    note
+  }
+}
+    `;
+export const useCreateSleepHabitMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateSleepHabitMutation, TError, CreateSleepHabitMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateSleepHabitMutation, TError, CreateSleepHabitMutationVariables, TContext>(
+      ['CreateSleepHabit'],
+      (variables?: CreateSleepHabitMutationVariables) => fetcher<CreateSleepHabitMutation, CreateSleepHabitMutationVariables>(client, CreateSleepHabitDocument, variables, headers)(),
+      options
+    );
+export const DeleteSleepHabitDocument = `
+    mutation DeleteSleepHabit($id: ID!) {
+  deleteSleepHabit(id: $id)
+}
+    `;
+export const useDeleteSleepHabitMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteSleepHabitMutation, TError, DeleteSleepHabitMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteSleepHabitMutation, TError, DeleteSleepHabitMutationVariables, TContext>(
+      ['DeleteSleepHabit'],
+      (variables?: DeleteSleepHabitMutationVariables) => fetcher<DeleteSleepHabitMutation, DeleteSleepHabitMutationVariables>(client, DeleteSleepHabitDocument, variables, headers)(),
+      options
+    );
+export const SleepHabitsByDateDocument = `
+    query SleepHabitsByDate($date_of_sleep: Date!) {
+  sleepHabitsByDate(date_of_sleep: $date_of_sleep) {
+    id
+    quality
+    amount
+    date_of_sleep
+    note
+  }
+}
+    `;
+export const useSleepHabitsByDateQuery = <
+      TData = SleepHabitsByDateQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: SleepHabitsByDateQueryVariables,
+      options?: UseQueryOptions<SleepHabitsByDateQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SleepHabitsByDateQuery, TError, TData>(
+      ['SleepHabitsByDate', variables],
+      fetcher<SleepHabitsByDateQuery, SleepHabitsByDateQueryVariables>(client, SleepHabitsByDateDocument, variables, headers),
+      options
+    );
+export const UpdateSleepHabitDocument = `
+    mutation UpdateSleepHabit($id: ID!, $input: SleepHabitInput!) {
+  updateSleepHabit(id: $id, input: $input) {
+    id
+    quality
+    amount
+    date_of_sleep
+    note
+  }
+}
+    `;
+export const useUpdateSleepHabitMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateSleepHabitMutation, TError, UpdateSleepHabitMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateSleepHabitMutation, TError, UpdateSleepHabitMutationVariables, TContext>(
+      ['UpdateSleepHabit'],
+      (variables?: UpdateSleepHabitMutationVariables) => fetcher<UpdateSleepHabitMutation, UpdateSleepHabitMutationVariables>(client, UpdateSleepHabitDocument, variables, headers)(),
       options
     );
 export const UserDocument = `
@@ -810,5 +1691,201 @@ export const useUserQuery = <
     useQuery<UserQuery, TError, TData>(
       variables === undefined ? ['User'] : ['User', variables],
       fetcher<UserQuery, UserQueryVariables>(client, UserDocument, variables, headers),
+      options
+    );
+export const DeleteUserDocument = `
+    mutation DeleteUser($id: ID!) {
+  deleteUser(id: $id) {
+    id
+    name
+    email
+  }
+}
+    `;
+export const useDeleteUserMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteUserMutation, TError, DeleteUserMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteUserMutation, TError, DeleteUserMutationVariables, TContext>(
+      ['DeleteUser'],
+      (variables?: DeleteUserMutationVariables) => fetcher<DeleteUserMutation, DeleteUserMutationVariables>(client, DeleteUserDocument, variables, headers)(),
+      options
+    );
+export const RegisterDocument = `
+    mutation Register($name: String!, $email: String!, $password: String!) {
+  createUser(name: $name, email: $email, password: $password) {
+    id
+    name
+    email
+  }
+}
+    `;
+export const useRegisterMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<RegisterMutation, TError, RegisterMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<RegisterMutation, TError, RegisterMutationVariables, TContext>(
+      ['Register'],
+      (variables?: RegisterMutationVariables) => fetcher<RegisterMutation, RegisterMutationVariables>(client, RegisterDocument, variables, headers)(),
+      options
+    );
+export const UpdateUserDocument = `
+    mutation UpdateUser($id: ID!, $name: String!, $email: String!) {
+  updateUser(id: $id, name: $name, email: $email) {
+    id
+    name
+    email
+  }
+}
+    `;
+export const useUpdateUserMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateUserMutation, TError, UpdateUserMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateUserMutation, TError, UpdateUserMutationVariables, TContext>(
+      ['UpdateUser'],
+      (variables?: UpdateUserMutationVariables) => fetcher<UpdateUserMutation, UpdateUserMutationVariables>(client, UpdateUserDocument, variables, headers)(),
+      options
+    );
+export const DeleteUserWeightDocument = `
+    mutation DeleteUserWeight($id: ID!) {
+  deleteUserWeight(id: $id)
+}
+    `;
+export const useDeleteUserWeightMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteUserWeightMutation, TError, DeleteUserWeightMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteUserWeightMutation, TError, DeleteUserWeightMutationVariables, TContext>(
+      ['DeleteUserWeight'],
+      (variables?: DeleteUserWeightMutationVariables) => fetcher<DeleteUserWeightMutation, DeleteUserWeightMutationVariables>(client, DeleteUserWeightDocument, variables, headers)(),
+      options
+    );
+export const SetUserWeightDocument = `
+    mutation SetUserWeight($input: UserWeightInput!) {
+  setUserWeight(input: $input) {
+    id
+    weight_in_lbs
+    date_of_weight
+    note
+  }
+}
+    `;
+export const useSetUserWeightMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SetUserWeightMutation, TError, SetUserWeightMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SetUserWeightMutation, TError, SetUserWeightMutationVariables, TContext>(
+      ['SetUserWeight'],
+      (variables?: SetUserWeightMutationVariables) => fetcher<SetUserWeightMutation, SetUserWeightMutationVariables>(client, SetUserWeightDocument, variables, headers)(),
+      options
+    );
+export const UpdateUserWeightDocument = `
+    mutation UpdateUserWeight($id: ID!, $input: UserWeightInput!) {
+  updateUserWeight(id: $id, input: $input) {
+    id
+    weight_in_lbs
+    date_of_weight
+    note
+  }
+}
+    `;
+export const useUpdateUserWeightMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateUserWeightMutation, TError, UpdateUserWeightMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateUserWeightMutation, TError, UpdateUserWeightMutationVariables, TContext>(
+      ['UpdateUserWeight'],
+      (variables?: UpdateUserWeightMutationVariables) => fetcher<UpdateUserWeightMutation, UpdateUserWeightMutationVariables>(client, UpdateUserWeightDocument, variables, headers)(),
+      options
+    );
+export const DeleteWeightGoalDocument = `
+    mutation DeleteWeightGoal($id: ID!) {
+  deleteWeightGoal(id: $id)
+}
+    `;
+export const useDeleteWeightGoalMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteWeightGoalMutation, TError, DeleteWeightGoalMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteWeightGoalMutation, TError, DeleteWeightGoalMutationVariables, TContext>(
+      ['DeleteWeightGoal'],
+      (variables?: DeleteWeightGoalMutationVariables) => fetcher<DeleteWeightGoalMutation, DeleteWeightGoalMutationVariables>(client, DeleteWeightGoalDocument, variables, headers)(),
+      options
+    );
+export const SetWeightGoalDocument = `
+    mutation SetWeightGoal($input: WeightGoalInput!) {
+  setWeightGoal(input: $input) {
+    id
+    goal_start_date
+    goal_in_lbs
+    note
+    active
+  }
+}
+    `;
+export const useSetWeightGoalMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SetWeightGoalMutation, TError, SetWeightGoalMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SetWeightGoalMutation, TError, SetWeightGoalMutationVariables, TContext>(
+      ['SetWeightGoal'],
+      (variables?: SetWeightGoalMutationVariables) => fetcher<SetWeightGoalMutation, SetWeightGoalMutationVariables>(client, SetWeightGoalDocument, variables, headers)(),
+      options
+    );
+export const UpdateWeightGoalDocument = `
+    mutation UpdateWeightGoal($id: ID!, $input: WeightGoalInput!) {
+  updateWeightGoal(id: $id, input: $input) {
+    id
+    goal_start_date
+    goal_in_lbs
+    note
+    active
+  }
+}
+    `;
+export const useUpdateWeightGoalMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateWeightGoalMutation, TError, UpdateWeightGoalMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateWeightGoalMutation, TError, UpdateWeightGoalMutationVariables, TContext>(
+      ['UpdateWeightGoal'],
+      (variables?: UpdateWeightGoalMutationVariables) => fetcher<UpdateWeightGoalMutation, UpdateWeightGoalMutationVariables>(client, UpdateWeightGoalDocument, variables, headers)(),
       options
     );

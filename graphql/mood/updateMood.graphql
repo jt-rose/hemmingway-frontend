@@ -1,0 +1,10 @@
+mutation UpdateMood($id: ID!, $input: MoodInput!) {
+  updateMood(id: $id, input: $input) {
+    id
+    note
+    date_of_mood
+    meditated
+    stress_level
+    mood_type
+  }
+}

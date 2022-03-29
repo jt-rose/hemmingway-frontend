@@ -1,0 +1,8 @@
+mutation UpdateUserWeight($id: ID!, $input: UserWeightInput!) {
+  updateUserWeight(id: $id, input: $input) {
+    id
+    weight_in_lbs
+    date_of_weight
+    note
+  }
+}

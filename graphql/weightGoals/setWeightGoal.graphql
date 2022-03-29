@@ -1,0 +1,9 @@
+mutation SetWeightGoal($input: WeightGoalInput!) {
+  setWeightGoal(input: $input) {
+    id
+    goal_start_date
+    goal_in_lbs
+    note
+    active
+  }
+}

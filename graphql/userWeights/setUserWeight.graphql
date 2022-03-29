@@ -1,0 +1,8 @@
+mutation SetUserWeight($input: UserWeightInput!) {
+  setUserWeight(input: $input) {
+    id
+    weight_in_lbs
+    date_of_weight
+    note
+  }
+}

@@ -1,0 +1,10 @@
+mutation CreateMood($input: MoodInput!) {
+  createMood(input: $input) {
+    id
+    note
+    date_of_mood
+    meditated
+    stress_level
+    mood_type
+  }
+}

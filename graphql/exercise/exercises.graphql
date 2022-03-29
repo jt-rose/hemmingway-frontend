@@ -1,0 +1,19 @@
+query Exercises($page: Int!) {
+  exercises(page: $page) {
+    data {
+      id
+      name
+      date_of_exercise
+      minutes
+      calories
+      steps
+      distance_in_miles
+    }
+    paginatorInfo {
+      currentPage
+      lastPage
+      hasMorePages
+      total
+    }
+  }
+}

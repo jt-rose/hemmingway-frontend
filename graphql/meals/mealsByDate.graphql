@@ -1,0 +1,9 @@
+query MealByDate($date_of_meal: Date!) {
+  mealsByDate(date_of_meal: $date_of_meal) {
+    id
+    name
+    date_of_meal
+    category
+    calories
+  }
+}

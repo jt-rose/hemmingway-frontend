@@ -1,0 +1,11 @@
+mutation CreateExercise($input: ExerciseInput!) {
+  createExercise(input: $input) {
+    id
+    name
+    date_of_exercise
+    minutes
+    calories
+    steps
+    distance_in_miles
+  }
+}

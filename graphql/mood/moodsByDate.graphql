@@ -1,0 +1,10 @@
+query MoodByDate($date_of_mood: Date!) {
+  moodByDate(date_of_mood: $date_of_mood) {
+    id
+    note
+    date_of_mood
+    meditated
+    stress_level
+    mood_type
+  }
+}

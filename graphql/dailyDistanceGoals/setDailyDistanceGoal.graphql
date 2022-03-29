@@ -1,0 +1,9 @@
+mutation SetDailyDistanceGoal($input: DailyDistanceGoalInput!) {
+  setDailyDistanceGoal(input: $input) {
+    id
+    note
+    goal_start_date
+    daily_goal_in_miles
+    active
+  }
+}

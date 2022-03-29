@@ -1,0 +1,9 @@
+mutation UpdateSleepHabit($id: ID!, $input: SleepHabitInput!) {
+  updateSleepHabit(id: $id, input: $input) {
+    id
+    quality
+    amount
+    date_of_sleep
+    note
+  }
+}

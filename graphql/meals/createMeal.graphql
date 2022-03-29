@@ -1,0 +1,9 @@
+mutation CreateMeal($input: MealInput!) {
+  createMeal(input: $input) {
+    id
+    name
+    date_of_meal
+    category
+    calories
+  }
+}

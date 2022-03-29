@@ -1,0 +1,9 @@
+mutation CreateSleepHabit($input: SleepHabitInput!) {
+  createSleepHabit(input: $input) {
+    id
+    quality
+    amount
+    date_of_sleep
+    note
+  }
+}

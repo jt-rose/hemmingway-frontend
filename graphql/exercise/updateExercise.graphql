@@ -1,0 +1,11 @@
+mutation UpdateExercise($id: ID!, $input: ExerciseInput!) {
+  updateExercise(id: $id, input: $input) {
+    id
+    name
+    date_of_exercise
+    minutes
+    calories
+    steps
+    distance_in_miles
+  }
+}

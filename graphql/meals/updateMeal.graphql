@@ -1,0 +1,9 @@
+mutation UpdateMeal($id: ID!, $input: MealInput!) {
+  updateMeal(id: $id, input: $input) {
+    id
+    name
+    date_of_meal
+    category
+    calories
+  }
+}

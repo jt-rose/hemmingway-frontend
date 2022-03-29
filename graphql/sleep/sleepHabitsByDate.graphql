@@ -1,0 +1,9 @@
+query SleepHabitsByDate($date_of_sleep: Date!) {
+  sleepHabitsByDate(date_of_sleep: $date_of_sleep) {
+    id
+    quality
+    amount
+    date_of_sleep
+    note
+  }
+}

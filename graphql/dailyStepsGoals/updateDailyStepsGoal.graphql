@@ -1,0 +1,9 @@
+mutation UpdateDailyStepsGoal($id: ID!, $input: DailyStepsGoalInput!) {
+  updateDailyStepsGoal(id: $id, input: $input) {
+    id
+    note
+    goal_start_date
+    daily_goal_in_steps
+    active
+  }
+}

@@ -1,0 +1,11 @@
+query ExercisesByDate($date_of_exercise: Date!) {
+  exercisesByDate(date_of_exercise: $date_of_exercise) {
+    id
+    name
+    date_of_exercise
+    minutes
+    calories
+    steps
+    distance_in_miles
+  }
+}
