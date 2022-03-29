@@ -15,15 +15,21 @@ function handleExitComplete() {
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [token, setToken] = useState("");
+  const [initialLoad, setInitialLoad] = useState(true);
   const router = useRouter();
 
   const gqlClient = initClient(token);
+  console.log("gql: ", gqlClient);
 
   useEffect(() => {
     const storedToken = window.localStorage.getItem("token");
     console.log(storedToken);
+
     if (storedToken) {
       setToken(storedToken);
+      setInitialLoad(false);
+    } else {
+      setInitialLoad(false);
     }
   }, []);
 
@@ -34,12 +40,16 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <AnimatePresence exitBeforeEnter onExitComplete={handleExitComplete}>
-        <Component
-          {...pageProps}
-          gqlClient={gqlClient}
-          setToken={setToken}
-          key={router.route}
-        />
+        {initialLoad ? (
+          <p>...loading</p>
+        ) : (
+          <Component
+            {...pageProps}
+            gqlClient={gqlClient}
+            setToken={setToken}
+            key={router.route}
+          />
+        )}
       </AnimatePresence>
       <style>
         {`

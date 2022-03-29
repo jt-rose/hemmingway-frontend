@@ -3,34 +3,36 @@ import React from "react";
 import {
   useUserQuery,
   useExercisesByDateQuery,
-  CreateExerciseMutation,
-  useCreateExerciseMutation,
 } from "src/generated/graphql-hooks";
 import { PropTypes } from "types/propTypes";
 import dayjs from "dayjs";
-import { useQueryClient } from "react-query";
-import { Exercise } from "../components/Exercise";
+import { Exercise } from "../components/exercise/Exercise";
 
 const Home = (props: PropTypes) => {
-  const queryClient = useQueryClient();
+  console.log("home gql: ", props.gqlClient);
   const date = dayjs().format("YYYY-MM-DD");
-  console.log(date);
   //const { data, error, isLoading } = useUserQuery(props.gqlClient);
-  const { data, error, isLoading } = useExercisesByDateQuery(props.gqlClient, {
-    date_of_exercise: date,
-  });
-
-  const addExercise = useCreateExerciseMutation(props.gqlClient);
+  const { data, error, isLoading } = useExercisesByDateQuery(
+    props.gqlClient,
+    {
+      date_of_exercise: date,
+    },
+    { retry: false }
+  );
 
   console.log("data: ", data);
-  //console.log("ex: ", exercises.data);
-
-  return (
-    <Layout>
-      <h1>Home</h1>
-      <Exercise gqlClient={props.gqlClient} date={date} />
-    </Layout>
-  );
+  if (isLoading) {
+    return <h3>... loading</h3>;
+  } else if (error) {
+    return <h3>Error</h3>;
+  } else {
+    return (
+      <Layout>
+        <h1>Home</h1>
+        <Exercise gqlClient={props.gqlClient} date={date} />
+      </Layout>
+    );
+  }
 };
 
 export default Home;
