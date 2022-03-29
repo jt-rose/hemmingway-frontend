@@ -1,3 +1,4 @@
+import "../styles/globals.css";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import { AppProps } from "next/app";
