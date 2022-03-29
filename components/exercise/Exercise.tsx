@@ -7,6 +7,7 @@ import { PropTypesWithDate } from "types/propTypes";
 import dayjs from "dayjs";
 import { useQueryClient } from "react-query";
 import { AddExercise } from "./AddExercise";
+import { UpdateExercise } from "./UpdateExercise";
 
 export const Exercise = (props: PropTypesWithDate) => {
   const queryClient = useQueryClient();
@@ -36,6 +37,7 @@ export const Exercise = (props: PropTypesWithDate) => {
           >
             {ex.name}
           </h3>
+          <UpdateExercise gqlClient={props.gqlClient} exercise={ex} />
           <button
             onClick={() =>
               updateExercise.mutate(
