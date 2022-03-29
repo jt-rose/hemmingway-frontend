@@ -1,5 +1,5 @@
 import { GraphQLClient } from "graphql-request";
-import { Exercise, ExercisesByDateQuery } from "src/generated/graphql-hooks";
+import { Exercise } from "src/generated/graphql-hooks";
 
 export interface PropTypes {
   gqlClient: GraphQLClient;

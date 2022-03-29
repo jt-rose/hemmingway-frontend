@@ -1,6 +1,5 @@
 import {
   useExercisesByDateQuery,
-  useUpdateExerciseMutation,
   useDeleteExerciseMutation,
 } from "src/generated/graphql-hooks";
 import { PropTypesWithDate } from "types/propTypes";
@@ -13,7 +12,7 @@ export const Exercise = (props: PropTypesWithDate) => {
   const { data, error, isLoading } = useExercisesByDateQuery(props.gqlClient, {
     date_of_exercise: props.date,
   });
-  const updateExercise = useUpdateExerciseMutation(props.gqlClient);
+
   const deleteExercise = useDeleteExerciseMutation(props.gqlClient);
 
   const refetchDirective = {
