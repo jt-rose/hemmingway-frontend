@@ -1,21 +1,41 @@
-import { useCreateExerciseMutation } from "src/generated/graphql-hooks";
-import { PropTypesWithDate } from "types/propTypes";
+import { useUpdateExerciseMutation } from "src/generated/graphql-hooks";
+import { PropTypesWithExercise } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 
-export const AddExercise = (props: PropTypesWithDate) => {
+export const UpdateExercise = (props: PropTypesWithExercise) => {
+  const {
+    id,
+    name,
+    steps,
+    minutes,
+    date_of_exercise,
+    distance_in_miles,
+    calories,
+  } = props.exercise;
+  const initialFormData = {
+    name,
+    steps,
+    minutes,
+    date_of_exercise,
+    distance_in_miles,
+    calories,
+  };
   const queryClient = useQueryClient();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    defaultValues: initialFormData,
+  });
 
   const onSubmit = (data: any) =>
-    addExercise.mutate(
+    updateExercise.mutate(
       {
+        id,
         input: data,
       },
       refetchDirective
     );
 
-  const addExercise = useCreateExerciseMutation(props.gqlClient);
+  const updateExercise = useUpdateExerciseMutation(props.gqlClient);
 
   const refetchDirective = {
     onSuccess: () => {
