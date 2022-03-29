@@ -12,13 +12,9 @@ const Home = (props: PropTypes) => {
   console.log("home gql: ", props.gqlClient);
   const date = dayjs().format("YYYY-MM-DD");
   //const { data, error, isLoading } = useUserQuery(props.gqlClient);
-  const { data, error, isLoading } = useExercisesByDateQuery(
-    props.gqlClient,
-    {
-      date_of_exercise: date,
-    },
-    { retry: false }
-  );
+  const { data, error, isLoading } = useExercisesByDateQuery(props.gqlClient, {
+    date_of_exercise: date,
+  });
 
   console.log("data: ", data);
   if (isLoading) {
