@@ -16,6 +16,12 @@ export const Exercise = (props: PropTypesWithDate) => {
   const addExercise = useCreateExerciseMutation(props.gqlClient);
   const updateExercise = useUpdateExerciseMutation(props.gqlClient);
   const deleteExercise = useDeleteExerciseMutation(props.gqlClient);
+
+  const refetchDirective = {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["ExercisesByDate"]);
+    },
+  };
   return (
     <div>
       <h3>Exercises</h3>
@@ -27,14 +33,7 @@ export const Exercise = (props: PropTypesWithDate) => {
           <h3
             key={ex.id}
             onClick={() =>
-              deleteExercise.mutate(
-                { id: ex.id },
-                {
-                  onSuccess: () => {
-                    queryClient.invalidateQueries(["ExercisesByDate"]);
-                  },
-                }
-              )
+              deleteExercise.mutate({ id: ex.id }, refetchDirective)
             }
           >
             {ex.name}
@@ -51,11 +50,7 @@ export const Exercise = (props: PropTypesWithDate) => {
                     name: "swimming",
                   },
                 },
-                {
-                  onSuccess: () => {
-                    queryClient.invalidateQueries(["ExercisesByDate"]);
-                  },
-                }
+                refetchDirective
               )
             }
           >
@@ -74,11 +69,7 @@ export const Exercise = (props: PropTypesWithDate) => {
                 name: "jogging",
               },
             },
-            {
-              onSuccess: () => {
-                queryClient.invalidateQueries(["ExercisesByDate"]);
-              },
-            }
+            refetchDirective
           );
         }}
       >
