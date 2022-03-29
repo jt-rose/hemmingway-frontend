@@ -2,6 +2,7 @@ import { useUpdateExerciseMutation } from "src/generated/graphql-hooks";
 import { PropTypesWithExercise } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 export const UpdateExercise = (props: PropTypesWithExercise) => {
   const {
@@ -21,12 +22,14 @@ export const UpdateExercise = (props: PropTypesWithExercise) => {
     distance_in_miles,
     calories,
   };
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm({
     defaultValues: initialFormData,
   });
 
-  const onSubmit = (data: any) =>
+  const onSubmit = (data: any) => {
+    setShowUpdateForm(false);
     updateExercise.mutate(
       {
         id,
@@ -34,6 +37,7 @@ export const UpdateExercise = (props: PropTypesWithExercise) => {
       },
       refetchDirective
     );
+  };
 
   const updateExercise = useUpdateExerciseMutation(props.gqlClient);
 
@@ -44,55 +48,60 @@ export const UpdateExercise = (props: PropTypesWithExercise) => {
   };
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="exercise-calories-input">calories</label>
-        <input
-          id="exercise-calories-input"
-          type="number"
-          {...register("calories", {
-            valueAsNumber: true,
-          })}
-        />
+      {showUpdateForm && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <label htmlFor={"exercise-calories-input" + id}>calories</label>
+          <input
+            id={"exercise-calories-input" + id}
+            type="number"
+            {...register("calories", {
+              valueAsNumber: true,
+            })}
+          />
 
-        <label htmlFor="exercise-date-input">date</label>
-        <input
-          id="exercise-date-input"
-          type="date"
-          {...register("date_of_exercise")}
-        />
+          <label htmlFor={"exercise-date-input" + id}>date</label>
+          <input
+            id={"exercise-date-input" + id}
+            type="date"
+            {...register("date_of_exercise")}
+          />
 
-        <label htmlFor="exercise-minutes-input">minutes</label>
-        <input
-          id="exercise-minutes-input"
-          type="number"
-          {...register("minutes", {
-            valueAsNumber: true,
-          })}
-        />
+          <label htmlFor={"exercise-minutes-input" + id}>minutes</label>
+          <input
+            id={"exercise-minutes-input" + id}
+            type="number"
+            {...register("minutes", {
+              valueAsNumber: true,
+            })}
+          />
 
-        <label htmlFor="exercise-miles-input">miles</label>
-        <input
-          id="exercise-miles-input"
-          type="number"
-          {...register("distance_in_miles", {
-            valueAsNumber: true,
-          })}
-        />
+          <label htmlFor={"exercise-miles-input" + id}>miles</label>
+          <input
+            id={"exercise-miles-input" + id}
+            type="number"
+            {...register("distance_in_miles", {
+              valueAsNumber: true,
+            })}
+          />
 
-        <label htmlFor="exercise-steps-input">steps</label>
-        <input
-          id="exercise-steps-input"
-          type="number"
-          {...register("steps", {
-            valueAsNumber: true,
-          })}
-        />
+          <label htmlFor={"exercise-steps-input" + id}>steps</label>
+          <input
+            id={"exercise-steps-input" + id}
+            type="number"
+            {...register("steps", {
+              valueAsNumber: true,
+            })}
+          />
 
-        <label htmlFor="exercise-name-input">name</label>
-        <input id="exercise-name-input" {...register("name")} />
+          <label htmlFor={"exercise-name-input" + id}>name</label>
+          <input id={"exercise-name-input" + id} {...register("name")} />
 
-        <input type="submit" value="Add Exercise" />
-      </form>
+          <input type="submit" value="Update" />
+        </form>
+      )}
+      <button onClick={() => setShowUpdateForm(!showUpdateForm)}>
+        {showUpdateForm ? "Cancel" : "Update"}
+      </button>
     </div>
   );
 };

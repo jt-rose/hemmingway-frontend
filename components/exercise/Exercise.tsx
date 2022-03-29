@@ -4,7 +4,6 @@ import {
   useDeleteExerciseMutation,
 } from "src/generated/graphql-hooks";
 import { PropTypesWithDate } from "types/propTypes";
-import dayjs from "dayjs";
 import { useQueryClient } from "react-query";
 import { AddExercise } from "./AddExercise";
 import { UpdateExercise } from "./UpdateExercise";
@@ -38,24 +37,6 @@ export const Exercise = (props: PropTypesWithDate) => {
             {ex.name}
           </h3>
           <UpdateExercise gqlClient={props.gqlClient} exercise={ex} />
-          <button
-            onClick={() =>
-              updateExercise.mutate(
-                {
-                  id: ex.id,
-                  input: {
-                    calories: 300,
-                    date_of_exercise: dayjs().format("YYYY-MM-DD"),
-                    minutes: 30,
-                    name: "swimming",
-                  },
-                },
-                refetchDirective
-              )
-            }
-          >
-            Update
-          </button>
         </div>
       ))}
       <AddExercise gqlClient={props.gqlClient} date={props.date} />

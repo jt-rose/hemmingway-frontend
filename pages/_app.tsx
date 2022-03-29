@@ -19,11 +19,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   const gqlClient = initClient(token);
-  console.log("gql: ", gqlClient);
 
   useEffect(() => {
     const storedToken = window.localStorage.getItem("token");
-    console.log(storedToken);
 
     if (storedToken) {
       setToken(storedToken);

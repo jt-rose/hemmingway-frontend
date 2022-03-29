@@ -1,15 +1,11 @@
 import { Layout } from "components/Layout";
 import React from "react";
-import {
-  useUserQuery,
-  useExercisesByDateQuery,
-} from "src/generated/graphql-hooks";
+import { useExercisesByDateQuery } from "src/generated/graphql-hooks";
 import { PropTypes } from "types/propTypes";
 import dayjs from "dayjs";
 import { Exercise } from "../components/exercise/Exercise";
 
 const Home = (props: PropTypes) => {
-  console.log("home gql: ", props.gqlClient);
   const date = dayjs().format("YYYY-MM-DD");
   //const { data, error, isLoading } = useUserQuery(props.gqlClient);
   const { data, error, isLoading } = useExercisesByDateQuery(props.gqlClient, {
