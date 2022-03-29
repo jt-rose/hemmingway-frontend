@@ -2,6 +2,8 @@ import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { useState } from "react";
+import { initClient } from "../utils/client";
 
 const queryClient = new QueryClient();
 
@@ -12,11 +14,21 @@ function handleExitComplete() {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [token, setToken] = useState("");
   const router = useRouter();
+
+  const gqlClient = initClient(token);
+  console.log(gqlClient);
+
   return (
     <QueryClientProvider client={queryClient}>
       <AnimatePresence exitBeforeEnter onExitComplete={handleExitComplete}>
-        <Component {...pageProps} key={router.route} />
+        <Component
+          {...pageProps}
+          gqlClient={gqlClient}
+          setToken={setToken}
+          key={router.route}
+        />
       </AnimatePresence>
       <style>
         {`
