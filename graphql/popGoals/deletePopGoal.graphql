@@ -1,0 +1,3 @@
+mutation DeletePopGoal($id: ID!) {
+  deletePopGoal(id: $id)
+}

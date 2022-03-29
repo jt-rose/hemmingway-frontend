@@ -1,0 +1,3 @@
+mutation DeleteMood($id: ID!) {
+  deleteMood(id: $id)
+}

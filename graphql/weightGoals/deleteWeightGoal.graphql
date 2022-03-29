@@ -1,0 +1,3 @@
+mutation DeleteWeightGoal($id: ID!) {
+  deleteWeightGoal(id: $id)
+}

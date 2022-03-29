@@ -1,0 +1,3 @@
+mutation DeleteSleepHabit($id: ID!) {
+  deleteSleepHabit(id: $id)
+}

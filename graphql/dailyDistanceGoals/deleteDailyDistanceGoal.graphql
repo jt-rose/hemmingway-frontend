@@ -1,0 +1,3 @@
+mutation DeleteDailyDistanceGoal($id: ID!) {
+  deleteDailyDistanceGoal(id: $id)
+}
