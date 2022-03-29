@@ -3,9 +3,5 @@ query Me {
     name
     id
     email
-    exercises {
-      name
-      id
-    }
   }
 }
