@@ -989,6 +989,11 @@ export type UpdateWeightGoalMutationVariables = Exact<{
 
 export type UpdateWeightGoalMutation = { __typename?: 'Mutation', updateWeightGoal: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean } };
 
+export type WeightGoalsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WeightGoalsQuery = { __typename?: 'Query', weight_goals: Array<{ __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean }> };
+
 
 export const LoginDocument = `
     mutation Login($email: String!, $password: String!) {
@@ -1918,5 +1923,30 @@ export const useUpdateWeightGoalMutation = <
     useMutation<UpdateWeightGoalMutation, TError, UpdateWeightGoalMutationVariables, TContext>(
       ['UpdateWeightGoal'],
       (variables?: UpdateWeightGoalMutationVariables) => fetcher<UpdateWeightGoalMutation, UpdateWeightGoalMutationVariables>(client, UpdateWeightGoalDocument, variables, headers)(),
+      options
+    );
+export const WeightGoalsDocument = `
+    query WeightGoals {
+  weight_goals {
+    id
+    goal_start_date
+    goal_in_lbs
+    note
+    active
+  }
+}
+    `;
+export const useWeightGoalsQuery = <
+      TData = WeightGoalsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: WeightGoalsQueryVariables,
+      options?: UseQueryOptions<WeightGoalsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<WeightGoalsQuery, TError, TData>(
+      variables === undefined ? ['WeightGoals'] : ['WeightGoals', variables],
+      fetcher<WeightGoalsQuery, WeightGoalsQueryVariables>(client, WeightGoalsDocument, variables, headers),
       options
     );
