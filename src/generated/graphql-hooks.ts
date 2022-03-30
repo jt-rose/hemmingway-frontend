@@ -93,7 +93,7 @@ export type ExercisePaginator = {
 };
 
 export enum Goal_Type {
-  Calroies = 'CALROIES',
+  Calories = 'CALORIES',
   Distance = 'DISTANCE',
   Steps = 'STEPS'
 }
@@ -526,7 +526,7 @@ export type QueryMoodsArgs = {
 
 
 export type QueryPopGoalsByDateArgs = {
-  date_of_pop_goal: Scalars['Date'];
+  date_of_goal: Scalars['Date'];
 };
 
 
@@ -880,6 +880,13 @@ export type DeletePopGoalMutationVariables = Exact<{
 
 
 export type DeletePopGoalMutation = { __typename?: 'Mutation', deletePopGoal: boolean };
+
+export type PopGoalsByDateQueryVariables = Exact<{
+  date: Scalars['Date'];
+}>;
+
+
+export type PopGoalsByDateQuery = { __typename?: 'Query', popGoalsByDate: Array<{ __typename?: 'PopGoal', id: string, goal_amount: number, goal_type?: Goal_Type | null, date_of_goal: any }> };
 
 export type CreateSleepHabitMutationVariables = Exact<{
   input: SleepHabitInput;
@@ -1574,6 +1581,30 @@ export const useDeletePopGoalMutation = <
     useMutation<DeletePopGoalMutation, TError, DeletePopGoalMutationVariables, TContext>(
       ['DeletePopGoal'],
       (variables?: DeletePopGoalMutationVariables) => fetcher<DeletePopGoalMutation, DeletePopGoalMutationVariables>(client, DeletePopGoalDocument, variables, headers)(),
+      options
+    );
+export const PopGoalsByDateDocument = `
+    query PopGoalsByDate($date: Date!) {
+  popGoalsByDate(date_of_goal: $date) {
+    id
+    goal_amount
+    goal_type
+    date_of_goal
+  }
+}
+    `;
+export const usePopGoalsByDateQuery = <
+      TData = PopGoalsByDateQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: PopGoalsByDateQueryVariables,
+      options?: UseQueryOptions<PopGoalsByDateQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<PopGoalsByDateQuery, TError, TData>(
+      ['PopGoalsByDate', variables],
+      fetcher<PopGoalsByDateQuery, PopGoalsByDateQueryVariables>(client, PopGoalsByDateDocument, variables, headers),
       options
     );
 export const CreateSleepHabitDocument = `

@@ -1,0 +1,8 @@
+query PopGoalsByDate($date: Date!) {
+  popGoalsByDate(date_of_goal: $date) {
+    id
+    goal_amount
+    goal_type
+    date_of_goal
+  }
+}
