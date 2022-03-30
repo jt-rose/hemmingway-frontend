@@ -292,11 +292,6 @@ export type MutationDeleteSleepHabitArgs = {
 };
 
 
-export type MutationDeleteUserArgs = {
-  id: Scalars['ID'];
-};
-
-
 export type MutationDeleteUserWeightArgs = {
   id: Scalars['ID'];
 };
@@ -375,7 +370,6 @@ export type MutationUpdateUserArgs = {
   email?: InputMaybe<Scalars['String']>;
   gender: Gender;
   height_in_inches: Scalars['Int'];
-  id: Scalars['ID'];
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -788,11 +782,6 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: string };
 
-export type MeQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', name: string, id: string, email: string } };
-
 export type DailyDistanceGoalsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1040,17 +1029,15 @@ export type UpdateSleepHabitMutationVariables = Exact<{
 
 export type UpdateSleepHabitMutation = { __typename?: 'Mutation', updateSleepHabit: { __typename?: 'SleepHabit', id: string, quality: SleepQuality, amount: SleepAmount, date_of_sleep: any, note: string } };
 
-export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+export type DeleteUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', name: string, email: string, id: string, weight_goals: Array<{ __typename?: 'WeightGoal', id: string }>, user_weights: Array<{ __typename?: 'UserWeight', id: string }>, daily_steps_goals: Array<{ __typename?: 'DailyStepsGoal', id: string }>, daily_distance_goals: Array<{ __typename?: 'DailyDistanceGoal', id: string }>, pop_goals: Array<{ __typename?: 'PopGoal', id: string }> } | null };
+export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: { __typename?: 'User', id: string, name: string, email: string, gender: Gender, birthday: any, height_in_inches: number } | null };
 
-export type DeleteUserMutationVariables = Exact<{
-  id: Scalars['ID'];
-}>;
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: { __typename?: 'User', id: string, name: string, email: string } | null };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, email: string, gender: Gender, birthday: any, height_in_inches: number } };
 
 export type RegisterMutationVariables = Exact<{
   name: Scalars['String'];
@@ -1065,7 +1052,6 @@ export type RegisterMutationVariables = Exact<{
 export type RegisterMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: string, name: string, email: string, gender: Gender, birthday: any, height_in_inches: number } };
 
 export type UpdateUserMutationVariables = Exact<{
-  id: Scalars['ID'];
   name: Scalars['String'];
   email: Scalars['String'];
   gender: Gender;
@@ -1161,29 +1147,6 @@ export const useLoginMutation = <
     useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
       ['Login'],
       (variables?: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(client, LoginDocument, variables, headers)(),
-      options
-    );
-export const MeDocument = `
-    query Me {
-  me {
-    name
-    id
-    email
-  }
-}
-    `;
-export const useMeQuery = <
-      TData = MeQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables?: MeQueryVariables,
-      options?: UseQueryOptions<MeQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<MeQuery, TError, TData>(
-      variables === undefined ? ['Me'] : ['Me', variables],
-      fetcher<MeQuery, MeQueryVariables>(client, MeDocument, variables, headers),
       options
     );
 export const DailyDistanceGoalsDocument = `
@@ -2015,50 +1978,15 @@ export const useUpdateSleepHabitMutation = <
       (variables?: UpdateSleepHabitMutationVariables) => fetcher<UpdateSleepHabitMutation, UpdateSleepHabitMutationVariables>(client, UpdateSleepHabitDocument, variables, headers)(),
       options
     );
-export const UserDocument = `
-    query User {
-  user(id: 1) {
-    name
-    email
-    id
-    weight_goals {
-      id
-    }
-    user_weights {
-      id
-    }
-    daily_steps_goals {
-      id
-    }
-    daily_distance_goals {
-      id
-    }
-    pop_goals {
-      id
-    }
-  }
-}
-    `;
-export const useUserQuery = <
-      TData = UserQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables?: UserQueryVariables,
-      options?: UseQueryOptions<UserQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<UserQuery, TError, TData>(
-      variables === undefined ? ['User'] : ['User', variables],
-      fetcher<UserQuery, UserQueryVariables>(client, UserDocument, variables, headers),
-      options
-    );
 export const DeleteUserDocument = `
-    mutation DeleteUser($id: ID!) {
-  deleteUser(id: $id) {
+    mutation DeleteUser {
+  deleteUser {
     id
     name
     email
+    gender
+    birthday
+    height_in_inches
   }
 }
     `;
@@ -2073,6 +2001,32 @@ export const useDeleteUserMutation = <
     useMutation<DeleteUserMutation, TError, DeleteUserMutationVariables, TContext>(
       ['DeleteUser'],
       (variables?: DeleteUserMutationVariables) => fetcher<DeleteUserMutation, DeleteUserMutationVariables>(client, DeleteUserDocument, variables, headers)(),
+      options
+    );
+export const MeDocument = `
+    query Me {
+  me {
+    id
+    name
+    email
+    gender
+    birthday
+    height_in_inches
+  }
+}
+    `;
+export const useMeQuery = <
+      TData = MeQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: MeQueryVariables,
+      options?: UseQueryOptions<MeQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<MeQuery, TError, TData>(
+      variables === undefined ? ['Me'] : ['Me', variables],
+      fetcher<MeQuery, MeQueryVariables>(client, MeDocument, variables, headers),
       options
     );
 export const RegisterDocument = `
@@ -2108,9 +2062,8 @@ export const useRegisterMutation = <
       options
     );
 export const UpdateUserDocument = `
-    mutation UpdateUser($id: ID!, $name: String!, $email: String!, $gender: GENDER!, $birthday: Date!, $height_in_inches: Int!) {
+    mutation UpdateUser($name: String!, $email: String!, $gender: GENDER!, $birthday: Date!, $height_in_inches: Int!) {
   updateUser(
-    id: $id
     name: $name
     email: $email
     gender: $gender

@@ -7,6 +7,7 @@ import {
   Meal,
   Mood,
   SleepHabit,
+  User,
   UserWeight,
   WeightGoal,
 } from "src/generated/graphql-hooks";
@@ -17,6 +18,13 @@ export interface PropTypes {
 
 export interface PropTypesWithRefresh extends PropTypes {
   setToken: Dispatch<SetStateAction<string>>;
+}
+
+export interface PropTypesWithUser extends PropTypes {
+  user: Pick<
+    User,
+    "id" | "name" | "birthday" | "email" | "gender" | "height_in_inches"
+  >;
 }
 export interface PropTypesWithDate extends PropTypes {
   date: string; // "2022-03-29"

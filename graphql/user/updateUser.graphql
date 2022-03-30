@@ -1,5 +1,4 @@
 mutation UpdateUser(
-  $id: ID!
   $name: String!
   $email: String!
   $gender: GENDER!
@@ -7,7 +6,6 @@ mutation UpdateUser(
   $height_in_inches: Int!
 ) {
   updateUser(
-    id: $id
     name: $name
     email: $email
     gender: $gender
