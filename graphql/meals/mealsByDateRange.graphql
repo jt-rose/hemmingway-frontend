@@ -1,0 +1,9 @@
+query MealsBetweenDates($dateRange: DateRange!) {
+  mealsBetweenDates(date_of_meal: $dateRange) {
+    id
+    name
+    calories
+    date_of_meal
+    category
+  }
+}

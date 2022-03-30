@@ -1,0 +1,10 @@
+query MoodsBetweenDates($dateRange: DateRange!) {
+  moodsBetweenDates(date_of_mood: $dateRange) {
+    id
+    date_of_mood
+    note
+    meditated
+    stress_level
+    mood_type
+  }
+}

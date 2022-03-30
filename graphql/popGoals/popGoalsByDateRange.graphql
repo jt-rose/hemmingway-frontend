@@ -1,0 +1,8 @@
+query PopGoalsBetweenDates($dateRange: DateRange!) {
+  popGoalsBetweenDates(date_of_goal: $dateRange) {
+    id
+    date_of_goal
+    goal_type
+    goal_amount
+  }
+}

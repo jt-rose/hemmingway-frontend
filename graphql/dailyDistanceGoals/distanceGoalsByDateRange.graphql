@@ -1,0 +1,9 @@
+query DistanceGoalsBetweenDates($dateRange: DateRange!) {
+  distanceGoalsBetweenDates(goal_start_date: $dateRange) {
+    id
+    goal_start_date
+    daily_goal_in_miles
+    note
+    active
+  }
+}

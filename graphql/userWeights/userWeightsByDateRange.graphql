@@ -1,0 +1,8 @@
+query WeightsBetweenDates($dateRange: DateRange!) {
+  weightBetweenDates(date_of_weight: $dateRange) {
+    id
+    date_of_weight
+    weight_in_lbs
+    note
+  }
+}

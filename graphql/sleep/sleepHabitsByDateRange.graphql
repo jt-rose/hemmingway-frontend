@@ -1,0 +1,9 @@
+query SleepHabitsBetweenDates($dateRange: DateRange!) {
+  sleepHabitsBetweenDates(date_of_sleep: $dateRange) {
+    id
+    date_of_sleep
+    quality
+    amount
+    note
+  }
+}

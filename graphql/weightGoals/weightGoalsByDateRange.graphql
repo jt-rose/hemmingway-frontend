@@ -1,0 +1,8 @@
+query WeightGoalsBetweenDates($dateRange: DateRange!) {
+  weightGoalsBetweenDates(goal_start_date: $dateRange) {
+    id
+    goal_in_lbs
+    goal_start_date
+    note
+  }
+}

@@ -59,6 +59,11 @@ export type DailyStepsGoalInput = {
   note?: InputMaybe<Scalars['String']>;
 };
 
+export type DateRange = {
+  from: Scalars['Date'];
+  to: Scalars['Date'];
+};
+
 export type Exercise = {
   __typename?: 'Exercise';
   calories: Scalars['Int'];
@@ -474,27 +479,46 @@ export type Query = {
   __typename?: 'Query';
   daily_distance_goals: Array<DailyDistanceGoal>;
   daily_steps_goals: Array<DailyStepsGoal>;
+  distanceGoalsBetweenDates: Array<DailyDistanceGoal>;
   exercises?: Maybe<ExercisePaginator>;
+  exercisesBetweenDates: Array<Exercise>;
   exercisesByDate: Array<Exercise>;
   me: User;
   meals?: Maybe<MealPaginator>;
+  mealsBetweenDates: Array<Meal>;
   mealsByDate: Array<Meal>;
   moodByDate: Array<Mood>;
   moods?: Maybe<MoodPaginator>;
+  moodsBetweenDates: Array<Mood>;
+  popGoalsBetweenDates: Array<PopGoal>;
   popGoalsByDate: Array<PopGoal>;
   pop_goals?: Maybe<PopGoalPaginator>;
   sleepHabits?: Maybe<SleepHabitPaginator>;
+  sleepHabitsBetweenDates: Array<SleepHabit>;
   sleepHabitsByDate: Array<SleepHabit>;
+  stepsGoalsBetweenDates: Array<DailyStepsGoal>;
   user?: Maybe<User>;
   users?: Maybe<UserPaginator>;
+  weightBetweenDates: Array<UserWeight>;
+  weightGoalsBetweenDates: Array<WeightGoal>;
   weight_goals: Array<WeightGoal>;
   weight_history: Array<UserWeight>;
+};
+
+
+export type QueryDistanceGoalsBetweenDatesArgs = {
+  goal_start_date: DateRange;
 };
 
 
 export type QueryExercisesArgs = {
   first?: InputMaybe<Scalars['Int']>;
   page?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryExercisesBetweenDatesArgs = {
+  date_of_exercise: DateRange;
 };
 
 
@@ -506,6 +530,11 @@ export type QueryExercisesByDateArgs = {
 export type QueryMealsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   page?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryMealsBetweenDatesArgs = {
+  date_of_meal: DateRange;
 };
 
 
@@ -522,6 +551,16 @@ export type QueryMoodByDateArgs = {
 export type QueryMoodsArgs = {
   first?: InputMaybe<Scalars['Int']>;
   page?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryMoodsBetweenDatesArgs = {
+  date_of_mood: DateRange;
+};
+
+
+export type QueryPopGoalsBetweenDatesArgs = {
+  date_of_goal: DateRange;
 };
 
 
@@ -542,8 +581,18 @@ export type QuerySleepHabitsArgs = {
 };
 
 
+export type QuerySleepHabitsBetweenDatesArgs = {
+  date_of_sleep: DateRange;
+};
+
+
 export type QuerySleepHabitsByDateArgs = {
   date_of_sleep: Scalars['Date'];
+};
+
+
+export type QueryStepsGoalsBetweenDatesArgs = {
+  goal_start_date: DateRange;
 };
 
 
@@ -557,6 +606,16 @@ export type QueryUsersArgs = {
   first?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
   page?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryWeightBetweenDatesArgs = {
+  date_of_weight: DateRange;
+};
+
+
+export type QueryWeightGoalsBetweenDatesArgs = {
+  goal_start_date: DateRange;
 };
 
 /** Information about pagination using a simple paginator. */
@@ -731,6 +790,13 @@ export type DeleteDailyDistanceGoalMutationVariables = Exact<{
 
 export type DeleteDailyDistanceGoalMutation = { __typename?: 'Mutation', deleteDailyDistanceGoal: boolean };
 
+export type DistanceGoalsBetweenDatesQueryVariables = Exact<{
+  dateRange: DateRange;
+}>;
+
+
+export type DistanceGoalsBetweenDatesQuery = { __typename?: 'Query', distanceGoalsBetweenDates: Array<{ __typename?: 'DailyDistanceGoal', id: string, goal_start_date: any, daily_goal_in_miles: number, note?: string | null, active: boolean }> };
+
 export type SetDailyDistanceGoalMutationVariables = Exact<{
   input: DailyDistanceGoalInput;
 }>;
@@ -764,6 +830,13 @@ export type SetDailyStepsGoalMutationVariables = Exact<{
 
 
 export type SetDailyStepsGoalMutation = { __typename?: 'Mutation', setDailyStepsGoal: { __typename?: 'DailyStepsGoal', id: string, note?: string | null, goal_start_date: any, daily_goal_in_steps: number, active: boolean } };
+
+export type StepsGoalsBetweenDatesQueryVariables = Exact<{
+  dateRange: DateRange;
+}>;
+
+
+export type StepsGoalsBetweenDatesQuery = { __typename?: 'Query', stepsGoalsBetweenDates: Array<{ __typename?: 'DailyStepsGoal', id: string, goal_start_date: any, daily_goal_in_steps: number, note?: string | null, active: boolean }> };
 
 export type UpdateDailyStepsGoalMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -801,6 +874,13 @@ export type ExercisesByDateQueryVariables = Exact<{
 
 export type ExercisesByDateQuery = { __typename?: 'Query', exercisesByDate: Array<{ __typename?: 'Exercise', id: string, name: string, date_of_exercise: any, minutes: number, calories: number, steps?: number | null, distance_in_miles?: number | null }> };
 
+export type ExercisesBetweenDatesQueryVariables = Exact<{
+  dateRange: DateRange;
+}>;
+
+
+export type ExercisesBetweenDatesQuery = { __typename?: 'Query', exercisesBetweenDates: Array<{ __typename?: 'Exercise', id: string, name: string, minutes: number, date_of_exercise: any }> };
+
 export type UpdateExerciseMutationVariables = Exact<{
   id: Scalars['ID'];
   input: ExerciseInput;
@@ -829,6 +909,13 @@ export type MealsByDateQueryVariables = Exact<{
 
 
 export type MealsByDateQuery = { __typename?: 'Query', mealsByDate: Array<{ __typename?: 'Meal', id: string, name: string, date_of_meal: any, category: MealCategory, calories: number }> };
+
+export type MealsBetweenDatesQueryVariables = Exact<{
+  dateRange: DateRange;
+}>;
+
+
+export type MealsBetweenDatesQuery = { __typename?: 'Query', mealsBetweenDates: Array<{ __typename?: 'Meal', id: string, name: string, calories: number, date_of_meal: any, category: MealCategory }> };
 
 export type UpdateMealMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -859,6 +946,13 @@ export type MoodByDateQueryVariables = Exact<{
 
 export type MoodByDateQuery = { __typename?: 'Query', moodByDate: Array<{ __typename?: 'Mood', id: string, note?: string | null, date_of_mood: any, meditated: boolean, stress_level: Stress_Level, mood_type: Mood_Type }> };
 
+export type MoodsBetweenDatesQueryVariables = Exact<{
+  dateRange: DateRange;
+}>;
+
+
+export type MoodsBetweenDatesQuery = { __typename?: 'Query', moodsBetweenDates: Array<{ __typename?: 'Mood', id: string, date_of_mood: any, note?: string | null, meditated: boolean, stress_level: Stress_Level, mood_type: Mood_Type }> };
+
 export type UpdateMoodMutationVariables = Exact<{
   id: Scalars['ID'];
   input: MoodInput;
@@ -888,6 +982,13 @@ export type PopGoalsByDateQueryVariables = Exact<{
 
 export type PopGoalsByDateQuery = { __typename?: 'Query', popGoalsByDate: Array<{ __typename?: 'PopGoal', id: string, goal_amount: number, goal_type?: Goal_Type | null, date_of_goal: any }> };
 
+export type PopGoalsBetweenDatesQueryVariables = Exact<{
+  dateRange: DateRange;
+}>;
+
+
+export type PopGoalsBetweenDatesQuery = { __typename?: 'Query', popGoalsBetweenDates: Array<{ __typename?: 'PopGoal', id: string, date_of_goal: any, goal_type?: Goal_Type | null, goal_amount: number }> };
+
 export type CreateSleepHabitMutationVariables = Exact<{
   input: SleepHabitInput;
 }>;
@@ -908,6 +1009,13 @@ export type SleepHabitsByDateQueryVariables = Exact<{
 
 
 export type SleepHabitsByDateQuery = { __typename?: 'Query', sleepHabitsByDate: Array<{ __typename?: 'SleepHabit', id: string, quality: SleepQuality, amount: SleepAmount, date_of_sleep: any, note: string }> };
+
+export type SleepHabitsBetweenDatesQueryVariables = Exact<{
+  dateRange: DateRange;
+}>;
+
+
+export type SleepHabitsBetweenDatesQuery = { __typename?: 'Query', sleepHabitsBetweenDates: Array<{ __typename?: 'SleepHabit', id: string, date_of_sleep: any, quality: SleepQuality, amount: SleepAmount, note: string }> };
 
 export type UpdateSleepHabitMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -969,6 +1077,13 @@ export type UpdateUserWeightMutationVariables = Exact<{
 
 export type UpdateUserWeightMutation = { __typename?: 'Mutation', updateUserWeight: { __typename?: 'UserWeight', id: string, weight_in_lbs: number, date_of_weight: any, note?: string | null } };
 
+export type WeightsBetweenDatesQueryVariables = Exact<{
+  dateRange: DateRange;
+}>;
+
+
+export type WeightsBetweenDatesQuery = { __typename?: 'Query', weightBetweenDates: Array<{ __typename?: 'UserWeight', id: string, date_of_weight: any, weight_in_lbs: number, note?: string | null }> };
+
 export type WeightHistoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1000,6 +1115,13 @@ export type WeightGoalsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type WeightGoalsQuery = { __typename?: 'Query', weight_goals: Array<{ __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean }> };
+
+export type WeightGoalsBetweenDatesQueryVariables = Exact<{
+  dateRange: DateRange;
+}>;
+
+
+export type WeightGoalsBetweenDatesQuery = { __typename?: 'Query', weightGoalsBetweenDates: Array<{ __typename?: 'WeightGoal', id: string, goal_in_lbs: number, goal_start_date: any, note?: string | null }> };
 
 
 export const LoginDocument = `
@@ -1084,6 +1206,31 @@ export const useDeleteDailyDistanceGoalMutation = <
     useMutation<DeleteDailyDistanceGoalMutation, TError, DeleteDailyDistanceGoalMutationVariables, TContext>(
       ['DeleteDailyDistanceGoal'],
       (variables?: DeleteDailyDistanceGoalMutationVariables) => fetcher<DeleteDailyDistanceGoalMutation, DeleteDailyDistanceGoalMutationVariables>(client, DeleteDailyDistanceGoalDocument, variables, headers)(),
+      options
+    );
+export const DistanceGoalsBetweenDatesDocument = `
+    query DistanceGoalsBetweenDates($dateRange: DateRange!) {
+  distanceGoalsBetweenDates(goal_start_date: $dateRange) {
+    id
+    goal_start_date
+    daily_goal_in_miles
+    note
+    active
+  }
+}
+    `;
+export const useDistanceGoalsBetweenDatesQuery = <
+      TData = DistanceGoalsBetweenDatesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: DistanceGoalsBetweenDatesQueryVariables,
+      options?: UseQueryOptions<DistanceGoalsBetweenDatesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<DistanceGoalsBetweenDatesQuery, TError, TData>(
+      ['DistanceGoalsBetweenDates', variables],
+      fetcher<DistanceGoalsBetweenDatesQuery, DistanceGoalsBetweenDatesQueryVariables>(client, DistanceGoalsBetweenDatesDocument, variables, headers),
       options
     );
 export const SetDailyDistanceGoalDocument = `
@@ -1199,6 +1346,31 @@ export const useSetDailyStepsGoalMutation = <
     useMutation<SetDailyStepsGoalMutation, TError, SetDailyStepsGoalMutationVariables, TContext>(
       ['SetDailyStepsGoal'],
       (variables?: SetDailyStepsGoalMutationVariables) => fetcher<SetDailyStepsGoalMutation, SetDailyStepsGoalMutationVariables>(client, SetDailyStepsGoalDocument, variables, headers)(),
+      options
+    );
+export const StepsGoalsBetweenDatesDocument = `
+    query StepsGoalsBetweenDates($dateRange: DateRange!) {
+  stepsGoalsBetweenDates(goal_start_date: $dateRange) {
+    id
+    goal_start_date
+    daily_goal_in_steps
+    note
+    active
+  }
+}
+    `;
+export const useStepsGoalsBetweenDatesQuery = <
+      TData = StepsGoalsBetweenDatesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: StepsGoalsBetweenDatesQueryVariables,
+      options?: UseQueryOptions<StepsGoalsBetweenDatesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<StepsGoalsBetweenDatesQuery, TError, TData>(
+      ['StepsGoalsBetweenDates', variables],
+      fetcher<StepsGoalsBetweenDatesQuery, StepsGoalsBetweenDatesQueryVariables>(client, StepsGoalsBetweenDatesDocument, variables, headers),
       options
     );
 export const UpdateDailyStepsGoalDocument = `
@@ -1331,6 +1503,30 @@ export const useExercisesByDateQuery = <
       fetcher<ExercisesByDateQuery, ExercisesByDateQueryVariables>(client, ExercisesByDateDocument, variables, headers),
       options
     );
+export const ExercisesBetweenDatesDocument = `
+    query ExercisesBetweenDates($dateRange: DateRange!) {
+  exercisesBetweenDates(date_of_exercise: $dateRange) {
+    id
+    name
+    minutes
+    date_of_exercise
+  }
+}
+    `;
+export const useExercisesBetweenDatesQuery = <
+      TData = ExercisesBetweenDatesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ExercisesBetweenDatesQueryVariables,
+      options?: UseQueryOptions<ExercisesBetweenDatesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ExercisesBetweenDatesQuery, TError, TData>(
+      ['ExercisesBetweenDates', variables],
+      fetcher<ExercisesBetweenDatesQuery, ExercisesBetweenDatesQueryVariables>(client, ExercisesBetweenDatesDocument, variables, headers),
+      options
+    );
 export const UpdateExerciseDocument = `
     mutation UpdateExercise($id: ID!, $input: ExerciseInput!) {
   updateExercise(id: $id, input: $input) {
@@ -1422,6 +1618,31 @@ export const useMealsByDateQuery = <
     useQuery<MealsByDateQuery, TError, TData>(
       ['MealsByDate', variables],
       fetcher<MealsByDateQuery, MealsByDateQueryVariables>(client, MealsByDateDocument, variables, headers),
+      options
+    );
+export const MealsBetweenDatesDocument = `
+    query MealsBetweenDates($dateRange: DateRange!) {
+  mealsBetweenDates(date_of_meal: $dateRange) {
+    id
+    name
+    calories
+    date_of_meal
+    category
+  }
+}
+    `;
+export const useMealsBetweenDatesQuery = <
+      TData = MealsBetweenDatesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: MealsBetweenDatesQueryVariables,
+      options?: UseQueryOptions<MealsBetweenDatesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<MealsBetweenDatesQuery, TError, TData>(
+      ['MealsBetweenDates', variables],
+      fetcher<MealsBetweenDatesQuery, MealsBetweenDatesQueryVariables>(client, MealsBetweenDatesDocument, variables, headers),
       options
     );
 export const UpdateMealDocument = `
@@ -1517,6 +1738,32 @@ export const useMoodByDateQuery = <
       fetcher<MoodByDateQuery, MoodByDateQueryVariables>(client, MoodByDateDocument, variables, headers),
       options
     );
+export const MoodsBetweenDatesDocument = `
+    query MoodsBetweenDates($dateRange: DateRange!) {
+  moodsBetweenDates(date_of_mood: $dateRange) {
+    id
+    date_of_mood
+    note
+    meditated
+    stress_level
+    mood_type
+  }
+}
+    `;
+export const useMoodsBetweenDatesQuery = <
+      TData = MoodsBetweenDatesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: MoodsBetweenDatesQueryVariables,
+      options?: UseQueryOptions<MoodsBetweenDatesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<MoodsBetweenDatesQuery, TError, TData>(
+      ['MoodsBetweenDates', variables],
+      fetcher<MoodsBetweenDatesQuery, MoodsBetweenDatesQueryVariables>(client, MoodsBetweenDatesDocument, variables, headers),
+      options
+    );
 export const UpdateMoodDocument = `
     mutation UpdateMood($id: ID!, $input: MoodInput!) {
   updateMood(id: $id, input: $input) {
@@ -1607,6 +1854,30 @@ export const usePopGoalsByDateQuery = <
       fetcher<PopGoalsByDateQuery, PopGoalsByDateQueryVariables>(client, PopGoalsByDateDocument, variables, headers),
       options
     );
+export const PopGoalsBetweenDatesDocument = `
+    query PopGoalsBetweenDates($dateRange: DateRange!) {
+  popGoalsBetweenDates(date_of_goal: $dateRange) {
+    id
+    date_of_goal
+    goal_type
+    goal_amount
+  }
+}
+    `;
+export const usePopGoalsBetweenDatesQuery = <
+      TData = PopGoalsBetweenDatesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: PopGoalsBetweenDatesQueryVariables,
+      options?: UseQueryOptions<PopGoalsBetweenDatesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<PopGoalsBetweenDatesQuery, TError, TData>(
+      ['PopGoalsBetweenDates', variables],
+      fetcher<PopGoalsBetweenDatesQuery, PopGoalsBetweenDatesQueryVariables>(client, PopGoalsBetweenDatesDocument, variables, headers),
+      options
+    );
 export const CreateSleepHabitDocument = `
     mutation CreateSleepHabit($input: SleepHabitInput!) {
   createSleepHabit(input: $input) {
@@ -1672,6 +1943,31 @@ export const useSleepHabitsByDateQuery = <
     useQuery<SleepHabitsByDateQuery, TError, TData>(
       ['SleepHabitsByDate', variables],
       fetcher<SleepHabitsByDateQuery, SleepHabitsByDateQueryVariables>(client, SleepHabitsByDateDocument, variables, headers),
+      options
+    );
+export const SleepHabitsBetweenDatesDocument = `
+    query SleepHabitsBetweenDates($dateRange: DateRange!) {
+  sleepHabitsBetweenDates(date_of_sleep: $dateRange) {
+    id
+    date_of_sleep
+    quality
+    amount
+    note
+  }
+}
+    `;
+export const useSleepHabitsBetweenDatesQuery = <
+      TData = SleepHabitsBetweenDatesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: SleepHabitsBetweenDatesQueryVariables,
+      options?: UseQueryOptions<SleepHabitsBetweenDatesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SleepHabitsBetweenDatesQuery, TError, TData>(
+      ['SleepHabitsBetweenDates', variables],
+      fetcher<SleepHabitsBetweenDatesQuery, SleepHabitsBetweenDatesQueryVariables>(client, SleepHabitsBetweenDatesDocument, variables, headers),
       options
     );
 export const UpdateSleepHabitDocument = `
@@ -1866,6 +2162,30 @@ export const useUpdateUserWeightMutation = <
       (variables?: UpdateUserWeightMutationVariables) => fetcher<UpdateUserWeightMutation, UpdateUserWeightMutationVariables>(client, UpdateUserWeightDocument, variables, headers)(),
       options
     );
+export const WeightsBetweenDatesDocument = `
+    query WeightsBetweenDates($dateRange: DateRange!) {
+  weightBetweenDates(date_of_weight: $dateRange) {
+    id
+    date_of_weight
+    weight_in_lbs
+    note
+  }
+}
+    `;
+export const useWeightsBetweenDatesQuery = <
+      TData = WeightsBetweenDatesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: WeightsBetweenDatesQueryVariables,
+      options?: UseQueryOptions<WeightsBetweenDatesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<WeightsBetweenDatesQuery, TError, TData>(
+      ['WeightsBetweenDates', variables],
+      fetcher<WeightsBetweenDatesQuery, WeightsBetweenDatesQueryVariables>(client, WeightsBetweenDatesDocument, variables, headers),
+      options
+    );
 export const WeightHistoryDocument = `
     query WeightHistory {
   weight_history {
@@ -1979,5 +2299,29 @@ export const useWeightGoalsQuery = <
     useQuery<WeightGoalsQuery, TError, TData>(
       variables === undefined ? ['WeightGoals'] : ['WeightGoals', variables],
       fetcher<WeightGoalsQuery, WeightGoalsQueryVariables>(client, WeightGoalsDocument, variables, headers),
+      options
+    );
+export const WeightGoalsBetweenDatesDocument = `
+    query WeightGoalsBetweenDates($dateRange: DateRange!) {
+  weightGoalsBetweenDates(goal_start_date: $dateRange) {
+    id
+    goal_in_lbs
+    goal_start_date
+    note
+  }
+}
+    `;
+export const useWeightGoalsBetweenDatesQuery = <
+      TData = WeightGoalsBetweenDatesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: WeightGoalsBetweenDatesQueryVariables,
+      options?: UseQueryOptions<WeightGoalsBetweenDatesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<WeightGoalsBetweenDatesQuery, TError, TData>(
+      ['WeightGoalsBetweenDates', variables],
+      fetcher<WeightGoalsBetweenDatesQuery, WeightGoalsBetweenDatesQueryVariables>(client, WeightGoalsBetweenDatesDocument, variables, headers),
       options
     );

@@ -1,0 +1,8 @@
+query ExercisesBetweenDates($dateRange: DateRange!) {
+  exercisesBetweenDates(date_of_exercise: $dateRange) {
+    id
+    name
+    minutes
+    date_of_exercise
+  }
+}
