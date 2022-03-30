@@ -1,0 +1,9 @@
+query DailyDistanceGoals {
+  daily_distance_goals {
+    id
+    goal_start_date
+    daily_goal_in_miles
+    note
+    active
+  }
+}

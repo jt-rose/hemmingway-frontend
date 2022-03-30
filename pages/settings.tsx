@@ -1,9 +1,16 @@
 import { Layout } from "components/Layout";
+import { DailyDistanceGoals } from "components/settings/dailyDistanceGoal/DistanceGoal";
+import { DailyStepsGoals } from "components/settings/dailyStepsGoal/StepsGoals";
+import dayjs from "dayjs";
+import { PropTypes } from "types/propTypes";
 
-const Settings = () => {
+const Settings = (props: PropTypes) => {
+  const date = dayjs().format("YYYY-MM-DD");
   return (
     <Layout>
       <h1>Settings</h1>
+      <DailyDistanceGoals gqlClient={props.gqlClient} date={date} />
+      <DailyStepsGoals gqlClient={props.gqlClient} date={date} />
     </Layout>
   );
 };

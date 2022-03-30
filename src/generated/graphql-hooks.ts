@@ -40,15 +40,6 @@ export type DailyDistanceGoalInput = {
   note?: InputMaybe<Scalars['String']>;
 };
 
-/** A paginated list of DailyDistanceGoal items. */
-export type DailyDistanceGoalPaginator = {
-  __typename?: 'DailyDistanceGoalPaginator';
-  /** A list of DailyDistanceGoal items. */
-  data: Array<DailyDistanceGoal>;
-  /** Pagination information about the list of items. */
-  paginatorInfo: PaginatorInfo;
-};
-
 export type DailyStepsGoal = {
   __typename?: 'DailyStepsGoal';
   active: Scalars['Boolean'];
@@ -66,15 +57,6 @@ export type DailyStepsGoalInput = {
   daily_goal_in_steps: Scalars['Int'];
   goal_start_date: Scalars['Date'];
   note?: InputMaybe<Scalars['String']>;
-};
-
-/** A paginated list of DailyStepsGoal items. */
-export type DailyStepsGoalPaginator = {
-  __typename?: 'DailyStepsGoalPaginator';
-  /** A list of DailyStepsGoal items. */
-  data: Array<DailyStepsGoal>;
-  /** Pagination information about the list of items. */
-  paginatorInfo: PaginatorInfo;
 };
 
 export type Exercise = {
@@ -95,8 +77,10 @@ export type Exercise = {
 export type ExerciseInput = {
   calories: Scalars['Int'];
   date_of_exercise: Scalars['Date'];
+  distance_in_miles?: InputMaybe<Scalars['Int']>;
   minutes: Scalars['Int'];
   name: Scalars['String'];
+  steps?: InputMaybe<Scalars['Int']>;
 };
 
 /** A paginated list of Exercise items. */
@@ -488,8 +472,8 @@ export type PopGoalPaginator = {
 
 export type Query = {
   __typename?: 'Query';
-  daily_distance_goals?: Maybe<DailyDistanceGoalPaginator>;
-  daily_steps_goals?: Maybe<DailyStepsGoalPaginator>;
+  daily_distance_goals: Array<DailyDistanceGoal>;
+  daily_steps_goals: Array<DailyStepsGoal>;
   exercises?: Maybe<ExercisePaginator>;
   exercisesByDate: Array<Exercise>;
   me: User;
@@ -503,20 +487,8 @@ export type Query = {
   sleepHabitsByDate: Array<SleepHabit>;
   user?: Maybe<User>;
   users?: Maybe<UserPaginator>;
-  weight_goals?: Maybe<WeightGoalPaginator>;
-  weight_history?: Maybe<UserWeightPaginator>;
-};
-
-
-export type QueryDaily_Distance_GoalsArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type QueryDaily_Steps_GoalsArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
+  weight_goals: Array<WeightGoal>;
+  weight_history: Array<UserWeight>;
 };
 
 
@@ -584,18 +556,6 @@ export type QueryUserArgs = {
 export type QueryUsersArgs = {
   first?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
-  page?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type QueryWeight_GoalsArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  page?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type QueryWeight_HistoryArgs = {
-  first?: InputMaybe<Scalars['Int']>;
   page?: InputMaybe<Scalars['Int']>;
 };
 
@@ -727,15 +687,6 @@ export type UserWeightInput = {
   weight_in_lbs: Scalars['Int'];
 };
 
-/** A paginated list of UserWeight items. */
-export type UserWeightPaginator = {
-  __typename?: 'UserWeightPaginator';
-  /** A list of UserWeight items. */
-  data: Array<UserWeight>;
-  /** Pagination information about the list of items. */
-  paginatorInfo: PaginatorInfo;
-};
-
 export type WeightGoal = {
   __typename?: 'WeightGoal';
   active: Scalars['Boolean'];
@@ -755,15 +706,6 @@ export type WeightGoalInput = {
   note?: InputMaybe<Scalars['String']>;
 };
 
-/** A paginated list of WeightGoal items. */
-export type WeightGoalPaginator = {
-  __typename?: 'WeightGoalPaginator';
-  /** A list of WeightGoal items. */
-  data: Array<WeightGoal>;
-  /** Pagination information about the list of items. */
-  paginatorInfo: PaginatorInfo;
-};
-
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -776,6 +718,11 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', name: string, id: string, email: string } };
+
+export type DailyDistanceGoalsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DailyDistanceGoalsQuery = { __typename?: 'Query', daily_distance_goals: Array<{ __typename?: 'DailyDistanceGoal', id: string, goal_start_date: any, daily_goal_in_miles: number, note?: string | null, active: boolean }> };
 
 export type DeleteDailyDistanceGoalMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -798,6 +745,11 @@ export type UpdateDailyDistanceGoalMutationVariables = Exact<{
 
 
 export type UpdateDailyDistanceGoalMutation = { __typename?: 'Mutation', updateDailyDistanceGoal: { __typename?: 'DailyDistanceGoal', id: string, note?: string | null, goal_start_date: any, daily_goal_in_miles: number, active: boolean } };
+
+export type DailyStepsGoalsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DailyStepsGoalsQuery = { __typename?: 'Query', daily_steps_goals: Array<{ __typename?: 'DailyStepsGoal', id: string, goal_start_date: any, daily_goal_in_steps: number, note?: string | null, active: boolean }> };
 
 export type DeleteDailyStepsGoalMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1074,6 +1026,31 @@ export const useMeQuery = <
       fetcher<MeQuery, MeQueryVariables>(client, MeDocument, variables, headers),
       options
     );
+export const DailyDistanceGoalsDocument = `
+    query DailyDistanceGoals {
+  daily_distance_goals {
+    id
+    goal_start_date
+    daily_goal_in_miles
+    note
+    active
+  }
+}
+    `;
+export const useDailyDistanceGoalsQuery = <
+      TData = DailyDistanceGoalsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: DailyDistanceGoalsQueryVariables,
+      options?: UseQueryOptions<DailyDistanceGoalsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<DailyDistanceGoalsQuery, TError, TData>(
+      variables === undefined ? ['DailyDistanceGoals'] : ['DailyDistanceGoals', variables],
+      fetcher<DailyDistanceGoalsQuery, DailyDistanceGoalsQueryVariables>(client, DailyDistanceGoalsDocument, variables, headers),
+      options
+    );
 export const DeleteDailyDistanceGoalDocument = `
     mutation DeleteDailyDistanceGoal($id: ID!) {
   deleteDailyDistanceGoal(id: $id)
@@ -1138,6 +1115,31 @@ export const useUpdateDailyDistanceGoalMutation = <
     useMutation<UpdateDailyDistanceGoalMutation, TError, UpdateDailyDistanceGoalMutationVariables, TContext>(
       ['UpdateDailyDistanceGoal'],
       (variables?: UpdateDailyDistanceGoalMutationVariables) => fetcher<UpdateDailyDistanceGoalMutation, UpdateDailyDistanceGoalMutationVariables>(client, UpdateDailyDistanceGoalDocument, variables, headers)(),
+      options
+    );
+export const DailyStepsGoalsDocument = `
+    query DailyStepsGoals {
+  daily_steps_goals {
+    id
+    goal_start_date
+    daily_goal_in_steps
+    note
+    active
+  }
+}
+    `;
+export const useDailyStepsGoalsQuery = <
+      TData = DailyStepsGoalsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: DailyStepsGoalsQueryVariables,
+      options?: UseQueryOptions<DailyStepsGoalsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<DailyStepsGoalsQuery, TError, TData>(
+      variables === undefined ? ['DailyStepsGoals'] : ['DailyStepsGoals', variables],
+      fetcher<DailyStepsGoalsQuery, DailyStepsGoalsQueryVariables>(client, DailyStepsGoalsDocument, variables, headers),
       options
     );
 export const DeleteDailyStepsGoalDocument = `
