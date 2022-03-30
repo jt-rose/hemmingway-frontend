@@ -1,4 +1,4 @@
-query MealByDate($date_of_meal: Date!) {
+query MealsByDate($date_of_meal: Date!) {
   mealsByDate(date_of_meal: $date_of_meal) {
     id
     name

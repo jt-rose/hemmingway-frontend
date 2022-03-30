@@ -1,30 +1,19 @@
 import { Layout } from "components/Layout";
-import React from "react";
-import { useExercisesByDateQuery } from "src/generated/graphql-hooks";
 import { PropTypes } from "types/propTypes";
 import dayjs from "dayjs";
 import { Exercise } from "../components/exercise/Exercise";
+import { Meals } from "components/meals/Meals";
 
 const Home = (props: PropTypes) => {
   const date = dayjs().format("YYYY-MM-DD");
-  //const { data, error, isLoading } = useUserQuery(props.gqlClient);
-  const { data, error, isLoading } = useExercisesByDateQuery(props.gqlClient, {
-    date_of_exercise: date,
-  });
 
-  console.log("data: ", data);
-  if (isLoading) {
-    return <h3>... loading</h3>;
-  } else if (error) {
-    return <h3>Error</h3>;
-  } else {
-    return (
-      <Layout>
-        <h1>Home</h1>
-        <Exercise gqlClient={props.gqlClient} date={date} />
-      </Layout>
-    );
-  }
+  return (
+    <Layout>
+      <h1>Home</h1>
+      <Exercise gqlClient={props.gqlClient} date={date} />
+      <Meals gqlClient={props.gqlClient} date={date} />
+    </Layout>
+  );
 };
 
 export default Home;

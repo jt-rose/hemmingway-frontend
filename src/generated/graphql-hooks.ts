@@ -871,12 +871,12 @@ export type DeleteMealMutationVariables = Exact<{
 
 export type DeleteMealMutation = { __typename?: 'Mutation', deleteMeal: boolean };
 
-export type MealByDateQueryVariables = Exact<{
+export type MealsByDateQueryVariables = Exact<{
   date_of_meal: Scalars['Date'];
 }>;
 
 
-export type MealByDateQuery = { __typename?: 'Query', mealsByDate: Array<{ __typename?: 'Meal', id: string, name: string, date_of_meal: any, category: MealCategory, calories: number }> };
+export type MealsByDateQuery = { __typename?: 'Query', mealsByDate: Array<{ __typename?: 'Meal', id: string, name: string, date_of_meal: any, category: MealCategory, calories: number }> };
 
 export type UpdateMealMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1380,8 +1380,8 @@ export const useDeleteMealMutation = <
       (variables?: DeleteMealMutationVariables) => fetcher<DeleteMealMutation, DeleteMealMutationVariables>(client, DeleteMealDocument, variables, headers)(),
       options
     );
-export const MealByDateDocument = `
-    query MealByDate($date_of_meal: Date!) {
+export const MealsByDateDocument = `
+    query MealsByDate($date_of_meal: Date!) {
   mealsByDate(date_of_meal: $date_of_meal) {
     id
     name
@@ -1391,18 +1391,18 @@ export const MealByDateDocument = `
   }
 }
     `;
-export const useMealByDateQuery = <
-      TData = MealByDateQuery,
+export const useMealsByDateQuery = <
+      TData = MealsByDateQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables: MealByDateQueryVariables,
-      options?: UseQueryOptions<MealByDateQuery, TError, TData>,
+      variables: MealsByDateQueryVariables,
+      options?: UseQueryOptions<MealsByDateQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<MealByDateQuery, TError, TData>(
-      ['MealByDate', variables],
-      fetcher<MealByDateQuery, MealByDateQueryVariables>(client, MealByDateDocument, variables, headers),
+    useQuery<MealsByDateQuery, TError, TData>(
+      ['MealsByDate', variables],
+      fetcher<MealsByDateQuery, MealsByDateQueryVariables>(client, MealsByDateDocument, variables, headers),
       options
     );
 export const UpdateMealDocument = `
