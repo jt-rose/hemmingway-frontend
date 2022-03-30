@@ -6,28 +6,16 @@ const links = [
     linkTitle: "Home",
   },
   {
-    href: "/exercise",
-    linkTitle: "Exercise",
-  },
-  {
-    href: "/meals",
-    linkTitle: "Meals",
-  },
-  {
-    href: "/mood",
-    linkTitle: "Mood",
-  },
-  {
-    href: "/sleep",
-    linkTitle: "Sleep",
-  },
-  {
     href: "/stats",
     linkTitle: "Stats",
   },
   {
     href: "/settings",
     linkTitle: "Settings",
+  },
+  {
+    href: "/welcome",
+    linkTitle: "Welcome",
   },
 ];
 
