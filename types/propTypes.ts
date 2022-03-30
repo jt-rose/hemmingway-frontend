@@ -1,6 +1,15 @@
 import { GraphQLClient } from "graphql-request";
 import { Dispatch, SetStateAction } from "react";
-import { Exercise, Meal, Mood, SleepHabit } from "src/generated/graphql-hooks";
+import {
+  DailyDistanceGoal,
+  DailyStepsGoal,
+  Exercise,
+  Meal,
+  Mood,
+  SleepHabit,
+  UserWeight,
+  WeightGoal,
+} from "src/generated/graphql-hooks";
 
 export interface PropTypes {
   gqlClient: GraphQLClient;
@@ -28,6 +37,34 @@ export interface PropTypesWithMood extends PropTypes {
 export interface PropTypesWithSleepHabit extends PropTypes {
   sleepHabit: Omit<
     SleepHabit,
+    "created_at" | "updated_at" | "user" | "user_id"
+  >;
+}
+
+export interface PropTypesWithDistanceGoal extends PropTypes {
+  distanceGoal: Omit<
+    DailyDistanceGoal,
+    "created_at" | "updated_at" | "user" | "user_id"
+  >;
+}
+
+export interface PropTypesWithStepsGoal extends PropTypes {
+  stepsGoal: Omit<
+    DailyStepsGoal,
+    "created_at" | "updated_at" | "user" | "user_id"
+  >;
+}
+
+export interface PropTypesWithUserWeight extends PropTypes {
+  userWeight: Omit<
+    UserWeight,
+    "created_at" | "updated_at" | "user" | "user_id"
+  >;
+}
+
+export interface PropTypesWithWeightGoal extends PropTypes {
+  weightGoal: Omit<
+    WeightGoal,
     "created_at" | "updated_at" | "user" | "user_id"
   >;
 }
