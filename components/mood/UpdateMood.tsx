@@ -78,7 +78,7 @@ export const UpdateMood = (props: PropTypesWithMood) => {
           </select>
 
           <label htmlFor={"stress-level-input-" + id}>stress level</label>
-          <select id="stress-level-input" {...register("stress_level")}>
+          <select id={"stress-level-input-" + id} {...register("stress_level")}>
             {["LOW", "MODERATE", "HIGH"].map((m) => (
               <option value={m} key={m + "-update-select-" + id}>
                 {m}
