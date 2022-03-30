@@ -1,6 +1,7 @@
 import { Layout } from "components/Layout";
 import { DailyDistanceGoals } from "components/settings/dailyDistanceGoal/DistanceGoal";
 import { DailyStepsGoals } from "components/settings/dailyStepsGoal/StepsGoals";
+import { UserWeight } from "components/settings/userWeight/UserWeight";
 import dayjs from "dayjs";
 import { PropTypes } from "types/propTypes";
 
@@ -9,6 +10,7 @@ const Settings = (props: PropTypes) => {
   return (
     <Layout>
       <h1>Settings</h1>
+      <UserWeight gqlClient={props.gqlClient} date={date} />
       <DailyDistanceGoals gqlClient={props.gqlClient} date={date} />
       <DailyStepsGoals gqlClient={props.gqlClient} date={date} />
     </Layout>

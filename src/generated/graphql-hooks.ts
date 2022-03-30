@@ -962,6 +962,11 @@ export type UpdateUserWeightMutationVariables = Exact<{
 
 export type UpdateUserWeightMutation = { __typename?: 'Mutation', updateUserWeight: { __typename?: 'UserWeight', id: string, weight_in_lbs: number, date_of_weight: any, note?: string | null } };
 
+export type WeightHistoryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WeightHistoryQuery = { __typename?: 'Query', weight_history: Array<{ __typename?: 'UserWeight', id: string, weight_in_lbs: number, date_of_weight: any, note?: string | null }> };
+
 export type DeleteWeightGoalMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -1823,6 +1828,30 @@ export const useUpdateUserWeightMutation = <
     useMutation<UpdateUserWeightMutation, TError, UpdateUserWeightMutationVariables, TContext>(
       ['UpdateUserWeight'],
       (variables?: UpdateUserWeightMutationVariables) => fetcher<UpdateUserWeightMutation, UpdateUserWeightMutationVariables>(client, UpdateUserWeightDocument, variables, headers)(),
+      options
+    );
+export const WeightHistoryDocument = `
+    query WeightHistory {
+  weight_history {
+    id
+    weight_in_lbs
+    date_of_weight
+    note
+  }
+}
+    `;
+export const useWeightHistoryQuery = <
+      TData = WeightHistoryQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: WeightHistoryQueryVariables,
+      options?: UseQueryOptions<WeightHistoryQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<WeightHistoryQuery, TError, TData>(
+      variables === undefined ? ['WeightHistory'] : ['WeightHistory', variables],
+      fetcher<WeightHistoryQuery, WeightHistoryQueryVariables>(client, WeightHistoryDocument, variables, headers),
       options
     );
 export const DeleteWeightGoalDocument = `

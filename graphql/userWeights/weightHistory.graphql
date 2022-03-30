@@ -1,0 +1,8 @@
+query WeightHistory {
+  weight_history {
+    id
+    weight_in_lbs
+    date_of_weight
+    note
+  }
+}
