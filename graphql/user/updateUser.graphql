@@ -1,7 +1,24 @@
-mutation UpdateUser($id: ID!, $name: String!, $email: String!) {
-  updateUser(id: $id, name: $name, email: $email) {
+mutation UpdateUser(
+  $id: ID!
+  $name: String!
+  $email: String!
+  $gender: GENDER!
+  $birthday: Date!
+  $height_in_inches: Int!
+) {
+  updateUser(
+    id: $id
+    name: $name
+    email: $email
+    gender: $gender
+    birthday: $birthday
+    height_in_inches: $height_in_inches
+  ) {
     id
     name
     email
+    gender
+    birthday
+    height_in_inches
   }
 }

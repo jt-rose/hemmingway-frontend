@@ -1,19 +1,16 @@
-type Gender = "MALE" | "FEMALE" | "NB";
+import { User } from "src/generated/graphql-hooks";
 
-export const calculateBMR = (
-  gender: Gender,
-  weightInPounds: number,
-  heightInInches: number,
-  age: number
-) => {
+export const calculateBMR = (user: User, weightInPounds: number) => {
+  const { gender, birthday, height_in_inches } = user;
+  const age = calculateAge(birthday);
   if (gender === "MALE") {
-    return calculateMaleBMR(weightInPounds, heightInInches, age);
+    return calculateMaleBMR(weightInPounds, height_in_inches, age);
   } else if (gender === "FEMALE") {
-    return calculateFemaleBMR(weightInPounds, heightInInches, age);
+    return calculateFemaleBMR(weightInPounds, height_in_inches, age);
   } else {
     // for NB, attempt to split the difference
-    const maleBMR = calculateMaleBMR(weightInPounds, heightInInches, age);
-    const femaleBMR = calculateFemaleBMR(weightInPounds, heightInInches, age);
+    const maleBMR = calculateMaleBMR(weightInPounds, height_in_inches, age);
+    const femaleBMR = calculateFemaleBMR(weightInPounds, height_in_inches, age);
 
     const difference = maleBMR - femaleBMR / 2;
     return femaleBMR + difference;
@@ -34,4 +31,15 @@ const calculateFemaleBMR = (
   age: number
 ) => {
   return 655.51 + 4.35 * weightInPounds + 4.7 * heightInInches - 4.7 * age;
+};
+
+const calculateAge = (birthday: string) => {
+  const today = new Date();
+  const birthDate = new Date(birthday);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
 };

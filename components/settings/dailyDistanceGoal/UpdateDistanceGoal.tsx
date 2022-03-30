@@ -1,5 +1,5 @@
 import { useUpdateDailyDistanceGoalMutation } from "src/generated/graphql-hooks";
-import { PropTypesWithDate, PropTypesWithDistanceGoal } from "types/propTypes";
+import { PropTypesWithDistanceGoal } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import { useState } from "react";

@@ -97,6 +97,12 @@ export type ExercisePaginator = {
   paginatorInfo: PaginatorInfo;
 };
 
+export enum Gender {
+  Female = 'FEMALE',
+  Male = 'MALE',
+  Nb = 'NB'
+}
+
 export enum Goal_Type {
   Calories = 'CALORIES',
   Distance = 'DISTANCE',
@@ -242,7 +248,10 @@ export type MutationCreateSleepHabitArgs = {
 
 
 export type MutationCreateUserArgs = {
+  birthday: Scalars['Date'];
   email: Scalars['String'];
+  gender: Gender;
+  height_in_inches: Scalars['Int'];
   name: Scalars['String'];
   password: Scalars['String'];
 };
@@ -362,7 +371,10 @@ export type MutationUpdateSleepHabitArgs = {
 
 
 export type MutationUpdateUserArgs = {
+  birthday: Scalars['Date'];
   email?: InputMaybe<Scalars['String']>;
+  gender: Gender;
+  height_in_inches: Scalars['Int'];
   id: Scalars['ID'];
   name?: InputMaybe<Scalars['String']>;
 };
@@ -703,12 +715,15 @@ export enum Trashed {
 
 export type User = {
   __typename?: 'User';
+  birthday: Scalars['Date'];
   created_at: Scalars['DateTime'];
   daily_distance_goals: Array<DailyDistanceGoal>;
   daily_steps_goals: Array<DailyStepsGoal>;
   email: Scalars['String'];
   email_verified_at?: Maybe<Scalars['DateTime']>;
   exercises: Array<Exercise>;
+  gender: Gender;
+  height_in_inches: Scalars['Int'];
   id: Scalars['ID'];
   meals: Array<Meal>;
   moods: Array<Mood>;
@@ -1041,19 +1056,25 @@ export type RegisterMutationVariables = Exact<{
   name: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
+  gender: Gender;
+  birthday: Scalars['Date'];
+  height_in_inches: Scalars['Int'];
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: string, name: string, email: string } };
+export type RegisterMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: string, name: string, email: string, gender: Gender, birthday: any, height_in_inches: number } };
 
 export type UpdateUserMutationVariables = Exact<{
   id: Scalars['ID'];
   name: Scalars['String'];
   email: Scalars['String'];
+  gender: Gender;
+  birthday: Scalars['Date'];
+  height_in_inches: Scalars['Int'];
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, name: string, email: string } };
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, name: string, email: string, gender: Gender, birthday: any, height_in_inches: number } };
 
 export type DeleteUserWeightMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -2055,11 +2076,21 @@ export const useDeleteUserMutation = <
       options
     );
 export const RegisterDocument = `
-    mutation Register($name: String!, $email: String!, $password: String!) {
-  createUser(name: $name, email: $email, password: $password) {
+    mutation Register($name: String!, $email: String!, $password: String!, $gender: GENDER!, $birthday: Date!, $height_in_inches: Int!) {
+  createUser(
+    name: $name
+    email: $email
+    password: $password
+    gender: $gender
+    birthday: $birthday
+    height_in_inches: $height_in_inches
+  ) {
     id
     name
     email
+    gender
+    birthday
+    height_in_inches
   }
 }
     `;
@@ -2077,11 +2108,21 @@ export const useRegisterMutation = <
       options
     );
 export const UpdateUserDocument = `
-    mutation UpdateUser($id: ID!, $name: String!, $email: String!) {
-  updateUser(id: $id, name: $name, email: $email) {
+    mutation UpdateUser($id: ID!, $name: String!, $email: String!, $gender: GENDER!, $birthday: Date!, $height_in_inches: Int!) {
+  updateUser(
+    id: $id
+    name: $name
+    email: $email
+    gender: $gender
+    birthday: $birthday
+    height_in_inches: $height_in_inches
+  ) {
     id
     name
     email
+    gender
+    birthday
+    height_in_inches
   }
 }
     `;

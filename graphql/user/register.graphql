@@ -1,7 +1,24 @@
-mutation Register($name: String!, $email: String!, $password: String!) {
-  createUser(name: $name, email: $email, password: $password) {
+mutation Register(
+  $name: String!
+  $email: String!
+  $password: String!
+  $gender: GENDER!
+  $birthday: Date!
+  $height_in_inches: Int!
+) {
+  createUser(
+    name: $name
+    email: $email
+    password: $password
+    gender: $gender
+    birthday: $birthday
+    height_in_inches: $height_in_inches
+  ) {
     id
     name
     email
+    gender
+    birthday
+    height_in_inches
   }
 }
