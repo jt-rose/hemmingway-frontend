@@ -27,7 +27,6 @@ export const getCalorieTotal = (
 };
 
 export const getDailyCalorieTarget = (
-  bmr: number,
   userWeight: UserWeight,
   weightGoal: WeightGoal
 ) => {
@@ -37,13 +36,13 @@ export const getDailyCalorieTarget = (
   }
 
   // add enums to weightGoal later
-  let target = "aggressive";
+  let target = weightGoal.goal_pace;
   // if user weight is over goal, calculate how much to skim
   if (userWeight.weight_in_lbs > weightGoal.goal_in_lbs) {
     switch (target) {
-      case "aggressive":
+      case "STRONG":
         return -400;
-      case "steady":
+      case "MODERATE":
         return -300;
       default: // used for mild and catchall
         return -200;
@@ -53,9 +52,9 @@ export const getDailyCalorieTarget = (
   // if user weight is over goal, calculate how much to bulk
   if (userWeight.weight_in_lbs < weightGoal.goal_in_lbs) {
     switch (target) {
-      case "aggressive":
+      case "STRONG":
         return 400;
-      case "steady":
+      case "MODERATE":
         return 300;
       default: // used for mild and catchall
         return 200;
