@@ -4,5 +4,7 @@ query WeightGoalsBetweenDates($dateRange: DateRange!) {
     goal_in_lbs
     goal_start_date
     note
+    active
+    goal_pace
   }
 }

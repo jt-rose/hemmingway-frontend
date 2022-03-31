@@ -1,0 +1,29 @@
+query CurrentGoals {
+  currentWeightGoal {
+    id
+    goal_start_date
+    goal_in_lbs
+    note
+    active
+  }
+  currentPopGoal {
+    id
+    date_of_goal
+    goal_type
+    goal_amount
+  }
+  currentStepsGoal {
+    id
+    goal_start_date
+    daily_goal_in_steps
+    note
+    active
+  }
+  currentDistanceGoal {
+    id
+    goal_start_date
+    daily_goal_in_miles
+    note
+    active
+  }
+}

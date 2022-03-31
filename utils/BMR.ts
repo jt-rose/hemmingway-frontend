@@ -1,6 +1,6 @@
 import { User } from "src/generated/graphql-hooks";
 
-type SimpleUser = Pick<
+export type SimpleUser = Pick<
   User,
   "id" | "name" | "birthday" | "email" | "gender" | "height_in_inches"
 >;

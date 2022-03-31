@@ -103,6 +103,12 @@ export enum Gender {
   Nb = 'NB'
 }
 
+export enum Goal_Pace {
+  Light = 'LIGHT',
+  Moderate = 'MODERATE',
+  Strong = 'STRONG'
+}
+
 export enum Goal_Type {
   Calories = 'CALORIES',
   Distance = 'DISTANCE',
@@ -765,6 +771,7 @@ export type WeightGoal = {
   active: Scalars['Boolean'];
   created_at: Scalars['DateTime'];
   goal_in_lbs: Scalars['Int'];
+  goal_pace: Goal_Pace;
   goal_start_date: Scalars['Date'];
   id: Scalars['ID'];
   note?: Maybe<Scalars['String']>;
@@ -775,6 +782,7 @@ export type WeightGoal = {
 export type WeightGoalInput = {
   active: Scalars['Boolean'];
   goal_in_lbs: Scalars['Int'];
+  goal_pace: Goal_Pace;
   goal_start_date: Scalars['Date'];
   note?: InputMaybe<Scalars['String']>;
 };
@@ -786,6 +794,11 @@ export type LoginMutationVariables = Exact<{
 
 
 export type LoginMutation = { __typename?: 'Mutation', login: string };
+
+export type CurrentGoalsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentGoalsQuery = { __typename?: 'Query', currentWeightGoal?: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean } | null, currentPopGoal?: { __typename?: 'PopGoal', id: string, date_of_goal: any, goal_type?: Goal_Type | null, goal_amount: number } | null, currentStepsGoal?: { __typename?: 'DailyStepsGoal', id: string, goal_start_date: any, daily_goal_in_steps: number, note?: string | null, active: boolean } | null, currentDistanceGoal?: { __typename?: 'DailyDistanceGoal', id: string, goal_start_date: any, daily_goal_in_miles: number, note?: string | null, active: boolean } | null };
 
 export type CurrentDistanceGoalQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1124,7 +1137,7 @@ export type WeightHistoryQuery = { __typename?: 'Query', weight_history: Array<{
 export type CurrentWeightGoalQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentWeightGoalQuery = { __typename?: 'Query', currentWeightGoal?: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean } | null };
+export type CurrentWeightGoalQuery = { __typename?: 'Query', currentWeightGoal?: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean, goal_pace: Goal_Pace } | null };
 
 export type DeleteWeightGoalMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1138,7 +1151,7 @@ export type SetWeightGoalMutationVariables = Exact<{
 }>;
 
 
-export type SetWeightGoalMutation = { __typename?: 'Mutation', setWeightGoal: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean } };
+export type SetWeightGoalMutation = { __typename?: 'Mutation', setWeightGoal: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean, goal_pace: Goal_Pace } };
 
 export type UpdateWeightGoalMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1146,19 +1159,19 @@ export type UpdateWeightGoalMutationVariables = Exact<{
 }>;
 
 
-export type UpdateWeightGoalMutation = { __typename?: 'Mutation', updateWeightGoal: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean } };
+export type UpdateWeightGoalMutation = { __typename?: 'Mutation', updateWeightGoal: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean, goal_pace: Goal_Pace } };
 
 export type WeightGoalsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type WeightGoalsQuery = { __typename?: 'Query', weight_goals: Array<{ __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean }> };
+export type WeightGoalsQuery = { __typename?: 'Query', weight_goals: Array<{ __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean, goal_pace: Goal_Pace }> };
 
 export type WeightGoalsBetweenDatesQueryVariables = Exact<{
   dateRange: DateRange;
 }>;
 
 
-export type WeightGoalsBetweenDatesQuery = { __typename?: 'Query', weightGoalsBetweenDates: Array<{ __typename?: 'WeightGoal', id: string, goal_in_lbs: number, goal_start_date: any, note?: string | null }> };
+export type WeightGoalsBetweenDatesQuery = { __typename?: 'Query', weightGoalsBetweenDates: Array<{ __typename?: 'WeightGoal', id: string, goal_in_lbs: number, goal_start_date: any, note?: string | null, active: boolean, goal_pace: Goal_Pace }> };
 
 
 export const LoginDocument = `
@@ -1177,6 +1190,51 @@ export const useLoginMutation = <
     useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
       ['Login'],
       (variables?: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(client, LoginDocument, variables, headers)(),
+      options
+    );
+export const CurrentGoalsDocument = `
+    query CurrentGoals {
+  currentWeightGoal {
+    id
+    goal_start_date
+    goal_in_lbs
+    note
+    active
+  }
+  currentPopGoal {
+    id
+    date_of_goal
+    goal_type
+    goal_amount
+  }
+  currentStepsGoal {
+    id
+    goal_start_date
+    daily_goal_in_steps
+    note
+    active
+  }
+  currentDistanceGoal {
+    id
+    goal_start_date
+    daily_goal_in_miles
+    note
+    active
+  }
+}
+    `;
+export const useCurrentGoalsQuery = <
+      TData = CurrentGoalsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: CurrentGoalsQueryVariables,
+      options?: UseQueryOptions<CurrentGoalsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<CurrentGoalsQuery, TError, TData>(
+      variables === undefined ? ['CurrentGoals'] : ['CurrentGoals', variables],
+      fetcher<CurrentGoalsQuery, CurrentGoalsQueryVariables>(client, CurrentGoalsDocument, variables, headers),
       options
     );
 export const CurrentDistanceGoalDocument = `
@@ -2340,6 +2398,7 @@ export const CurrentWeightGoalDocument = `
     goal_in_lbs
     note
     active
+    goal_pace
   }
 }
     `;
@@ -2383,6 +2442,7 @@ export const SetWeightGoalDocument = `
     goal_in_lbs
     note
     active
+    goal_pace
   }
 }
     `;
@@ -2407,6 +2467,7 @@ export const UpdateWeightGoalDocument = `
     goal_in_lbs
     note
     active
+    goal_pace
   }
 }
     `;
@@ -2431,6 +2492,7 @@ export const WeightGoalsDocument = `
     goal_in_lbs
     note
     active
+    goal_pace
   }
 }
     `;
@@ -2455,6 +2517,8 @@ export const WeightGoalsBetweenDatesDocument = `
     goal_in_lbs
     goal_start_date
     note
+    active
+    goal_pace
   }
 }
     `;

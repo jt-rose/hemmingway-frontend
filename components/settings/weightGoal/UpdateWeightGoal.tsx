@@ -5,12 +5,14 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 export const UpdateWeightGoal = (props: PropTypesWithWeightGoal) => {
-  const { id, goal_in_lbs, goal_start_date, note } = props.weightGoal;
+  const { id, goal_in_lbs, goal_start_date, note, goal_pace } =
+    props.weightGoal;
   const initialFormData = {
     goal_in_lbs,
     goal_start_date,
     note,
     active: true,
+    goal_pace,
   };
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const queryClient = useQueryClient();
@@ -55,6 +57,15 @@ export const UpdateWeightGoal = (props: PropTypesWithWeightGoal) => {
             type="date"
             {...register("goal_start_date")}
           />
+
+          <label htmlFor={"weight-goal-pace-input"}>goal pace</label>
+          <select id="weight-goal-pace-input" {...register("goal_pace")}>
+            {["STRONG", "MODERATE", "LIGHT"].map((gp) => (
+              <option value={gp} key={gp + "goal-pace-select"}>
+                {gp}
+              </option>
+            ))}
+          </select>
 
           <label htmlFor={"goal-note-input-" + id}>note</label>
           <input id={"goal-note-input-" + id} {...register("note")} />

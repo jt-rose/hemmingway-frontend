@@ -42,6 +42,15 @@ export const SetWeightGoal = (props: PropTypes) => {
           {...register("goal_start_date")}
         />
 
+        <label htmlFor={"weight-goal-pace-input"}>goal pace</label>
+        <select id="weight-goal-pace-input" {...register("goal_pace")}>
+          {["STRONG", "MODERATE", "LIGHT"].map((gp) => (
+            <option value={gp} key={gp + "goal-pace-select"}>
+              {gp}
+            </option>
+          ))}
+        </select>
+
         <label htmlFor={"goal-note-input"}>note</label>
         <input id={"goal-note-input"} {...register("note")} />
 
