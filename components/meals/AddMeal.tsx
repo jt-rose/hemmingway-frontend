@@ -2,6 +2,9 @@ import { useCreateMealMutation } from "src/generated/graphql-hooks";
 import { PropTypesWithDate } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
+import { Input } from "components/forms/Input";
+import { Select } from "components/forms/Select";
+import { Form } from "components/forms/Form";
 
 export const AddMeal = (props: PropTypesWithDate) => {
   const queryClient = useQueryClient();
@@ -24,33 +27,43 @@ export const AddMeal = (props: PropTypesWithDate) => {
   };
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="meal-calories-input">calories</label>
-        <input
+      <Form onSubmit={handleSubmit(onSubmit)} submitButtonName="Add Meal">
+        <Input
           id="meal-calories-input"
           type="number"
-          {...register("calories", {
+          placeholder="...add calories"
+          label="Calories"
+          required
+          formConnect={register("calories", {
             valueAsNumber: true,
           })}
         />
 
-        <label htmlFor="meal-date-input">date</label>
-        <input id="meal-date-input" type="date" {...register("date_of_meal")} />
+        <Input
+          id="meal-date-input"
+          label="date"
+          placeholder="some text..."
+          required={true}
+          type="date"
+          formConnect={register("date_of_meal")}
+        />
 
-        <label htmlFor="meal-category-input">category</label>
-        <select id="meal-category-input" {...register("category")}>
-          {["BREAKFAST", "LUNCH", "DINNER", "SNACK"].map((m) => (
-            <option value={m} key={m + "select"}>
-              {m}
-            </option>
-          ))}
-        </select>
+        <Select
+          id="meal-category-input"
+          selectOptions={["BREAKFAST", "LUNCH", "DINNER", "SNACK"]}
+          formConnect={register("category")}
+          label="Category"
+        />
 
-        <label htmlFor="meal-name-input">name</label>
-        <input id="meal-name-input" {...register("name")} />
-
-        <input type="submit" value="Add Meal" />
-      </form>
+        <Input
+          id="meal-name-input"
+          label="working"
+          placeholder="some text..."
+          required={true}
+          type="text"
+          formConnect={register("name")}
+        />
+      </Form>
     </div>
   );
 };

@@ -14,6 +14,7 @@ import {
   useMeQuery,
 } from "src/generated/graphql-hooks";
 import { calculateBMR } from "utils/BMR";
+import { Input } from "components/Input";
 
 const Home = (props: PropTypes) => {
   const date = dayjs().format("YYYY-MM-DD");
@@ -46,6 +47,14 @@ const Home = (props: PropTypes) => {
   return (
     <Layout>
       <h1>Home</h1>
+      {/* <Input /> */}
+      {/* <Inp
+        id="my-id"
+        label="working"
+        placeholder="some text..."
+        required={true}
+        type="password"
+      /> */}
       <Exercise gqlClient={props.gqlClient} date={date} />
       <Meals gqlClient={props.gqlClient} date={date} />
       <Mood gqlClient={props.gqlClient} date={date} />
