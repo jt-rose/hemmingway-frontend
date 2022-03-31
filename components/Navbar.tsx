@@ -1,6 +1,10 @@
 import Link from "next/link";
 //import { Menu } from "@headlessui/react";
-import { UserCircleIcon } from "@heroicons/react/outline";
+import {
+  UserCircleIcon,
+  ChartBarIcon,
+  CalendarIcon,
+} from "@heroicons/react/outline";
 
 const links = [
   {
@@ -33,9 +37,17 @@ export const Navbar = () => {
           </li>
         ))}
       </ul>
+      <CalendarIcon
+        className="text-slate-50 p-2 ht-10 w-10 hover:bg-teal-500 rounded-full"
+        stroke="rgb(248 250 252)"
+      />
+      <ChartBarIcon
+        className="text-slate-50 p-2 ht-10 w-10 hover:bg-teal-500 rounded-full"
+        stroke="rgb(248 250 252)"
+      />
       {/* <UserIcon className="text-slate-50 grow text-right pr-8 pt-2 " /> */}
       <UserCircleIcon
-        className="text-slate-50 ht-8 w-8"
+        className="text-slate-50 p-2 ht-10 w-10 hover:bg-teal-500 rounded-full"
         stroke="rgb(248 250 252)"
       />
     </nav>
