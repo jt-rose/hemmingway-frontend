@@ -16,6 +16,14 @@ export interface PropTypes {
   gqlClient: GraphQLClient;
 }
 
+export interface PropTypesWithModalForm extends PropTypes {
+  formType: "MEAL" | "MOOD" | "EXERCISE" | "SLEEPHABIT";
+}
+
+export interface PropTypesWithModal extends PropTypes {
+  closeModal: () => void;
+}
+
 export interface PropTypesWithRefresh extends PropTypes {
   setToken: Dispatch<SetStateAction<string>>;
 }

@@ -1,12 +1,16 @@
 import { useCreateMealMutation } from "src/generated/graphql-hooks";
-import { PropTypesWithDate } from "types/propTypes";
+import {
+  PropTypes,
+  PropTypesWithDate,
+  PropTypesWithModal,
+} from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import { Input } from "components/forms/Input";
 import { Select } from "components/forms/Select";
 import { Form } from "components/forms/Form";
 
-export const AddMeal = (props: PropTypesWithDate) => {
+export const AddMeal = (props: PropTypesWithModal) => {
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
 
@@ -22,6 +26,7 @@ export const AddMeal = (props: PropTypesWithDate) => {
 
   const refetchDirective = {
     onSuccess: () => {
+      props.closeModal();
       queryClient.invalidateQueries(["MealsByDate"]);
     },
   };
@@ -64,6 +69,7 @@ export const AddMeal = (props: PropTypesWithDate) => {
           formConnect={register("name")}
         />
       </Form>
+      <button onClick={props.closeModal}>Close</button>
     </div>
   );
 };
