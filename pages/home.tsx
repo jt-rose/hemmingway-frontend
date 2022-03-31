@@ -11,7 +11,11 @@ import {
   useCurrentStepsGoalQuery,
   useCurrentUserWeightQuery,
   useCurrentWeightGoalQuery,
+  useExercisesByDateQuery,
+  useMealsByDateQuery,
   useMeQuery,
+  useMoodByDateQuery,
+  useSleepHabitsByDateQuery,
 } from "src/generated/graphql-hooks";
 import { calculateBMR } from "utils/BMR";
 import {
@@ -54,6 +58,32 @@ const Home = (props: PropTypes) => {
     console.log("my bmr is " + bmr);
   }
 
+  const mood = useMoodByDateQuery(props.gqlClient, {
+    date_of_mood: date,
+  });
+  const meals = useMealsByDateQuery(props.gqlClient, {
+    date_of_meal: date,
+  });
+  const exercise = useExercisesByDateQuery(props.gqlClient, {
+    date_of_exercise: date,
+  });
+  const sleepHabit = useSleepHabitsByDateQuery(props.gqlClient, {
+    date_of_sleep: date,
+  });
+
+  console.log(
+    date,
+    "meals",
+    meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0)
+  );
+  console.log(
+    date,
+    "exercise",
+    exercise.data?.exercisesByDate.reduce((a, b) => a + b.calories, 0)
+  );
+  console.log(date, "moods", mood);
+  console.log(date, "sleepHabit", sleepHabit);
+
   return (
     <Layout>
       <h1>Home</h1>
@@ -64,6 +94,22 @@ const Home = (props: PropTypes) => {
       </div>
 
       <p>My BMR is {bmr !== 0 ? bmr : "Unknown"}</p>
+      <p>
+        Current: {meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0)}{" "}
+        out of{" "}
+        {bmr +
+          exercise.data?.exercisesByDate.reduce(
+            (a, b) => a + b.calories,
+            0
+          )}{" "}
+        calories
+      </p>
+      <p>
+        Over by{" "}
+        {meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0) -
+          (bmr +
+            exercise.data?.exercisesByDate.reduce((a, b) => a + b.calories, 0))}
+      </p>
       <Exercise gqlClient={props.gqlClient} date={date} />
       <Meals gqlClient={props.gqlClient} date={date} />
       <Mood gqlClient={props.gqlClient} date={date} />
