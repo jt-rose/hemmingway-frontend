@@ -6,6 +6,7 @@ import { PropTypesWithDate } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { AddExercise } from "./AddExercise";
 import { UpdateExercise } from "./UpdateExercise";
+import { ModalForm } from "components/forms/ModalForm";
 
 export const Exercise = (props: PropTypesWithDate) => {
   const queryClient = useQueryClient();
@@ -38,7 +39,12 @@ export const Exercise = (props: PropTypesWithDate) => {
           <UpdateExercise gqlClient={props.gqlClient} exercise={ex} />
         </div>
       ))}
-      <AddExercise gqlClient={props.gqlClient} date={props.date} />
+      {/* <AddExercise gqlClient={props.gqlClient} date={props.date} /> */}
+      <ModalForm
+        gqlClient={props.gqlClient}
+        formType="EXERCISE"
+        addOrUpdate="ADD"
+      />
     </div>
   );
 };

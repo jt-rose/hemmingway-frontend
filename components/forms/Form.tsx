@@ -4,6 +4,7 @@ export const Form = (props: {
   submitButtonName: string;
   onSubmit: any;
   children: ReactNode;
+  closeModal: () => void;
 }) => {
   return (
     <div className="flex justify-center">
@@ -18,6 +19,7 @@ export const Form = (props: {
         >
           {props.submitButtonName}
         </button>
+        <button onClick={props.closeModal}>Close</button>
       </form>
     </div>
   );

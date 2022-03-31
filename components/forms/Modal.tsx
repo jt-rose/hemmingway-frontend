@@ -1,12 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { AddMeal } from "components/meals/AddMeal";
-import { Dispatch, Fragment, ReactNode, SetStateAction, useState } from "react";
-import { PropTypesWithDate } from "types/propTypes";
+import { Dispatch, Fragment, ReactNode, SetStateAction } from "react";
 
 export function Modal(props: {
   children: ReactNode;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  formTitle: string;
 }) {
   //let [isOpen, setIsOpen] = useState(false);
 
@@ -26,7 +25,7 @@ export function Modal(props: {
           onClick={openModal}
           className="px-4 bg-teal-400 hover:bg-teal-500 py-2 text-sm font-medium text-white rounded-md  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
-          Add meal
+          {props.formTitle}
         </button>
       </div>
 
@@ -70,7 +69,7 @@ export function Modal(props: {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Add Meal
+                  {props.formTitle}
                 </Dialog.Title>
                 {/* <div className="mt-2">
                   <p className="text-sm text-gray-500">

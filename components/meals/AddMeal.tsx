@@ -1,9 +1,5 @@
 import { useCreateMealMutation } from "src/generated/graphql-hooks";
-import {
-  PropTypes,
-  PropTypesWithDate,
-  PropTypesWithModal,
-} from "types/propTypes";
+import { PropTypesWithModal } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import { Input } from "components/forms/Input";
@@ -32,7 +28,11 @@ export const AddMeal = (props: PropTypesWithModal) => {
   };
   return (
     <div>
-      <Form onSubmit={handleSubmit(onSubmit)} submitButtonName="Add Meal">
+      <Form
+        onSubmit={handleSubmit(onSubmit)}
+        submitButtonName="Add Meal"
+        closeModal={props.closeModal}
+      >
         <Input
           id="meal-calories-input"
           type="number"
@@ -69,7 +69,6 @@ export const AddMeal = (props: PropTypesWithModal) => {
           formConnect={register("name")}
         />
       </Form>
-      <button onClick={props.closeModal}>Close</button>
     </div>
   );
 };

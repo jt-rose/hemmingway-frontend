@@ -4,8 +4,8 @@ import {
 } from "src/generated/graphql-hooks";
 import { PropTypesWithDate } from "types/propTypes";
 import { useQueryClient } from "react-query";
-import { AddMood } from "./AddMood";
 import { UpdateMood } from "./UpdateMood";
+import { ModalForm } from "components/forms/ModalForm";
 
 export const Mood = (props: PropTypesWithDate) => {
   const queryClient = useQueryClient();
@@ -36,7 +36,11 @@ export const Mood = (props: PropTypesWithDate) => {
           <UpdateMood gqlClient={props.gqlClient} mood={mood} />
         </div>
       ))}
-      <AddMood gqlClient={props.gqlClient} date={props.date} />
+      <ModalForm
+        gqlClient={props.gqlClient}
+        formType="MOOD"
+        addOrUpdate="ADD"
+      />
     </div>
   );
 };

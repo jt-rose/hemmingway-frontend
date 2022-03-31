@@ -38,7 +38,11 @@ export const Meals = (props: PropTypesWithDate) => {
         </div>
       ))}
       {/* <AddMeal gqlClient={props.gqlClient} /> */}
-      <ModalForm gqlClient={props.gqlClient} formType="MEAL" />
+      <ModalForm
+        gqlClient={props.gqlClient}
+        formType="MEAL"
+        addOrUpdate="ADD"
+      />
     </div>
   );
 };

@@ -4,8 +4,8 @@ import {
 } from "src/generated/graphql-hooks";
 import { PropTypesWithDate } from "types/propTypes";
 import { useQueryClient } from "react-query";
-import { AddSleepHabit } from "./AddSleepHabit";
 import { UpdateSleepHabit } from "./UpdateSleepHabit";
+import { ModalForm } from "components/forms/ModalForm";
 
 export const SleepHabit = (props: PropTypesWithDate) => {
   const queryClient = useQueryClient();
@@ -46,7 +46,12 @@ export const SleepHabit = (props: PropTypesWithDate) => {
           <UpdateSleepHabit gqlClient={props.gqlClient} sleepHabit={sh} />
         </div>
       ))}
-      <AddSleepHabit gqlClient={props.gqlClient} date={props.date} />
+      {/* <AddSleepHabit gqlClient={props.gqlClient} date={props.date} /> */}
+      <ModalForm
+        gqlClient={props.gqlClient}
+        formType="SLEEPHABIT"
+        addOrUpdate="ADD"
+      />
     </div>
   );
 };

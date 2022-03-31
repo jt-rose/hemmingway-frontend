@@ -18,6 +18,7 @@ export interface PropTypes {
 
 export interface PropTypesWithModalForm extends PropTypes {
   formType: "MEAL" | "MOOD" | "EXERCISE" | "SLEEPHABIT";
+  addOrUpdate: "ADD" | "UPDATE";
 }
 
 export interface PropTypesWithModal extends PropTypes {

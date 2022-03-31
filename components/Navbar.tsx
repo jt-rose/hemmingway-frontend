@@ -1,7 +1,6 @@
 import Link from "next/link";
 //import { Menu } from "@headlessui/react";
-import { Example, Tail } from "./Example";
-import { UserCircleIcon, UserIcon } from "@heroicons/react/outline";
+import { UserCircleIcon } from "@heroicons/react/outline";
 
 const links = [
   {
