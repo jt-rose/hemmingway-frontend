@@ -7,6 +7,7 @@ import { useQueryClient } from "react-query";
 import { UpdateMeal } from "./UpdateMeal";
 // import { MealModalForm } from "components/forms/MealModalForm";
 import { ModalForm } from "components/forms/ModalForm";
+import { MealCard } from "components/meals/MealCard";
 
 export const Meals = (props: PropTypesWithDate) => {
   const queryClient = useQueryClient();
@@ -24,18 +25,16 @@ export const Meals = (props: PropTypesWithDate) => {
   return (
     <div>
       <h3>Meals</h3>
-      <p>Data: {`${data}`}</p>
-      <p>error: {`${error}`}</p>
-      <p>loading: {`${isLoading}`}</p>
       {data?.mealsByDate.map((meal) => (
-        <div key={"meal-" + meal.id}>
-          <h3
-            onClick={() => deleteMeal.mutate({ id: meal.id }, refetchDirective)}
-          >
-            {meal.name}
-          </h3>
-          <UpdateMeal gqlClient={props.gqlClient} meal={meal} />
-        </div>
+        <MealCard meal={meal} gqlClient={props.gqlClient} />
+        // <div key={"meal-" + meal.id}>
+        //   <h3
+        //     onClick={() => deleteMeal.mutate({ id: meal.id }, refetchDirective)}
+        //   >
+        //     {meal.name}
+        //   </h3>
+        //   <UpdateMeal gqlClient={props.gqlClient} meal={meal} />
+        // </div>
       ))}
       {/* <AddMeal gqlClient={props.gqlClient} /> */}
       <ModalForm

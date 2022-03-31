@@ -26,9 +26,6 @@ export const SleepHabit = (props: PropTypesWithDate) => {
   return (
     <div>
       <h3>Moods</h3>
-      <p>Data: {`${data}`}</p>
-      <p>error: {`${error}`}</p>
-      <p>loading: {`${isLoading}`}</p>
       {data?.sleepHabitsByDate.map((sh) => (
         <div key={"sleep-habit-" + sh.id}>
           <h3

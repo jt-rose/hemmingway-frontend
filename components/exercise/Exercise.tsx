@@ -24,9 +24,6 @@ export const Exercise = (props: PropTypesWithDate) => {
   return (
     <div>
       <h3>Exercises</h3>
-      <p>Data: {`${data}`}</p>
-      <p>error: {`${error}`}</p>
-      <p>loading: {`${isLoading}`}</p>
       {data?.exercisesByDate.map((ex) => (
         <div key={"exercise-" + ex.id}>
           <h3

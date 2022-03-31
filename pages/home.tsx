@@ -14,7 +14,6 @@ import {
   useMeQuery,
 } from "src/generated/graphql-hooks";
 import { calculateBMR } from "utils/BMR";
-import { Input } from "components/Input";
 
 const Home = (props: PropTypes) => {
   const date = dayjs().format("YYYY-MM-DD");
@@ -32,12 +31,13 @@ const Home = (props: PropTypes) => {
   console.log("current pop goal: ", currentPopGoal.data);
   console.log("current user weight: ", currentUserWeight.data);
 
+  let bmr = 0;
   if (
     me.data &&
     currentUserWeight.data &&
     currentUserWeight.data.currentUserWeight
   ) {
-    const bmr = calculateBMR(
+    bmr = calculateBMR(
       me.data.me,
       currentUserWeight.data.currentUserWeight.weight_in_lbs
     );
@@ -47,14 +47,7 @@ const Home = (props: PropTypes) => {
   return (
     <Layout>
       <h1>Home</h1>
-      {/* <Input /> */}
-      {/* <Inp
-        id="my-id"
-        label="working"
-        placeholder="some text..."
-        required={true}
-        type="password"
-      /> */}
+      <p>My BMR is {bmr !== 0 ? bmr : "Unknown"}</p>
       <Exercise gqlClient={props.gqlClient} date={date} />
       <Meals gqlClient={props.gqlClient} date={date} />
       <Mood gqlClient={props.gqlClient} date={date} />

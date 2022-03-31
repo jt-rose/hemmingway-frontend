@@ -23,9 +23,6 @@ export const Mood = (props: PropTypesWithDate) => {
   return (
     <div>
       <h3>Moods</h3>
-      <p>Data: {`${data}`}</p>
-      <p>error: {`${error}`}</p>
-      <p>loading: {`${isLoading}`}</p>
       {data?.moodByDate.map((mood) => (
         <div key={"mood-" + mood.id}>
           <h3

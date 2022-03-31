@@ -12,6 +12,11 @@ import {
   WeightGoal,
 } from "src/generated/graphql-hooks";
 
+export type SimpleMeal = Omit<
+  Meal,
+  "created_at" | "updated_at" | "user" | "user_id"
+>;
+
 export interface PropTypes {
   gqlClient: GraphQLClient;
 }
@@ -44,7 +49,7 @@ export interface PropTypesWithExercise extends PropTypes {
 }
 
 export interface PropTypesWithMeal extends PropTypes {
-  meal: Omit<Meal, "created_at" | "updated_at" | "user" | "user_id">;
+  meal: SimpleMeal;
 }
 
 export interface PropTypesWithMood extends PropTypes {
