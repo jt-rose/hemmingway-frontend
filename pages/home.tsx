@@ -14,9 +14,19 @@ import {
   useMeQuery,
 } from "src/generated/graphql-hooks";
 import { calculateBMR } from "utils/BMR";
+import {
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon,
+} from "@heroicons/react/outline";
+import { useState } from "react";
 
 const Home = (props: PropTypes) => {
-  const date = dayjs().format("YYYY-MM-DD");
+  const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
+
+  const increaseDate = () =>
+    setDate(dayjs(date).add(1, "day").format("YYYY-MM-DD"));
+  const decreaseDate = () =>
+    setDate(dayjs(date).subtract(1, "day").format("YYYY-MM-DD"));
 
   const me = useMeQuery(props.gqlClient);
   const currentDistanceGoal = useCurrentDistanceGoalQuery(props.gqlClient);
@@ -47,6 +57,12 @@ const Home = (props: PropTypes) => {
   return (
     <Layout>
       <h1>Home</h1>
+      <div className="flex w-full justify-around my-8">
+        <ChevronDoubleLeftIcon className="ht-12 w-8" onClick={decreaseDate} />
+        <p>Date: {date}</p>
+        <ChevronDoubleRightIcon className="ht-12 w-8" onClick={increaseDate} />
+      </div>
+
       <p>My BMR is {bmr !== 0 ? bmr : "Unknown"}</p>
       <Exercise gqlClient={props.gqlClient} date={date} />
       <Meals gqlClient={props.gqlClient} date={date} />
