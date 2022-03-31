@@ -483,6 +483,11 @@ export type PopGoalPaginator = {
 
 export type Query = {
   __typename?: 'Query';
+  currentDistanceGoal?: Maybe<DailyDistanceGoal>;
+  currentPopGoal?: Maybe<PopGoal>;
+  currentStepsGoal?: Maybe<DailyStepsGoal>;
+  currentUserWeight?: Maybe<UserWeight>;
+  currentWeightGoal?: Maybe<WeightGoal>;
   daily_distance_goals: Array<DailyDistanceGoal>;
   daily_steps_goals: Array<DailyStepsGoal>;
   distanceGoalsBetweenDates: Array<DailyDistanceGoal>;
@@ -782,6 +787,11 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: string };
 
+export type CurrentDistanceGoalQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentDistanceGoalQuery = { __typename?: 'Query', currentDistanceGoal?: { __typename?: 'DailyDistanceGoal', id: string, goal_start_date: any, daily_goal_in_miles: number, note?: string | null, active: boolean } | null };
+
 export type DailyDistanceGoalsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -815,6 +825,11 @@ export type UpdateDailyDistanceGoalMutationVariables = Exact<{
 
 
 export type UpdateDailyDistanceGoalMutation = { __typename?: 'Mutation', updateDailyDistanceGoal: { __typename?: 'DailyDistanceGoal', id: string, note?: string | null, goal_start_date: any, daily_goal_in_miles: number, active: boolean } };
+
+export type CurrentStepsGoalQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentStepsGoalQuery = { __typename?: 'Query', currentStepsGoal?: { __typename?: 'DailyStepsGoal', id: string, goal_start_date: any, daily_goal_in_steps: number, note?: string | null, active: boolean } | null };
 
 export type DailyStepsGoalsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -972,6 +987,11 @@ export type CreatePopGoalMutationVariables = Exact<{
 
 export type CreatePopGoalMutation = { __typename?: 'Mutation', createPopGoal: { __typename?: 'PopGoal', id: string, goal_amount: number, goal_type?: Goal_Type | null, date_of_goal: any } };
 
+export type CurrentPopGoalQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentPopGoalQuery = { __typename?: 'Query', currentPopGoal?: { __typename?: 'PopGoal', id: string, date_of_goal: any, goal_type?: Goal_Type | null, goal_amount: number } | null };
+
 export type DeletePopGoalMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -1062,6 +1082,11 @@ export type UpdateUserMutationVariables = Exact<{
 
 export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, name: string, email: string, gender: Gender, birthday: any, height_in_inches: number } };
 
+export type CurrentUserWeightQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentUserWeightQuery = { __typename?: 'Query', currentUserWeight?: { __typename?: 'UserWeight', id: string, weight_in_lbs: number, date_of_weight: any, note?: string | null } | null };
+
 export type DeleteUserWeightMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -1095,6 +1120,11 @@ export type WeightHistoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type WeightHistoryQuery = { __typename?: 'Query', weight_history: Array<{ __typename?: 'UserWeight', id: string, weight_in_lbs: number, date_of_weight: any, note?: string | null }> };
+
+export type CurrentWeightGoalQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentWeightGoalQuery = { __typename?: 'Query', currentWeightGoal?: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean } | null };
 
 export type DeleteWeightGoalMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1147,6 +1177,31 @@ export const useLoginMutation = <
     useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
       ['Login'],
       (variables?: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(client, LoginDocument, variables, headers)(),
+      options
+    );
+export const CurrentDistanceGoalDocument = `
+    query CurrentDistanceGoal {
+  currentDistanceGoal {
+    id
+    goal_start_date
+    daily_goal_in_miles
+    note
+    active
+  }
+}
+    `;
+export const useCurrentDistanceGoalQuery = <
+      TData = CurrentDistanceGoalQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: CurrentDistanceGoalQueryVariables,
+      options?: UseQueryOptions<CurrentDistanceGoalQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<CurrentDistanceGoalQuery, TError, TData>(
+      variables === undefined ? ['CurrentDistanceGoal'] : ['CurrentDistanceGoal', variables],
+      fetcher<CurrentDistanceGoalQuery, CurrentDistanceGoalQueryVariables>(client, CurrentDistanceGoalDocument, variables, headers),
       options
     );
 export const DailyDistanceGoalsDocument = `
@@ -1263,6 +1318,31 @@ export const useUpdateDailyDistanceGoalMutation = <
     useMutation<UpdateDailyDistanceGoalMutation, TError, UpdateDailyDistanceGoalMutationVariables, TContext>(
       ['UpdateDailyDistanceGoal'],
       (variables?: UpdateDailyDistanceGoalMutationVariables) => fetcher<UpdateDailyDistanceGoalMutation, UpdateDailyDistanceGoalMutationVariables>(client, UpdateDailyDistanceGoalDocument, variables, headers)(),
+      options
+    );
+export const CurrentStepsGoalDocument = `
+    query CurrentStepsGoal {
+  currentStepsGoal {
+    id
+    goal_start_date
+    daily_goal_in_steps
+    note
+    active
+  }
+}
+    `;
+export const useCurrentStepsGoalQuery = <
+      TData = CurrentStepsGoalQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: CurrentStepsGoalQueryVariables,
+      options?: UseQueryOptions<CurrentStepsGoalQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<CurrentStepsGoalQuery, TError, TData>(
+      variables === undefined ? ['CurrentStepsGoal'] : ['CurrentStepsGoal', variables],
+      fetcher<CurrentStepsGoalQuery, CurrentStepsGoalQueryVariables>(client, CurrentStepsGoalDocument, variables, headers),
       options
     );
 export const DailyStepsGoalsDocument = `
@@ -1796,6 +1876,30 @@ export const useCreatePopGoalMutation = <
       (variables?: CreatePopGoalMutationVariables) => fetcher<CreatePopGoalMutation, CreatePopGoalMutationVariables>(client, CreatePopGoalDocument, variables, headers)(),
       options
     );
+export const CurrentPopGoalDocument = `
+    query CurrentPopGoal {
+  currentPopGoal {
+    id
+    date_of_goal
+    goal_type
+    goal_amount
+  }
+}
+    `;
+export const useCurrentPopGoalQuery = <
+      TData = CurrentPopGoalQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: CurrentPopGoalQueryVariables,
+      options?: UseQueryOptions<CurrentPopGoalQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<CurrentPopGoalQuery, TError, TData>(
+      variables === undefined ? ['CurrentPopGoal'] : ['CurrentPopGoal', variables],
+      fetcher<CurrentPopGoalQuery, CurrentPopGoalQueryVariables>(client, CurrentPopGoalDocument, variables, headers),
+      options
+    );
 export const DeletePopGoalDocument = `
     mutation DeletePopGoal($id: ID!) {
   deletePopGoal(id: $id)
@@ -2092,6 +2196,30 @@ export const useUpdateUserMutation = <
       (variables?: UpdateUserMutationVariables) => fetcher<UpdateUserMutation, UpdateUserMutationVariables>(client, UpdateUserDocument, variables, headers)(),
       options
     );
+export const CurrentUserWeightDocument = `
+    query CurrentUserWeight {
+  currentUserWeight {
+    id
+    weight_in_lbs
+    date_of_weight
+    note
+  }
+}
+    `;
+export const useCurrentUserWeightQuery = <
+      TData = CurrentUserWeightQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: CurrentUserWeightQueryVariables,
+      options?: UseQueryOptions<CurrentUserWeightQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<CurrentUserWeightQuery, TError, TData>(
+      variables === undefined ? ['CurrentUserWeight'] : ['CurrentUserWeight', variables],
+      fetcher<CurrentUserWeightQuery, CurrentUserWeightQueryVariables>(client, CurrentUserWeightDocument, variables, headers),
+      options
+    );
 export const DeleteUserWeightDocument = `
     mutation DeleteUserWeight($id: ID!) {
   deleteUserWeight(id: $id)
@@ -2202,6 +2330,31 @@ export const useWeightHistoryQuery = <
     useQuery<WeightHistoryQuery, TError, TData>(
       variables === undefined ? ['WeightHistory'] : ['WeightHistory', variables],
       fetcher<WeightHistoryQuery, WeightHistoryQueryVariables>(client, WeightHistoryDocument, variables, headers),
+      options
+    );
+export const CurrentWeightGoalDocument = `
+    query CurrentWeightGoal {
+  currentWeightGoal {
+    id
+    goal_start_date
+    goal_in_lbs
+    note
+    active
+  }
+}
+    `;
+export const useCurrentWeightGoalQuery = <
+      TData = CurrentWeightGoalQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: CurrentWeightGoalQueryVariables,
+      options?: UseQueryOptions<CurrentWeightGoalQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<CurrentWeightGoalQuery, TError, TData>(
+      variables === undefined ? ['CurrentWeightGoal'] : ['CurrentWeightGoal', variables],
+      fetcher<CurrentWeightGoalQuery, CurrentWeightGoalQueryVariables>(client, CurrentWeightGoalDocument, variables, headers),
       options
     );
 export const DeleteWeightGoalDocument = `

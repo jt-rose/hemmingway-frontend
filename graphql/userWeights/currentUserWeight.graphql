@@ -1,0 +1,8 @@
+query CurrentUserWeight {
+  currentUserWeight {
+    id
+    weight_in_lbs
+    date_of_weight
+    note
+  }
+}

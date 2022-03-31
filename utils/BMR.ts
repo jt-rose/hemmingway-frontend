@@ -1,6 +1,11 @@
 import { User } from "src/generated/graphql-hooks";
 
-export const calculateBMR = (user: User, weightInPounds: number) => {
+type SimpleUser = Pick<
+  User,
+  "id" | "name" | "birthday" | "email" | "gender" | "height_in_inches"
+>;
+
+export const calculateBMR = (user: SimpleUser, weightInPounds: number) => {
   const { gender, birthday, height_in_inches } = user;
   const age = calculateAge(birthday);
   if (gender === "MALE") {

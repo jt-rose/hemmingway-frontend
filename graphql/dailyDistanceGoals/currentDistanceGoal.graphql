@@ -1,0 +1,9 @@
+query CurrentDistanceGoal {
+  currentDistanceGoal {
+    id
+    goal_start_date
+    daily_goal_in_miles
+    note
+    active
+  }
+}

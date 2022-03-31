@@ -1,0 +1,8 @@
+query CurrentPopGoal {
+  currentPopGoal {
+    id
+    date_of_goal
+    goal_type
+    goal_amount
+  }
+}
