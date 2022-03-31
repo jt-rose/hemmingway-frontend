@@ -18,11 +18,13 @@ import {
   useSleepHabitsByDateQuery,
 } from "src/generated/graphql-hooks";
 import { calculateBMR } from "utils/BMR";
+import { getDailyCalorieTarget } from "utils/getDailyCalories";
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from "@heroicons/react/outline";
 import { useState } from "react";
+import { Pie } from "components/Pie";
 
 const Home = (props: PropTypes) => {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -84,6 +86,11 @@ const Home = (props: PropTypes) => {
   console.log(date, "moods", mood);
   console.log(date, "sleepHabit", sleepHabit);
 
+  const target = getDailyCalorieTarget(
+    currentUserWeight.data?.currentUserWeight?.weight_in_lbs,
+    currentWeightGoal.data?.currentWeightGoal?.goal_in_lbs
+  );
+
   return (
     <Layout>
       <h1>Home</h1>
@@ -110,6 +117,32 @@ const Home = (props: PropTypes) => {
           (bmr +
             exercise.data?.exercisesByDate.reduce((a, b) => a + b.calories, 0))}
       </p>
+      <p>Current daily goal: {target} </p>
+      <div className="max-w-xs">
+        <Pie
+          data={[
+            {
+              title: "cal burned",
+              value:
+                bmr +
+                exercise.data?.exercisesByDate.reduce(
+                  (a, b) => a + b.calories,
+                  0
+                ) -
+                meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0),
+              color: "#E38627",
+            },
+            {
+              title: "cal ate",
+              value: meals.data?.mealsByDate.reduce(
+                (a, b) => a + b.calories,
+                0
+              ),
+              color: "#C13C37",
+            },
+          ]}
+        />
+      </div>
       <Exercise gqlClient={props.gqlClient} date={date} />
       <Meals gqlClient={props.gqlClient} date={date} />
       <Mood gqlClient={props.gqlClient} date={date} />
