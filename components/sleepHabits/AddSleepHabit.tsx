@@ -13,7 +13,7 @@ export const AddSleepHabit = (props: PropTypesWithModal) => {
   const onSubmit = (data: any) =>
     addSleepHabit.mutate(
       {
-        input: data,
+        input: { ...data, date_of_sleep: props.date },
       },
       refetchDirective
     );
@@ -40,14 +40,14 @@ export const AddSleepHabit = (props: PropTypesWithModal) => {
           {...register("date_of_sleep")}
         /> */}
 
-        <Input
+        {/* <Input
           id="sleep-date-input"
           label="date"
           placeholder=""
           required={true}
           type="date"
           formConnect={register("date_of_sleep")}
-        />
+        /> */}
 
         {/* <label htmlFor="sleep-quality-input">Sleep Quality</label>
         <select id={"sleep-quality-input"} {...register("quality")}>

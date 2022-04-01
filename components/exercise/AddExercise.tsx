@@ -12,7 +12,7 @@ export const AddExercise = (props: PropTypesWithModal) => {
   const onSubmit = (data: any) =>
     addExercise.mutate(
       {
-        input: data,
+        input: { ...data, date_of_exercise: props.date },
       },
       refetchDirective
     );
@@ -41,14 +41,16 @@ export const AddExercise = (props: PropTypesWithModal) => {
           formConnect={register("calories", { valueAsNumber: true })}
         />
 
-        <Input
+        {/* <Input
           id="exercise-date-input"
           label="date"
           placeholder=""
           required={true}
           type="date"
           formConnect={register("date_of_exercise")}
+          
         />
+        <input type="date" hidden /> */}
 
         <Input
           id="exercise-minutes-input"

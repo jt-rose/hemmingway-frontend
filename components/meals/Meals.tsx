@@ -41,6 +41,7 @@ export const Meals = (props: PropTypesWithDate) => {
         gqlClient={props.gqlClient}
         formType="MEAL"
         addOrUpdate="ADD"
+        date={props.date}
       />
     </div>
   );

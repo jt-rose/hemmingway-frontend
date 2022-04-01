@@ -13,7 +13,7 @@ export const AddMeal = (props: PropTypesWithModal) => {
   const onSubmit = (data: any) =>
     addMeal.mutate(
       {
-        input: data,
+        input: { ...data, date_of_meal: props.date },
       },
       refetchDirective
     );
@@ -44,14 +44,14 @@ export const AddMeal = (props: PropTypesWithModal) => {
           })}
         />
 
-        <Input
+        {/* <Input
           id="meal-date-input"
           label="date"
           placeholder="some text..."
           required={true}
           type="date"
           formConnect={register("date_of_meal")}
-        />
+        /> */}
 
         <Select
           id="meal-category-input"

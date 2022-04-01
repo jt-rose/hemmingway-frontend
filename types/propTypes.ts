@@ -24,10 +24,12 @@ export interface PropTypes {
 export interface PropTypesWithModalForm extends PropTypes {
   formType: "MEAL" | "MOOD" | "EXERCISE" | "SLEEPHABIT";
   addOrUpdate: "ADD" | "UPDATE";
+  date: string;
 }
 
 export interface PropTypesWithModal extends PropTypes {
   closeModal: () => void;
+  date: string;
 }
 
 export interface PropTypesWithRefresh extends PropTypes {

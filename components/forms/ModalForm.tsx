@@ -63,7 +63,11 @@ export function ModalForm(props: PropTypesWithModalForm) {
   const buttonTitle = getFormButtonTitle(props.formType, props.addOrUpdate);
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} formTitle={buttonTitle}>
-      <FormElement gqlClient={props.gqlClient} closeModal={closeModal} />
+      <FormElement
+        gqlClient={props.gqlClient}
+        closeModal={closeModal}
+        date={props.date}
+      />
     </Modal>
   );
 }

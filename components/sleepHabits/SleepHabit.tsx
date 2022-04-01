@@ -48,6 +48,7 @@ export const SleepHabit = (props: PropTypesWithDate) => {
         gqlClient={props.gqlClient}
         formType="SLEEPHABIT"
         addOrUpdate="ADD"
+        date={props.date}
       />
     </div>
   );

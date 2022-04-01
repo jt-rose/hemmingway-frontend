@@ -37,6 +37,7 @@ export const Mood = (props: PropTypesWithDate) => {
         gqlClient={props.gqlClient}
         formType="MOOD"
         addOrUpdate="ADD"
+        date={props.date}
       />
     </div>
   );

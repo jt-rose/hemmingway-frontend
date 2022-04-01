@@ -14,7 +14,7 @@ export const AddMood = (props: PropTypesWithModal) => {
   const onSubmit = (data: any) =>
     addMood.mutate(
       {
-        input: data,
+        input: { ...data, date_of_mood: props.date },
       },
       refetchDirective
     );
@@ -55,14 +55,14 @@ export const AddMood = (props: PropTypesWithModal) => {
           type="date"
           {...register("date_of_mood")}
         /> */}
-        <Input
+        {/* <Input
           id="mood-date-input"
           label="date"
           placeholder=""
           required={true}
           type="date"
           formConnect={register("date_of_mood")}
-        />
+        /> */}
 
         {/* <label htmlFor={"mood-type-input"}>mood type</label>
         <select id="mood-type-input" {...register("mood_type")}>
