@@ -3,7 +3,6 @@
 import { PropTypesWithRefresh } from "types/propTypes";
 import { Layout } from "components/Layout";
 import { LoginForm } from "components/auth/LoginForm";
-import { RegisterForm } from "components/auth/RegisterForm";
 import Link from "next/link";
 
 const Login = (props: PropTypesWithRefresh) => {

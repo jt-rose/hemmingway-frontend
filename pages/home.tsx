@@ -18,13 +18,11 @@ import {
   useSleepHabitsByDateQuery,
 } from "src/generated/graphql-hooks";
 import { calculateBMR } from "utils/BMR";
-import { getDailyCalorieTarget } from "utils/getDailyCalories";
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from "@heroicons/react/outline";
 import { useState } from "react";
-import { Pie } from "components/Pie";
 
 const Home = (props: PropTypes) => {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));

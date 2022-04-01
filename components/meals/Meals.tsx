@@ -1,27 +1,14 @@
-import {
-  useMealsByDateQuery,
-  useDeleteMealMutation,
-} from "src/generated/graphql-hooks";
+import { useMealsByDateQuery } from "src/generated/graphql-hooks";
 import { PropTypesWithDate } from "types/propTypes";
-import { useQueryClient } from "react-query";
-import { UpdateMeal } from "./UpdateMeal";
 // import { MealModalForm } from "components/forms/MealModalForm";
 import { ModalForm } from "components/forms/ModalForm";
 import { MealCard } from "components/meals/MealCard";
 
 export const Meals = (props: PropTypesWithDate) => {
-  const queryClient = useQueryClient();
-  const { data, error, isLoading } = useMealsByDateQuery(props.gqlClient, {
+  const { data } = useMealsByDateQuery(props.gqlClient, {
     date_of_meal: props.date,
   });
 
-  const deleteMeal = useDeleteMealMutation(props.gqlClient);
-
-  const refetchDirective = {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["MealsByDate"]);
-    },
-  };
   return (
     <div>
       <h3>Meals</h3>
