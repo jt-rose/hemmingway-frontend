@@ -13,6 +13,15 @@ import {
 import { useState } from "react";
 import dayjs from "dayjs";
 import { PropTypes } from "types/propTypes";
+import { Chart } from "components/Chart";
+import {
+  VictoryChart,
+  VictoryTheme,
+  VictoryPie,
+  VictoryArea,
+  VictoryPolarAxis,
+} from "victory";
+import { Pie } from "components/Pie";
 
 const Stats = (props: PropTypes) => {
   const [from, setFrom] = useState("1900-01-01");
@@ -72,6 +81,69 @@ const Stats = (props: PropTypes) => {
       Meals: {meals.data?.mealsBetweenDates.length}
       Moods: {moods.data?.moodsBetweenDates.length}
       Sleep Habits: {sleepHabits.data?.sleepHabitsBetweenDates.length}
+      <Chart />
+      <VictoryChart theme={VictoryTheme.material}>
+        <VictoryArea
+          style={{ data: { fill: "#c43a31" } }}
+          data={[
+            { x: 1, y: 3 },
+            { x: 2, y: 3 },
+            { x: 3, y: 5 },
+            { x: 4, y: 4 },
+            { x: 5, y: 7 },
+          ]}
+        />
+      </VictoryChart>
+      <Pie
+        data={[
+          { title: "One", value: 10, color: "#E38627" },
+          { title: "Two", value: 15, color: "#C13C37" },
+          { title: "Three", value: 20, color: "#6A2135" },
+        ]}
+      />
+      <svg width={300} height={300}>
+        <circle cx={150} cy={150} r={50} fill="#c43a31" />
+        <VictoryPie
+          standalone={false}
+          width={300}
+          height={300}
+          innerRadius={75}
+          data={[
+            { x: "Cats", y: 35 },
+            { x: "Dogs", y: 40 },
+            { x: "Birds", y: 55 },
+          ]}
+        />
+      </svg>
+      <VictoryPie
+        theme={VictoryTheme.material}
+        colorScale={["green", "orange", "red", "cyan"]}
+        //innerRadius={({ datum }) => datum.y + 10}
+        padAngle={5}
+        innerRadius={80}
+        //padAngle={({ datum }) => datum.y}
+        data={[
+          { x: "full", y: 70 },
+          { x: "few", y: 17 },
+          { x: "none", y: 3 },
+          { x: "extra", y: 10 },
+        ]}
+      />
+      <VictoryChart polar theme={VictoryTheme.material}>
+        <VictoryArea
+          data={[
+            { x: "HAPPY", y: 10 },
+            { x: "MOTIVATED", y: 8 },
+            { x: "SATISFIED", y: 6 },
+            { x: "RELAXED", y: 12 },
+            { x: "TIRED", y: 14 },
+            { x: "FRUSTRATED", y: 2 },
+            { x: "SAD", y: 3 },
+            { x: "ANXIOUS", y: 5 },
+          ]}
+        />
+        <VictoryPolarAxis />
+      </VictoryChart>
     </Layout>
   );
 };

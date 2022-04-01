@@ -6,6 +6,7 @@ import { PropTypesWithDate } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { SetUserWeight } from "./SetUserWeight";
 import { UpdateUserWeight } from "./UpdateUserWeight";
+import dayjs from "dayjs";
 
 export const UserWeight = (props: PropTypesWithDate) => {
   const queryClient = useQueryClient();
@@ -39,7 +40,10 @@ export const UserWeight = (props: PropTypesWithDate) => {
           <UpdateUserWeight gqlClient={props.gqlClient} userWeight={weight} />
         </div>
       ))}
-      <SetUserWeight gqlClient={props.gqlClient} />
+      <SetUserWeight
+        gqlClient={props.gqlClient}
+        date={dayjs().format("YYYY-MM-DD")}
+      />
     </div>
   );
 };

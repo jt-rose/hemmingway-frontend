@@ -39,7 +39,7 @@ export const RegisterForm = (props: PropTypesWithRefresh) => {
                 queryClient.invalidateQueries(["Me"]);
                 props.setToken(res.login);
                 //router.push('/set-weight')
-                router.push("/home");
+                router.push("/settings");
               },
             }
           );
