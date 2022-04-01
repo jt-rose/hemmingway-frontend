@@ -4,7 +4,7 @@ import { PencilAltIcon } from "@heroicons/react/outline";
 import { UpdateMeal } from "components/meals/UpdateMeal";
 import { PropTypesWithMeal } from "types/propTypes";
 
-export function UpdateModal(props: PropTypesWithMeal) {
+export function UpdateMealModal(props: PropTypesWithMeal) {
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {

@@ -3,7 +3,7 @@ import { TrashIcon } from "@heroicons/react/outline";
 import { GraphQLClient } from "graphql-request";
 import { useDeleteMealMutation } from "src/generated/graphql-hooks";
 import { useQueryClient } from "react-query";
-import { UpdateModal } from "components/forms/UpdateModal";
+import { UpdateMealModal } from "components/forms/UpdateMealModal";
 
 export const MealCard = (props: {
   gqlClient: GraphQLClient;
@@ -42,7 +42,7 @@ export const MealCard = (props: {
         </p>
       </div>
       <div className="mr-8">
-        <UpdateModal gqlClient={props.gqlClient} meal={props.meal} />
+        <UpdateMealModal gqlClient={props.gqlClient} meal={props.meal} />
         <TrashIcon
           className="ht-8 w-6 hover:bg-red-500 rounded-lg"
           onClick={handleDelete}
