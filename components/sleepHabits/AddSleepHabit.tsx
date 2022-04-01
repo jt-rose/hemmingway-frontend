@@ -88,7 +88,7 @@ export const AddSleepHabit = (props: PropTypesWithModal) => {
           id="sleep-note-input"
           label="Note"
           placeholder="some text..."
-          required={true}
+          required={false}
           type="text"
           formConnect={register("note")}
         />
