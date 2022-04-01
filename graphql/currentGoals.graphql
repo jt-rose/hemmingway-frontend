@@ -5,6 +5,7 @@ query CurrentGoals {
     goal_in_lbs
     note
     active
+    goal_pace
   }
   currentPopGoal {
     id

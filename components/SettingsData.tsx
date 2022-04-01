@@ -12,6 +12,7 @@ import { SetUserWeight } from "./settings/userWeight/SetUserWeight";
 import { SetWeightGoal } from "./settings/weightGoal/SetWeightGoal";
 import { SetDistanceGoal } from "./settings/dailyDistanceGoal/SetDistanceGoal";
 import { SetStepsGoal } from "./settings/dailyStepsGoal/SetStepsGoal";
+import { getDailyCalorieTarget } from "utils/getDailyCalories";
 
 export const SettingsData = (props: {
   data: CurrentGoalsQuery;
@@ -32,7 +33,15 @@ export const SettingsData = (props: {
     <div>
       <h1 className="text-3xl">Settings</h1>
       <h2 className="text-3xl">Goals</h2>
-      <p className="text-2xl">Daily Calorie Goal: -200</p>
+      <p className="text-2xl">
+        Daily Calorie Goal:{" "}
+        {currentUserWeight && currentWeightGoal
+          ? `${getDailyCalorieTarget(
+              currentUserWeight,
+              currentWeightGoal
+            )} Per Day`
+          : "No Target Set"}
+      </p>
       <p className="text-2xl">
         {currentStepsGoal?.daily_goal_in_steps} Steps Daily
       </p>

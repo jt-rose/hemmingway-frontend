@@ -27,8 +27,8 @@ export const getCalorieTotal = (
 };
 
 export const getDailyCalorieTarget = (
-  userWeight: UserWeight,
-  weightGoal: WeightGoal
+  userWeight: Omit<UserWeight, "created_at" | "updated_at" | "user_id">,
+  weightGoal: Omit<WeightGoal, "created_at" | "updated_at" | "user_id">
 ) => {
   // if goal is met, return maintenance calorie target
   if (userWeight.weight_in_lbs === weightGoal.goal_in_lbs) {
