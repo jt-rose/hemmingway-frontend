@@ -9,6 +9,7 @@ const Login = (props: PropTypesWithRefresh) => {
   return (
     <Layout>
       <h3>Login</h3>
+
       <LoginForm gqlClient={props.gqlClient} setToken={props.setToken} />
       <h3>Register</h3>
       <RegisterForm gqlClient={props.gqlClient} setToken={props.setToken} />

@@ -86,10 +86,10 @@ const Home = (props: PropTypes) => {
   console.log(date, "moods", mood);
   console.log(date, "sleepHabit", sleepHabit);
 
-  const target = getDailyCalorieTarget(
-    currentUserWeight.data?.currentUserWeight?.weight_in_lbs,
-    currentWeightGoal.data?.currentWeightGoal?.goal_in_lbs
-  );
+  // const target = getDailyCalorieTarget(
+  //   currentUserWeight.data?.currentUserWeight?.weight_in_lbs,
+  //   currentWeightGoal.data?.currentWeightGoal?.goal_in_lbs
+  // );
 
   return (
     <Layout>
@@ -101,7 +101,7 @@ const Home = (props: PropTypes) => {
       </div>
 
       <p>My BMR is {bmr !== 0 ? bmr : "Unknown"}</p>
-      <p>
+      {/* <p>
         Current: {meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0)}{" "}
         out of{" "}
         {bmr +
@@ -142,7 +142,7 @@ const Home = (props: PropTypes) => {
             },
           ]}
         />
-      </div>
+      </div> */}
       <Exercise gqlClient={props.gqlClient} date={date} />
       <Meals gqlClient={props.gqlClient} date={date} />
       <Mood gqlClient={props.gqlClient} date={date} />
