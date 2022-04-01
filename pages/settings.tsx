@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { PropTypes } from "types/propTypes";
 
 import { useCurrentGoalsQuery } from "../src/generated/graphql-hooks";
-import { Pie } from "components/Pie";
+import { Radio } from "components/forms/Radio";
 
 const Settings = (props: PropTypes) => {
   const date = dayjs().format("YYYY-MM-DD");
@@ -17,7 +17,7 @@ const Settings = (props: PropTypes) => {
   return (
     <Layout>
       <h1>Settings</h1>
-
+      <Radio radioOptions={["MALE", "FEMALE", "NB"]} name="gender" />
       <UserWeight gqlClient={props.gqlClient} date={date} />
       {/*<WeightGoal gqlClient={props.gqlClient} date={date} />
       <PopGoal gqlClient={props.gqlClient} date={date} />
