@@ -2,10 +2,15 @@ import { PropTypesWithRefresh } from "types/propTypes";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import { useRegisterMutation } from "src/generated/graphql-hooks";
+import { Form } from "components/forms/Form";
+import { Input } from "components/forms/Input";
+import { Select } from "components/forms/Select";
+import { useRouter } from "next/router";
 
 export const RegisterForm = (props: PropTypesWithRefresh) => {
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
+  const router = useRouter();
 
   const createUser = useRegisterMutation(props.gqlClient);
 
@@ -21,45 +26,97 @@ export const RegisterForm = (props: PropTypesWithRefresh) => {
       },
       {
         onSuccess: () => {
-          //props.setToken(response.createUser);
+          props.setToken("");
           queryClient.invalidateQueries(["Me"]);
+          router.push("/login");
         },
       }
     );
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="register-name-input">name</label>
-      <input id="register-name-input" {...register("name")} />
+    <Form submitButtonName="Sign up" onSubmit={handleSubmit(onSubmit)}>
+      {/* <label htmlFor="register-name-input">name</label>
+      <input id="register-name-input" {...register("name")} /> */}
 
-      <label htmlFor="register-email-input">email</label>
-      <input id="register-email-input" {...register("email")} />
+      <Input
+        required
+        type="text"
+        id="register-name-input"
+        label="Name"
+        placeholder="..."
+        formConnect={register("name")}
+      />
 
-      <label htmlFor="register-password-input">password</label>
-      <input id="register-password-input" {...register("password")} />
+      <Input
+        required
+        type="text"
+        id="register-email-input"
+        label="Email"
+        placeholder="..."
+        formConnect={register("email")}
+      />
+      {/* <label htmlFor="register-email-input">email</label>
+      <input id="register-email-input" {...register("email")} /> */}
 
-      <label htmlFor="birthday-input">birthday</label>
-      <input id="birthday-input" type="date" {...register("birthday")} />
+      {/* <label htmlFor="register-password-input">password</label>
+      <input id="register-password-input" {...register("password")} /> */}
 
-      <label htmlFor="register-gender-input">category</label>
+      <Input
+        required
+        type="password"
+        id="register-password-input"
+        label="Password"
+        placeholder="********"
+        formConnect={register("password")}
+      />
+
+      {/* <label htmlFor="birthday-input">birthday</label>
+      <input id="birthday-input" type="date" {...register("birthday")} /> */}
+
+      <Input
+        required
+        type="date"
+        id="birthday-input"
+        label="Birthday"
+        placeholder="..."
+        formConnect={register("birthday")}
+      />
+
+      {/* <label htmlFor="register-gender-input">category</label>
       <select id="register-gender-input" {...register("gender")}>
         {["MALE", "FEMALE", "NB"].map((g) => (
           <option value={g} key={g + "select"}>
             {g === "NB" ? "NONBINARY" : g}
           </option>
         ))}
-      </select>
+      </select> */}
 
-      <label htmlFor="register-height-input">height in inches</label>
+      <Select
+        id="register-gender-input"
+        selectOptions={["MALE", "FEMALE", "NB"]}
+        formConnect={register("gender")}
+        label="Gender"
+      />
+
+      {/* <label htmlFor="register-height-input">height in inches</label>
       <input
         id="register-height-input"
         type="number"
         {...register("height_in_inches", {
           valueAsNumber: true,
         })}
-      />
+      /> */}
 
-      <input type="submit" value="Sign Up" />
-    </form>
+      <Input
+        required
+        type="number"
+        id="register-height-input"
+        label="Height in Inches"
+        placeholder="..."
+        formConnect={register("height_in_inches", {
+          valueAsNumber: true,
+        })}
+      />
+    </Form>
   );
 };

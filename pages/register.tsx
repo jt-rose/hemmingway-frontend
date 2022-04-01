@@ -2,18 +2,16 @@
 // import { useLoginMutation } from "../src/generated/graphql-hooks";
 import { PropTypesWithRefresh } from "types/propTypes";
 import { Layout } from "components/Layout";
-import { LoginForm } from "components/auth/LoginForm";
 import { RegisterForm } from "components/auth/RegisterForm";
 import Link from "next/link";
 
 const Login = (props: PropTypesWithRefresh) => {
   return (
     <Layout>
-      <h3>Login</h3>
-
-      <LoginForm gqlClient={props.gqlClient} setToken={props.setToken} />
-      <Link href="/register">
-        <a>Register</a>
+      <h3>Register</h3>
+      <RegisterForm gqlClient={props.gqlClient} setToken={props.setToken} />
+      <Link href="/login">
+        <a>Login</a>
       </Link>
     </Layout>
   );
