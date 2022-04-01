@@ -58,6 +58,11 @@ const Stats = (props: PropTypes) => {
   return (
     <Layout>
       <h1>Stats</h1>
+      <h3>Weight Change</h3>
+      <h3>Calorie Intake</h3>
+      <h3>Sleep Quality</h3>
+      <h3>Sleep Amount</h3>
+      <h3>Stress Levels</h3>
       <label htmlFor="from-date">From: </label>
       <input
         id="from-date"
@@ -81,6 +86,14 @@ const Stats = (props: PropTypes) => {
       Meals: {meals.data?.mealsBetweenDates.length}
       Moods: {moods.data?.moodsBetweenDates.length}
       Sleep Habits: {sleepHabits.data?.sleepHabitsBetweenDates.length}
+      <Pie
+        data={[
+          { title: "High", value: 10, color: "#E38627" },
+          { title: "Moderate", value: 15, color: "#C13C37" },
+          { title: "Low", value: 20, color: "#6A2135" },
+        ]}
+      />
+      <h3>Mood</h3>
       <Chart />
       <VictoryChart theme={VictoryTheme.material}>
         <VictoryArea

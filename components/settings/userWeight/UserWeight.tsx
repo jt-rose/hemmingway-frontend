@@ -35,7 +35,7 @@ export const UserWeight = (props: PropTypesWithDate) => {
             {"User Weight: " +
               weight.weight_in_lbs +
               " lbs recorded on " +
-              weight.weight_in_lbs}
+              weight.date_of_weight}
           </h3>
           <UpdateUserWeight gqlClient={props.gqlClient} userWeight={weight} />
         </div>
