@@ -1,5 +1,5 @@
 import { CurrentGoalsQuery } from "src/generated/graphql-hooks";
-// import { DailyDistanceGoals } from "components/settings/dailyDistanceGoal/DistanceGoal";
+import { DailyDistanceGoals } from "components/settings/dailyDistanceGoal/DistanceGoal";
 import { DailyStepsGoals } from "components/settings/dailyStepsGoal/StepsGoals";
 // import { PopGoal } from "components/settings/popGoal/PopGoal";
 import { UserWeight } from "components/settings/userWeight/UserWeight";
@@ -43,8 +43,8 @@ export const SettingsData = (props: {
       </p>
       <UserWeight gqlClient={props.gqlClient} date={date} />
       {/*<WeightGoal gqlClient={props.gqlClient} date={date} />
-        <PopGoal gqlClient={props.gqlClient} date={date} />
-        <DailyDistanceGoals gqlClient={props.gqlClient} date={date} /> */}
+        <PopGoal gqlClient={props.gqlClient} date={date} />*/}
+      <DailyDistanceGoals gqlClient={props.gqlClient} date={date} />
       <DailyStepsGoals gqlClient={props.gqlClient} date={date} />
     </div>
   );

@@ -43,7 +43,7 @@ export const DailyDistanceGoals = (props: PropTypesWithDate) => {
           <UpdateDistanceGoal gqlClient={props.gqlClient} distanceGoal={dg} />
         </div>
       ))}
-      <SetDistanceGoal gqlClient={props.gqlClient} />
+      <SetDistanceGoal gqlClient={props.gqlClient} date={props.date} />
     </div>
   );
 };
