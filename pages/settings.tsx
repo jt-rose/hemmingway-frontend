@@ -17,6 +17,12 @@ const Settings = (props: PropTypes) => {
   return (
     <Layout>
       <h1>Settings</h1>
+      <h2>Goals</h2>
+      <p>Daily Calorie Goal: -200</p>
+      <p>Daily Steps Goal: 10,000</p>
+      <p>Daily Distance Goal: 3.5 miles</p>
+      <p>Current Weight: 200 lbs</p>
+      <p>Target Weight: 185 lbs</p>
       <Radio radioOptions={["MALE", "FEMALE", "NB"]} name="gender" />
       <UserWeight gqlClient={props.gqlClient} date={date} />
       {/*<WeightGoal gqlClient={props.gqlClient} date={date} />

@@ -28,7 +28,7 @@ import { Pie } from "components/Pie";
 
 const Home = (props: PropTypes) => {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
-
+  const isToday = date === dayjs().format("YYYY-MM-DD");
   const increaseDate = () =>
     setDate(dayjs(date).add(1, "day").format("YYYY-MM-DD"));
   const decreaseDate = () =>
@@ -95,9 +95,17 @@ const Home = (props: PropTypes) => {
     <Layout>
       <h1>Home</h1>
       <div className="flex w-full justify-around my-8">
-        <ChevronDoubleLeftIcon className="ht-12 w-8" onClick={decreaseDate} />
+        <ChevronDoubleLeftIcon
+          className="ht-12 w-8 hover:cursor-pointer"
+          onClick={decreaseDate}
+        />
         <p>Date: {date}</p>
-        <ChevronDoubleRightIcon className="ht-12 w-8" onClick={increaseDate} />
+        <ChevronDoubleRightIcon
+          className={`ht-12 w-8 ${
+            isToday ? "opacity-25" : "hover:cursor-pointer"
+          }`}
+          onClick={isToday ? () => {} : increaseDate}
+        />
       </div>
 
       <p>My BMR is {bmr !== 0 ? bmr : "Unknown"}</p>
