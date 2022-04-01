@@ -63,16 +63,6 @@ export const SetUserWeight = (props: PropTypesWithDate) => {
         onSubmit={handleSubmit(onSubmit)}
         submitButtonName="Record New Weight"
       >
-        {/* <form onSubmit={handleSubmit(onSubmit)}> */}
-        {/* <label htmlFor={"weight-in-lbs-input"}>weight in lbs</label>
-        <input
-          id={"weight-in-lbs-input"}
-          type="number"
-          {...register("weight_in_lbs", {
-            valueAsNumber: true,
-          })}
-        /> */}
-
         <Input
           id="weight-in-lbs-input"
           label="Weight in lbs"
@@ -84,16 +74,6 @@ export const SetUserWeight = (props: PropTypesWithDate) => {
           })}
         />
 
-        {/* <label htmlFor="weight-date-input">date</label>
-        <input
-          id="weight-date-input"
-          type="date"
-          {...register("date_of_weight")}
-        /> */}
-
-        {/* <label htmlFor={"weight-note-input"}>note</label>
-        <input id={"weight-note-input"} {...register("note")} /> */}
-
         <Input
           id="weight-note-input"
           label="Note"
@@ -102,9 +82,6 @@ export const SetUserWeight = (props: PropTypesWithDate) => {
           type="text"
           formConnect={register("note")}
         />
-
-        {/* <input type="submit" value="Update User Weight" />
-      </form> */}
       </Form>
     </div>
   );

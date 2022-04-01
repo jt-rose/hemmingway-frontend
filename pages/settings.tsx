@@ -1,34 +1,18 @@
 import { Layout } from "components/Layout";
-// import { DailyDistanceGoals } from "components/settings/dailyDistanceGoal/DistanceGoal";
-// import { DailyStepsGoals } from "components/settings/dailyStepsGoal/StepsGoals";
-// import { PopGoal } from "components/settings/popGoal/PopGoal";
-import { UserWeight } from "components/settings/userWeight/UserWeight";
-// import { WeightGoal } from "components/settings/weightGoal/WeightGoal";
-import dayjs from "dayjs";
+import { LoaderStack } from "components/Loader";
+import { SettingsData } from "components/SettingsData";
 import { PropTypes } from "types/propTypes";
 
 import { useCurrentGoalsQuery } from "../src/generated/graphql-hooks";
-import { Radio } from "components/forms/Radio";
 
 const Settings = (props: PropTypes) => {
-  const date = dayjs().format("YYYY-MM-DD");
   const { data } = useCurrentGoalsQuery(props.gqlClient);
+
   console.log(data);
   return (
     <Layout>
-      <h1>Settings</h1>
-      <h2>Goals</h2>
-      <p>Daily Calorie Goal: -200</p>
-      <p>Daily Steps Goal: 10,000</p>
-      <p>Daily Distance Goal: 3.5 miles</p>
-      <p>Current Weight: 200 lbs</p>
-      <p>Target Weight: 185 lbs</p>
-      <Radio radioOptions={["MALE", "FEMALE", "NB"]} name="gender" />
-      <UserWeight gqlClient={props.gqlClient} date={date} />
-      {/*<WeightGoal gqlClient={props.gqlClient} date={date} />
-      <PopGoal gqlClient={props.gqlClient} date={date} />
-      <DailyDistanceGoals gqlClient={props.gqlClient} date={date} />
-      <DailyStepsGoals gqlClient={props.gqlClient} date={date} /> */}
+      {!data && <LoaderStack />}
+      {data && <SettingsData data={data} gqlClient={props.gqlClient} />}
     </Layout>
   );
 };

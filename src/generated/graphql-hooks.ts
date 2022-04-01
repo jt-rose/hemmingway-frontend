@@ -798,7 +798,7 @@ export type LoginMutation = { __typename?: 'Mutation', login: string };
 export type CurrentGoalsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentGoalsQuery = { __typename?: 'Query', currentWeightGoal?: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean } | null, currentPopGoal?: { __typename?: 'PopGoal', id: string, date_of_goal: any, goal_type?: Goal_Type | null, goal_amount: number } | null, currentStepsGoal?: { __typename?: 'DailyStepsGoal', id: string, goal_start_date: any, daily_goal_in_steps: number, note?: string | null, active: boolean } | null, currentDistanceGoal?: { __typename?: 'DailyDistanceGoal', id: string, goal_start_date: any, daily_goal_in_miles: number, note?: string | null, active: boolean } | null };
+export type CurrentGoalsQuery = { __typename?: 'Query', currentWeightGoal?: { __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, active: boolean } | null, currentPopGoal?: { __typename?: 'PopGoal', id: string, date_of_goal: any, goal_type?: Goal_Type | null, goal_amount: number } | null, currentStepsGoal?: { __typename?: 'DailyStepsGoal', id: string, goal_start_date: any, daily_goal_in_steps: number, note?: string | null, active: boolean } | null, currentDistanceGoal?: { __typename?: 'DailyDistanceGoal', id: string, goal_start_date: any, daily_goal_in_miles: number, note?: string | null, active: boolean } | null, me: { __typename?: 'User', id: string, name: string, email: string, gender: Gender, birthday: any, height_in_inches: number }, currentUserWeight?: { __typename?: 'UserWeight', id: string, weight_in_lbs: number, date_of_weight: any, note?: string | null } | null };
 
 export type CurrentDistanceGoalQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1220,6 +1220,20 @@ export const CurrentGoalsDocument = `
     daily_goal_in_miles
     note
     active
+  }
+  me {
+    id
+    name
+    email
+    gender
+    birthday
+    height_in_inches
+  }
+  currentUserWeight {
+    id
+    weight_in_lbs
+    date_of_weight
+    note
   }
 }
     `;

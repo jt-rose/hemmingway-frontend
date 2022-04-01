@@ -26,4 +26,18 @@ query CurrentGoals {
     note
     active
   }
+  me {
+    id
+    name
+    email
+    gender
+    birthday
+    height_in_inches
+  }
+  currentUserWeight {
+    id
+    weight_in_lbs
+    date_of_weight
+    note
+  }
 }
