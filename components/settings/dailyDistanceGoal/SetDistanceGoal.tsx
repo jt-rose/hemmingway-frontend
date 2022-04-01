@@ -3,7 +3,7 @@ import {
   useSetDailyDistanceGoalMutation,
   useUpdateDailyDistanceGoalMutation,
 } from "src/generated/graphql-hooks";
-import { PropTypes, PropTypesWithDate } from "types/propTypes";
+import { PropTypesWithDate } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import { Form } from "components/forms/Form";

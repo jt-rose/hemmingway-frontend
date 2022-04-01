@@ -1,63 +1,88 @@
-import { useSetWeightGoalMutation } from "src/generated/graphql-hooks";
-import { PropTypes } from "types/propTypes";
+import {
+  useSetWeightGoalMutation,
+  useCurrentWeightGoalQuery,
+  useUpdateWeightGoalMutation,
+} from "src/generated/graphql-hooks";
+import { PropTypesWithDate } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
+import { Form } from "components/forms/Form";
+import { Input } from "components/forms/Input";
+import { useRouter } from "next/router";
+import { Select } from "components/forms/Select";
 
-export const SetWeightGoal = (props: PropTypes) => {
+export const SetWeightGoal = (props: PropTypesWithDate) => {
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
+  const router = useRouter();
+
+  const currentWeightGoal = useCurrentWeightGoalQuery(props.gqlClient);
+  const setWeightGoal = useSetWeightGoalMutation(props.gqlClient);
+  const updateWeightGoal = useUpdateWeightGoalMutation(props.gqlClient);
+
+  const weightAlreadyRecordedForToday =
+    currentWeightGoal.data?.currentWeightGoal?.goal_start_date &&
+    currentWeightGoal.data.currentWeightGoal?.goal_start_date >= props.date
+      ? currentWeightGoal.data.currentWeightGoal.id
+      : null;
 
   const onSubmit = (data: any) => {
-    setWeightGoal.mutate(
-      {
-        input: data,
-      },
-      refetchDirective
-    );
+    if (weightAlreadyRecordedForToday) {
+      updateWeightGoal.mutate(
+        {
+          id: weightAlreadyRecordedForToday,
+          input: { ...data, goal_start_date: props.date, active: true },
+        },
+        refetchDirective
+      );
+    } else {
+      setWeightGoal.mutate(
+        {
+          input: { ...data, goal_start_date: props.date, active: true },
+        },
+        refetchDirective
+      );
+    }
   };
-
-  const setWeightGoal = useSetWeightGoalMutation(props.gqlClient);
 
   const refetchDirective = {
     onSuccess: () => {
       queryClient.invalidateQueries(["WeightGoals"]);
+      router.push("/home");
     },
   };
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor={"goal-in-lbs-input"}>goal in lbs</label>
-        <input
-          id={"goal-in-lbs-input"}
+      <Form
+        onSubmit={handleSubmit(onSubmit)}
+        submitButtonName="Set Weight Goal"
+      >
+        <Input
+          id="goal-weight-input"
+          label="Weight Goal"
+          placeholder="weight goal"
+          required={true}
           type="number"
-          {...register("goal_in_lbs", {
+          formConnect={register("goal_in_lbs", {
             valueAsNumber: true,
           })}
         />
-
-        <label htmlFor="goal-date-input">start date</label>
-        <input
-          id="goal-date-input"
-          type="date"
-          {...register("goal_start_date")}
+        <Select
+          id="weight-goal-pace-input"
+          label="Goal Pace"
+          selectOptions={["STRONG", "MODERATE", "LIGHT"]}
+          formConnect={register("goal_pace")}
         />
 
-        <label htmlFor={"weight-goal-pace-input"}>goal pace</label>
-        <select id="weight-goal-pace-input" {...register("goal_pace")}>
-          {["STRONG", "MODERATE", "LIGHT"].map((gp) => (
-            <option value={gp} key={gp + "goal-pace-select"}>
-              {gp}
-            </option>
-          ))}
-        </select>
-
-        <label htmlFor={"goal-note-input"}>note</label>
-        <input id={"goal-note-input"} {...register("note")} />
-
-        <input {...register("active")} hidden type="checkbox" checked />
-
-        <input type="submit" value="Update Weight Goal" />
-      </form>
+        <Input
+          id="goal-weight-note-input"
+          label="Note"
+          placeholder="..."
+          required={false}
+          type="text"
+          formConnect={register("note")}
+        />
+      </Form>
     </div>
   );
 };

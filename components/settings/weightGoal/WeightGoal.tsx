@@ -39,7 +39,7 @@ export const WeightGoal = (props: PropTypesWithDate) => {
           <UpdateWeightGoal gqlClient={props.gqlClient} weightGoal={weight} />
         </div>
       ))}
-      <SetWeightGoal gqlClient={props.gqlClient} />
+      <SetWeightGoal gqlClient={props.gqlClient} date={props.date} />
     </div>
   );
 };
