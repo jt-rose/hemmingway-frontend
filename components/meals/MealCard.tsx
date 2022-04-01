@@ -1,8 +1,9 @@
 import { SimpleMeal } from "../../types/propTypes";
-import { PencilAltIcon, TrashIcon } from "@heroicons/react/outline";
+import { TrashIcon } from "@heroicons/react/outline";
 import { GraphQLClient } from "graphql-request";
 import { useDeleteMealMutation } from "src/generated/graphql-hooks";
 import { useQueryClient } from "react-query";
+import { UpdateModal } from "components/forms/UpdateModal";
 
 export const MealCard = (props: {
   gqlClient: GraphQLClient;
@@ -41,7 +42,7 @@ export const MealCard = (props: {
         </p>
       </div>
       <div className="mr-8">
-        <PencilAltIcon className="ht-8 w-6 hover:bg-yellow-500 rounded-lg mb-2" />
+        <UpdateModal gqlClient={props.gqlClient} meal={props.meal} />
         <TrashIcon
           className="ht-8 w-6 hover:bg-red-500 rounded-lg"
           onClick={handleDelete}

@@ -5,7 +5,7 @@ export const Select = (props: {
   formConnect: any;
 }) => {
   return (
-    <div key={props.id + "-" + props.label}>
+    <div key={props.id + "-" + props.label} className="mb-6">
       <label
         htmlFor={props.id}
         className="block font-bold text-center mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"

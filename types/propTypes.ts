@@ -50,12 +50,24 @@ export interface PropTypesWithExercise extends PropTypes {
   exercise: Omit<Exercise, "created_at" | "updated_at" | "user" | "user_id">;
 }
 
+export interface PropTypesWithExerciseAndModal extends PropTypesWithExercise {
+  closeModal: () => void;
+}
+
 export interface PropTypesWithMeal extends PropTypes {
   meal: SimpleMeal;
 }
 
+export interface PropTypesWithMealAndModal extends PropTypesWithMeal {
+  closeModal: () => void;
+}
+
 export interface PropTypesWithMood extends PropTypes {
   mood: Omit<Mood, "created_at" | "updated_at" | "user" | "user_id">;
+}
+
+export interface PropTypesWithMoodAndModal extends PropTypesWithMood {
+  closeModal: () => void;
 }
 
 export interface PropTypesWithSleepHabit extends PropTypes {
@@ -63,6 +75,11 @@ export interface PropTypesWithSleepHabit extends PropTypes {
     SleepHabit,
     "created_at" | "updated_at" | "user" | "user_id"
   >;
+}
+
+export interface PropTypesWithSleepHabitAndModal
+  extends PropTypesWithSleepHabit {
+  closeModal: () => void;
 }
 
 export interface PropTypesWithDistanceGoal extends PropTypes {
