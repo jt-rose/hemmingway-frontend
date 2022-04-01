@@ -1,7 +1,10 @@
 import { PropTypesWithRefresh } from "types/propTypes";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
-import { useRegisterMutation } from "src/generated/graphql-hooks";
+import {
+  useLoginMutation,
+  useRegisterMutation,
+} from "src/generated/graphql-hooks";
 import { Form } from "components/forms/Form";
 import { Input } from "components/forms/Input";
 import { Select } from "components/forms/Select";
@@ -13,8 +16,9 @@ export const RegisterForm = (props: PropTypesWithRefresh) => {
   const router = useRouter();
 
   const createUser = useRegisterMutation(props.gqlClient);
+  const loginUser = useLoginMutation(props.gqlClient);
 
-  const onSubmit = (data: any) =>
+  const onSubmit = (data: any) => {
     createUser.mutate(
       {
         name: data.name,
@@ -25,13 +29,24 @@ export const RegisterForm = (props: PropTypesWithRefresh) => {
         height_in_inches: data.height_in_inches,
       },
       {
+        // upon success, log user in and redirect them
+        // to fill out data on current weight for BMR calculations
         onSuccess: () => {
-          props.setToken("");
-          queryClient.invalidateQueries(["Me"]);
-          router.push("/login");
+          loginUser.mutate(
+            { email: data.email, password: data.password },
+            {
+              onSuccess: (res) => {
+                queryClient.invalidateQueries(["Me"]);
+                props.setToken(res.login);
+                //router.push('/set-weight')
+                router.push("/home");
+              },
+            }
+          );
         },
       }
     );
+  };
 
   return (
     <Form submitButtonName="Sign up" onSubmit={handleSubmit(onSubmit)}>
