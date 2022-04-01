@@ -1,10 +1,12 @@
 import { useUpdateSleepHabitMutation } from "src/generated/graphql-hooks";
-import { PropTypesWithSleepHabit } from "types/propTypes";
+import { PropTypesWithSleepHabitAndModal } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { Form } from "../forms/Form";
+import { Select } from "components/forms/Select";
+import { Input } from "components/forms/Input";
 
-export const UpdateSleepHabit = (props: PropTypesWithSleepHabit) => {
+export const UpdateSleepHabit = (props: PropTypesWithSleepHabitAndModal) => {
   const { id, quality, date_of_sleep, amount, note } = props.sleepHabit;
   const initialFormData = {
     quality,
@@ -12,14 +14,13 @@ export const UpdateSleepHabit = (props: PropTypesWithSleepHabit) => {
     date_of_sleep,
     amount,
   };
-  const [showUpdateForm, setShowUpdateForm] = useState(false);
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm({
     defaultValues: initialFormData,
   });
 
   const onSubmit = (data: any) => {
-    setShowUpdateForm(false);
+    props.closeModal();
     updateSleepHabit.mutate(
       {
         id,
@@ -38,45 +39,33 @@ export const UpdateSleepHabit = (props: PropTypesWithSleepHabit) => {
   };
   return (
     <div>
-      {showUpdateForm && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor={"sleep-date-input" + id}>date</label>
-          <input
-            id={"sleep-date-input" + id}
-            type="date"
-            {...register("date_of_sleep")}
-          />
+      <Form
+        onSubmit={handleSubmit(onSubmit)}
+        submitButtonName="Update Sleep habit"
+      >
+        <Select
+          id="sleep-quality-input"
+          selectOptions={["GOOD", "DECENT", "POOR"]}
+          formConnect={register("quality")}
+          label="Sleep Quality"
+        />
 
-          <label htmlFor={"sleep-quality-input-" + id}>Sleep Quality</label>
-          <select
-            id={"sleep-quality-input-update-" + id}
-            {...register("quality")}
-          >
-            {["POOR", "DECENT", "GOOD"].map((sq) => (
-              <option value={sq} key={sq + "-update-select-" + id}>
-                {sq}
-              </option>
-            ))}
-          </select>
+        <Select
+          id="sleep-amount-input"
+          selectOptions={["FULL", "FEW", "NONE", "EXTRA"]}
+          formConnect={register("amount")}
+          label="Sleep Amount"
+        />
 
-          <label htmlFor={"sleep-amount-input-" + id}>sleep amount</label>
-          <select id={"sleep-amount-input-" + id} {...register("amount")}>
-            {["NONE", "FEW", "FULL", "EXTRA"].map((m) => (
-              <option value={m} key={m + "-update-select-" + id}>
-                {m}
-              </option>
-            ))}
-          </select>
-
-          <label htmlFor={"sleep-note-input" + id}>note</label>
-          <input id={"sleep-note-input" + id} {...register("note")} />
-
-          <input type="submit" value="Update" />
-        </form>
-      )}
-      <button onClick={() => setShowUpdateForm(!showUpdateForm)}>
-        {showUpdateForm ? "Cancel" : "Update"}
-      </button>
+        <Input
+          id="sleep-note-input"
+          label="Note"
+          placeholder="some text..."
+          required={false}
+          type="text"
+          formConnect={register("note")}
+        />
+      </Form>
     </div>
   );
 };

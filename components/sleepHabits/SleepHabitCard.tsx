@@ -1,0 +1,56 @@
+import { SimpleSleepHabit } from "../../types/propTypes";
+import { TrashIcon } from "@heroicons/react/outline";
+import { GraphQLClient } from "graphql-request";
+import { useDeleteSleepHabitMutation } from "src/generated/graphql-hooks";
+import { useQueryClient } from "react-query";
+import { UpdateSleepHabitModal } from "../forms/UpdateSleepHabitModal";
+
+export const SleepHabitCard = (props: {
+  gqlClient: GraphQLClient;
+  sleepHabit: SimpleSleepHabit;
+}) => {
+  const queryClient = useQueryClient();
+  const deleteSleepHabit = useDeleteSleepHabitMutation(props.gqlClient);
+
+  const refetchDirective = {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["SleepHabitsByDate"]);
+    },
+  };
+
+  const handleDelete = () => {
+    deleteSleepHabit.mutate({ id: props.sleepHabit.id }, refetchDirective);
+  };
+
+  return (
+    <a
+      href="#"
+      className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+    >
+      <img
+        className="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+        src="/docs/images/blog/image-4.jpg"
+        alt=""
+      />
+      <div className="flex flex-col grow justify-between p-4 leading-normal">
+        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Note: {props.sleepHabit.note}
+        </h5>
+        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+          Amount: {props.sleepHabit.amount} | Quality:{" "}
+          {props.sleepHabit.quality} | {props.sleepHabit.date_of_sleep}
+        </p>
+      </div>
+      <div className="mr-8">
+        <UpdateSleepHabitModal
+          gqlClient={props.gqlClient}
+          sleepHabit={props.sleepHabit}
+        />
+        <TrashIcon
+          className="ht-8 w-6 hover:bg-red-500 rounded-lg"
+          onClick={handleDelete}
+        />
+      </div>
+    </a>
+  );
+};

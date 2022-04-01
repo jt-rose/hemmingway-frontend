@@ -30,34 +30,9 @@ export const AddSleepHabit = (props: PropTypesWithModal) => {
     <div>
       <Form
         onSubmit={handleSubmit(onSubmit)}
-        submitButtonName="Add Mood"
+        submitButtonName="Add Sleep Habit"
         closeModal={props.closeModal}
       >
-        {/* <label htmlFor="sleep-date-input">date</label>
-        <input
-          id="sleep-date-input"
-          type="date"
-          {...register("date_of_sleep")}
-        /> */}
-
-        {/* <Input
-          id="sleep-date-input"
-          label="date"
-          placeholder=""
-          required={true}
-          type="date"
-          formConnect={register("date_of_sleep")}
-        /> */}
-
-        {/* <label htmlFor="sleep-quality-input">Sleep Quality</label>
-        <select id={"sleep-quality-input"} {...register("quality")}>
-          {["GOOD", "DECENT", "POOR"].map((sq) => (
-            <option value={sq} key={sq + "-update-select"}>
-              {sq}
-            </option>
-          ))}
-        </select> */}
-
         <Select
           id="sleep-quality-input"
           selectOptions={["GOOD", "DECENT", "POOR"]}
@@ -65,24 +40,12 @@ export const AddSleepHabit = (props: PropTypesWithModal) => {
           label="Sleep Quality"
         />
 
-        {/* <label htmlFor={"sleep-amount-input"}>sleep amount</label>
-        <select id={"sleep-amount-input"} {...register("amount")}>
-          {["FULL", "FEW", "NONE", "EXTRA"].map((m) => (
-            <option value={m} key={m + "-update-select"}>
-              {m}
-            </option>
-          ))}
-        </select> */}
-
         <Select
           id="sleep-amount-input"
           selectOptions={["FULL", "FEW", "NONE", "EXTRA"]}
           formConnect={register("amount")}
           label="Sleep Amount"
         />
-
-        {/* <label htmlFor={"sleep-note-input"}>note</label>
-        <input id={"sleep-note-input"} {...register("note")} /> */}
 
         <Input
           id="sleep-note-input"

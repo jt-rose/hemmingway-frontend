@@ -70,11 +70,12 @@ export interface PropTypesWithMoodAndModal extends PropTypesWithMood {
   closeModal: () => void;
 }
 
+export type SimpleSleepHabit = Omit<
+  SleepHabit,
+  "created_at" | "updated_at" | "user" | "user_id"
+>;
 export interface PropTypesWithSleepHabit extends PropTypes {
-  sleepHabit: Omit<
-    SleepHabit,
-    "created_at" | "updated_at" | "user" | "user_id"
-  >;
+  sleepHabit: SimpleSleepHabit;
 }
 
 export interface PropTypesWithSleepHabitAndModal
