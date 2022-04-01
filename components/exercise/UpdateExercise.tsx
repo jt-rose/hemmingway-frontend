@@ -1,10 +1,11 @@
 import { useUpdateExerciseMutation } from "src/generated/graphql-hooks";
-import { PropTypesWithExercise } from "types/propTypes";
+import { PropTypesWithExerciseAndModal } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { Form } from "components/forms/Form";
+import { Input } from "components/forms/Input";
 
-export const UpdateExercise = (props: PropTypesWithExercise) => {
+export const UpdateExercise = (props: PropTypesWithExerciseAndModal) => {
   const {
     id,
     name,
@@ -22,14 +23,14 @@ export const UpdateExercise = (props: PropTypesWithExercise) => {
     distance_in_miles,
     calories,
   };
-  const [showUpdateForm, setShowUpdateForm] = useState(false);
+
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm({
     defaultValues: initialFormData,
   });
 
   const onSubmit = (data: any) => {
-    setShowUpdateForm(false);
+    props.closeModal();
     updateExercise.mutate(
       {
         id,
@@ -48,60 +49,56 @@ export const UpdateExercise = (props: PropTypesWithExercise) => {
   };
   return (
     <div>
-      {showUpdateForm && (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor={"exercise-calories-input" + id}>calories</label>
-          <input
-            id={"exercise-calories-input" + id}
-            type="number"
-            {...register("calories", {
-              valueAsNumber: true,
-            })}
-          />
+      <Form
+        onSubmit={handleSubmit(onSubmit)}
+        submitButtonName="Update Exercise"
+        closeModal={props.closeModal}
+      >
+        <Input
+          id="exercise-calories-input"
+          label="Calories"
+          placeholder=""
+          required={true}
+          type="number"
+          formConnect={register("calories", { valueAsNumber: true })}
+        />
 
-          <label htmlFor={"exercise-date-input" + id}>date</label>
-          <input
-            id={"exercise-date-input" + id}
-            type="date"
-            {...register("date_of_exercise")}
-          />
+        <Input
+          id="exercise-minutes-input"
+          label="Minutes"
+          placeholder=""
+          required={true}
+          type="number"
+          formConnect={register("minutes", { valueAsNumber: true })}
+        />
 
-          <label htmlFor={"exercise-minutes-input" + id}>minutes</label>
-          <input
-            id={"exercise-minutes-input" + id}
-            type="number"
-            {...register("minutes", {
-              valueAsNumber: true,
-            })}
-          />
+        <Input
+          id="exercise-miles-input"
+          label="Miles"
+          placeholder=""
+          required={false}
+          type="number"
+          formConnect={register("distance_in_miles", { valueAsNumber: true })}
+        />
 
-          <label htmlFor={"exercise-miles-input" + id}>miles</label>
-          <input
-            id={"exercise-miles-input" + id}
-            type="number"
-            {...register("distance_in_miles", {
-              valueAsNumber: true,
-            })}
-          />
+        <Input
+          id="exercise-steps-input"
+          label="Steps"
+          placeholder=""
+          required={false}
+          type="number"
+          formConnect={register("steps", { valueAsNumber: true })}
+        />
 
-          <label htmlFor={"exercise-steps-input" + id}>steps</label>
-          <input
-            id={"exercise-steps-input" + id}
-            type="number"
-            {...register("steps", {
-              valueAsNumber: true,
-            })}
-          />
-
-          <label htmlFor={"exercise-name-input" + id}>name</label>
-          <input id={"exercise-name-input" + id} {...register("name")} />
-
-          <input type="submit" value="Update" />
-        </form>
-      )}
-      <button onClick={() => setShowUpdateForm(!showUpdateForm)}>
-        {showUpdateForm ? "Cancel" : "Update"}
-      </button>
+        <Input
+          id="exercise-name-input"
+          label="Exercise Name"
+          placeholder="some text..."
+          required={true}
+          type="text"
+          formConnect={register("name")}
+        />
+      </Form>
     </div>
   );
 };

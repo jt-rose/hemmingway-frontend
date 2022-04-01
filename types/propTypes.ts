@@ -46,8 +46,12 @@ export interface PropTypesWithDate extends PropTypes {
   date: string; // "2022-03-29"
 }
 
+export type SimpleExercise = Omit<
+  Exercise,
+  "created_at" | "updated_at" | "user" | "user_id"
+>;
 export interface PropTypesWithExercise extends PropTypes {
-  exercise: Omit<Exercise, "created_at" | "updated_at" | "user" | "user_id">;
+  exercise: SimpleExercise;
 }
 
 export interface PropTypesWithExerciseAndModal extends PropTypesWithExercise {
