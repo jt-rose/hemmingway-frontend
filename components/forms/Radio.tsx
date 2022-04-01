@@ -3,7 +3,7 @@ export const Radio = (props: { radioOptions: string[]; name: string }) => {
     <fieldset className="flex justify-around max-w-xs">
       <legend className="sr-only">Countries</legend>
       {props.radioOptions.map((ro, index) => (
-        <div className="flex items-center mb-4">
+        <div className="flex items-center mb-4" key={"radio-" + ro}>
           <input
             id={ro + "-radio-" + index}
             type="radio"
