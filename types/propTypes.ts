@@ -61,9 +61,13 @@ export interface PropTypesWithMeal extends PropTypes {
 export interface PropTypesWithMealAndModal extends PropTypesWithMeal {
   closeModal: () => void;
 }
+export type SimpleMood = Omit<
+  Mood,
+  "created_at" | "updated_at" | "user" | "user_id"
+>;
 
 export interface PropTypesWithMood extends PropTypes {
-  mood: Omit<Mood, "created_at" | "updated_at" | "user" | "user_id">;
+  mood: SimpleMood;
 }
 
 export interface PropTypesWithMoodAndModal extends PropTypesWithMood {

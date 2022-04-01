@@ -4,8 +4,8 @@ import {
 } from "src/generated/graphql-hooks";
 import { PropTypesWithDate } from "types/propTypes";
 import { useQueryClient } from "react-query";
-import { UpdateMood } from "./UpdateMood";
 import { ModalForm } from "components/forms/ModalForm";
+import { MoodCard } from "./MoodCard";
 
 export const Mood = (props: PropTypesWithDate) => {
   const queryClient = useQueryClient();
@@ -24,14 +24,11 @@ export const Mood = (props: PropTypesWithDate) => {
     <div>
       <h3>Moods</h3>
       {data?.moodByDate.map((mood) => (
-        <div key={"mood-" + mood.id}>
-          <h3
-            onClick={() => deleteMood.mutate({ id: mood.id }, refetchDirective)}
-          >
-            {"Stress: " + mood.stress_level + " on " + mood.date_of_mood}
-          </h3>
-          <UpdateMood gqlClient={props.gqlClient} mood={mood} />
-        </div>
+        <MoodCard
+          gqlClient={props.gqlClient}
+          mood={mood}
+          key={"mood-" + mood.id}
+        />
       ))}
       <ModalForm
         gqlClient={props.gqlClient}

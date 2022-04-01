@@ -1,5 +1,5 @@
 import { useUpdateMealMutation } from "src/generated/graphql-hooks";
-import { PropTypesWithMeal, PropTypesWithMealAndModal } from "types/propTypes";
+import { PropTypesWithMealAndModal } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import { Form } from "components/forms/Form";
@@ -39,42 +39,7 @@ export const UpdateMeal = (props: PropTypesWithMealAndModal) => {
   };
   return (
     <div>
-      {/* <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor={"meal-calories-input" + id}>calories</label>
-        <input
-          id={"meal-calories-input" + id}
-          type="number"
-          {...register("calories", {
-            valueAsNumber: true,
-          })}
-        />
-
-        <label htmlFor={"meal-date-input" + id}>date</label>
-        <input
-          id={"meal-date-input" + id}
-          type="date"
-          {...register("date_of_meal")}
-        />
-
-        <label htmlFor={"meal-category-input-" + id}>category</label>
-        <select id="meal-category-input" {...register("category")}>
-          {["BREAKFAST", "LUNCH", "DINNER", "SNACK"].map((m) => (
-            <option value={m} key={m + "-update-select-" + id}>
-              {m}
-            </option>
-          ))}
-        </select>
-
-        <label htmlFor={"meal-name-input" + id}>name</label>
-        <input id={"meal-name-input" + id} {...register("name")} />
-
-        <input type="submit" value="Update" />
-      </form> */}
-      <Form
-        onSubmit={handleSubmit(onSubmit)}
-        submitButtonName="Update Meal"
-        //closeModal={props.closeModal}
-      >
+      <Form onSubmit={handleSubmit(onSubmit)} submitButtonName="Update Meal">
         <Input
           id="meal-calories-input"
           type="number"
