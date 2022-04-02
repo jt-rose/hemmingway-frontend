@@ -41,17 +41,6 @@ export const AddExercise = (props: PropTypesWithModal) => {
           formConnect={register("calories", { valueAsNumber: true })}
         />
 
-        {/* <Input
-          id="exercise-date-input"
-          label="date"
-          placeholder=""
-          required={true}
-          type="date"
-          formConnect={register("date_of_exercise")}
-          
-        />
-        <input type="date" hidden /> */}
-
         <Input
           id="exercise-minutes-input"
           label="Minutes"
