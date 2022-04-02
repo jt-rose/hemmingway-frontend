@@ -9,6 +9,7 @@ import {
   useMealsBetweenDatesQuery,
   useMoodsBetweenDatesQuery,
   useSleepHabitsBetweenDatesQuery,
+  MoodsBetweenDatesQuery,
 } from "src/generated/graphql-hooks";
 import { useState } from "react";
 import dayjs from "dayjs";
@@ -22,6 +23,16 @@ import {
   VictoryPolarAxis,
 } from "victory";
 import { Pie } from "components/Pie";
+import { UseQueryResult } from "react-query";
+
+const countMoodType = (
+  moodData: UseQueryResult<MoodsBetweenDatesQuery, unknown>,
+  mood_type: string
+) =>
+  moodData.data
+    ? moodData.data?.moodsBetweenDates.filter((m) => m.mood_type === mood_type)
+        .length + 1
+    : 1;
 
 const Stats = (props: PropTypes) => {
   const [from, setFrom] = useState("1900-01-01");
@@ -63,6 +74,22 @@ const Stats = (props: PropTypes) => {
       <h3>Sleep Quality</h3>
       <h3>Sleep Amount</h3>
       <h3>Stress Levels</h3>
+      <h3>Moods</h3>
+      <VictoryChart polar theme={VictoryTheme.material}>
+        <VictoryArea
+          data={[
+            { x: "HAPPY", y: countMoodType(moods, "HAPPY") },
+            { x: "MOTIVATED", y: countMoodType(moods, "MOTIVATED") },
+            { x: "SATISFIED", y: countMoodType(moods, "SATISFIED") },
+            { x: "RELAXED", y: countMoodType(moods, "RELAXED") },
+            { x: "TIRED", y: countMoodType(moods, "TIRED") },
+            { x: "FRUSTRATED", y: countMoodType(moods, "FRUSTRATED") },
+            { x: "SAD", y: countMoodType(moods, "SAD") },
+            { x: "ANXIOUS", y: countMoodType(moods, "ANXIOUS") },
+          ]}
+        />
+        <VictoryPolarAxis />
+      </VictoryChart>
       <label htmlFor="from-date">From: </label>
       <input
         id="from-date"
