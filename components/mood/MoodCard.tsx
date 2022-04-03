@@ -23,31 +23,30 @@ export const MoodCard = (props: {
   };
 
   return (
-    <a
-      href="#"
-      className="flex flex-col items-center bg-white rounded-lg border shadow-md md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
-    >
+    <div className="flex flex-col sm:flex-row items-center bg-white rounded-lg  shadow-md max-w-xl sm:h-28 md:max-w-2xl lg:max-w-3xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-4">
       <img
-        className="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+        className="object-cover h-28 sm:h-full w-full rounded-t-lg sm:w-48 sm:rounded-none sm:rounded-l-lg"
         src="/mood-1.jpg"
         alt=""
       />
-      <div className="flex flex-col grow justify-between p-4 leading-normal">
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Note: {props.mood.note}
-        </h5>
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          Meditated: {props.mood.meditated} | Mood: {props.mood.mood_type} |{" "}
-          Stress: {props.mood.stress_level} | {props.mood.date_of_mood}
-        </p>
+      <div className="flex grow w-full">
+        <div className="flex grow flex-col w-full justify-between p-4 leading-normal">
+          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Note: {props.mood.note}
+          </h5>
+          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            Meditated: {props.mood.meditated} | Mood: {props.mood.mood_type} |{" "}
+            Stress: {props.mood.stress_level} | {props.mood.date_of_mood}
+          </p>
+        </div>
+        <div className="m-8">
+          <UpdateMoodModal gqlClient={props.gqlClient} mood={props.mood} />
+          <TrashIcon
+            className="ht-8 w-6 hover:bg-red-500 rounded-lg"
+            onClick={handleDelete}
+          />
+        </div>
       </div>
-      <div className="mr-8">
-        <UpdateMoodModal gqlClient={props.gqlClient} mood={props.mood} />
-        <TrashIcon
-          className="ht-8 w-6 hover:bg-red-500 rounded-lg"
-          onClick={handleDelete}
-        />
-      </div>
-    </a>
+    </div>
   );
 };

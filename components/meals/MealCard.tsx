@@ -23,9 +23,9 @@ export const MealCard = (props: {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row items-center bg-white rounded-lg border shadow-md max-w-xl md:max-w-2xl lg:max-w-3xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-4">
+    <div className="flex flex-col sm:flex-row items-center bg-white rounded-lg  shadow-md max-w-xl sm:h-28 md:max-w-2xl lg:max-w-3xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-4">
       <img
-        className="object-cover h-24 sm:h-full w-full rounded-t-lg sm:w-48 sm:rounded-none sm:rounded-l-lg"
+        className="object-cover h-28 sm:h-full w-full rounded-t-lg sm:w-48 sm:rounded-none sm:rounded-l-lg"
         src="/breakfast.jpg"
         alt=""
       />
@@ -35,8 +35,7 @@ export const MealCard = (props: {
             {props.meal.name}
           </h5>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            {props.meal.calories} | {props.meal.category} |{" "}
-            {props.meal.date_of_meal}
+            {props.meal.calories} Calories | {props.meal.category}
           </p>
         </div>
         <div className="m-8">

@@ -23,21 +23,21 @@ export const ExerciseCard = (props: {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row items-center bg-white rounded-lg border shadow-md max-w-xl md:max-w-2xl lg:max-w-3xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-4">
+    <div className="flex flex-col sm:flex-row items-center bg-white rounded-lg  shadow-md max-w-xl sm:h-28 md:max-w-2xl lg:max-w-3xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-4">
       <img
-        className="object-cover h-24 sm:h-full w-full rounded-t-lg sm:w-48 sm:rounded-none sm:rounded-l-lg"
+        className="object-cover h-28 sm:h-full w-full rounded-t-lg sm:w-48 sm:rounded-none sm:rounded-l-lg"
         src="/exercise-1.jpg"
         alt=""
       />
-      <div className="flex grow">
+      <div className="flex grow w-full">
         <div className="flex grow flex-col w-full justify-between p-4 leading-normal">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {props.exercise.name}
           </h5>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            {props.exercise.calories} | Minutes: {props.exercise.minutes} |
-            Miles: {props.exercise.distance_in_miles} | Steps:{" "}
-            {props.exercise.steps} | {props.exercise.date_of_exercise}
+            {props.exercise.calories} Calories | {props.exercise.minutes}{" "}
+            Minutes | {props.exercise.distance_in_miles} Miles |{" "}
+            {props.exercise.steps} Steps
           </p>
         </div>
         <div className="m-8">
