@@ -38,7 +38,6 @@ export const RegisterForm = (props: PropTypesWithRefresh) => {
               onSuccess: (res) => {
                 queryClient.invalidateQueries(["Me"]);
                 props.setToken(res.login);
-                //router.push('/set-weight')
                 router.push("/settings");
               },
             }
@@ -50,9 +49,6 @@ export const RegisterForm = (props: PropTypesWithRefresh) => {
 
   return (
     <Form submitButtonName="Sign up" onSubmit={handleSubmit(onSubmit)}>
-      {/* <label htmlFor="register-name-input">name</label>
-      <input id="register-name-input" {...register("name")} /> */}
-
       <Input
         required
         type="text"
@@ -70,11 +66,6 @@ export const RegisterForm = (props: PropTypesWithRefresh) => {
         placeholder="..."
         formConnect={register("email")}
       />
-      {/* <label htmlFor="register-email-input">email</label>
-      <input id="register-email-input" {...register("email")} /> */}
-
-      {/* <label htmlFor="register-password-input">password</label>
-      <input id="register-password-input" {...register("password")} /> */}
 
       <Input
         required
@@ -85,9 +76,6 @@ export const RegisterForm = (props: PropTypesWithRefresh) => {
         formConnect={register("password")}
       />
 
-      {/* <label htmlFor="birthday-input">birthday</label>
-      <input id="birthday-input" type="date" {...register("birthday")} /> */}
-
       <Input
         required
         type="date"
@@ -97,30 +85,12 @@ export const RegisterForm = (props: PropTypesWithRefresh) => {
         formConnect={register("birthday")}
       />
 
-      {/* <label htmlFor="register-gender-input">category</label>
-      <select id="register-gender-input" {...register("gender")}>
-        {["MALE", "FEMALE", "NB"].map((g) => (
-          <option value={g} key={g + "select"}>
-            {g === "NB" ? "NONBINARY" : g}
-          </option>
-        ))}
-      </select> */}
-
       <Select
         id="register-gender-input"
         selectOptions={["MALE", "FEMALE", "NB"]}
         formConnect={register("gender")}
         label="Gender"
       />
-
-      {/* <label htmlFor="register-height-input">height in inches</label>
-      <input
-        id="register-height-input"
-        type="number"
-        {...register("height_in_inches", {
-          valueAsNumber: true,
-        })}
-      /> */}
 
       <Input
         required

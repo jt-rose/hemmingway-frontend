@@ -2,11 +2,16 @@ import { PropTypesWithUser } from "types/propTypes";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import { useUpdateUserMutation } from "src/generated/graphql-hooks";
+import { Form } from "components/forms/Form";
+import { Input } from "components/forms/Input";
+import { Select } from "components/forms/Select";
+import { useRouter } from "next/router";
 
 export const UpdateUserForm = (props: PropTypesWithUser) => {
   const { name, email, gender, birthday, height_in_inches } = props.user;
   const initialFormValues = { name, email, gender, birthday, height_in_inches };
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { register, handleSubmit } = useForm({
     defaultValues: initialFormValues,
   });
@@ -23,44 +28,59 @@ export const UpdateUserForm = (props: PropTypesWithUser) => {
         height_in_inches: data.height_in_inches,
       },
       {
-        onSuccess: (data) => {
-          //props.setToken(response.createUser);
-          console.log(data);
+        onSuccess: () => {
           queryClient.invalidateQueries(["Me"]);
+          router.push("/");
         },
       }
     );
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="register-name-input">name</label>
-      <input id="register-name-input" {...register("name")} />
+    <Form submitButtonName="Update" onSubmit={handleSubmit(onSubmit)}>
+      <Input
+        required
+        type="text"
+        id="update-name-input"
+        label="Name"
+        placeholder="..."
+        formConnect={register("name")}
+      />
 
-      <label htmlFor="register-email-input">email</label>
-      <input id="register-email-input" {...register("email")} />
+      <Input
+        required
+        type="text"
+        id="update-email-input"
+        label="Email"
+        placeholder="..."
+        formConnect={register("email")}
+      />
 
-      <label htmlFor="birthday-input">birthday</label>
-      <input id="birthday-input" type="date" {...register("birthday")} />
+      <Input
+        required
+        type="date"
+        id="update-birthday-input"
+        label="Birthday"
+        placeholder="..."
+        formConnect={register("birthday")}
+      />
 
-      <label htmlFor="register-gender-input">category</label>
-      <select id="register-gender-input" {...register("gender")}>
-        {["MALE", "FEMALE", "NB"].map((g) => (
-          <option value={g} key={g + "select"}>
-            {g === "NB" ? "NONBINARY" : g}
-          </option>
-        ))}
-      </select>
+      <Select
+        id="update-gender-input"
+        selectOptions={["MALE", "FEMALE", "NB"]}
+        formConnect={register("gender")}
+        label="Gender"
+      />
 
-      <label htmlFor="register-height-input">height in inches</label>
-      <input
-        id="register-height-input"
+      <Input
+        required
         type="number"
-        {...register("height_in_inches", {
+        id="update-height-input"
+        label="Height in Inches"
+        placeholder="..."
+        formConnect={register("height_in_inches", {
           valueAsNumber: true,
         })}
       />
-
-      <input type="submit" value="Update User Account" />
-    </form>
+    </Form>
   );
 };
