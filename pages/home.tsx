@@ -100,7 +100,7 @@ const Home = (props: PropTypesWithRefresh) => {
         <p>Date: {date}</p>
         <ChevronDoubleRightIcon
           className={`ht-12 w-8 ${
-            isToday ? "opacity-25" : "hover:cursor-pointer"
+            isToday ? "opacity-0" : "hover:cursor-pointer"
           }`}
           onClick={isToday ? () => {} : increaseDate}
         />
