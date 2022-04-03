@@ -6,14 +6,9 @@ import { Meals } from "components/meals/Meals";
 import { Mood } from "components/mood/Mood";
 import { SleepHabit } from "components/sleepHabits/SleepHabit";
 import {
-  useCurrentDistanceGoalQuery,
-  useCurrentPopGoalQuery,
-  useCurrentStepsGoalQuery,
-  useCurrentUserWeightQuery,
-  useCurrentWeightGoalQuery,
+  useCurrentGoalsQuery,
   useExercisesByDateQuery,
   useMealsByDateQuery,
-  useMeQuery,
   useMoodByDateQuery,
   useSleepHabitsByDateQuery,
 } from "src/generated/graphql-hooks";
@@ -32,28 +27,29 @@ const Home = (props: PropTypesWithRefresh) => {
   const decreaseDate = () =>
     setDate(dayjs(date).subtract(1, "day").format("YYYY-MM-DD"));
 
-  const me = useMeQuery(props.gqlClient);
-  const currentDistanceGoal = useCurrentDistanceGoalQuery(props.gqlClient);
-  const currentStepsGoal = useCurrentStepsGoalQuery(props.gqlClient);
-  const currentWeightGoal = useCurrentWeightGoalQuery(props.gqlClient);
-  const currentPopGoal = useCurrentPopGoalQuery(props.gqlClient);
-  const currentUserWeight = useCurrentUserWeightQuery(props.gqlClient);
+  const currentGoals = useCurrentGoalsQuery(props.gqlClient);
 
-  console.log("current distance goal: ", currentDistanceGoal.data);
-  console.log("current steps goal: ", currentStepsGoal.data);
-  console.log("current Weight goal: ", currentWeightGoal.data);
-  console.log("current pop goal: ", currentPopGoal.data);
-  console.log("current user weight: ", currentUserWeight.data);
+  console.log(
+    "current distance goal: ",
+    currentGoals.data?.currentDistanceGoal
+  );
+  console.log("current steps goal: ", currentGoals.data?.currentStepsGoal);
+  console.log("current Weight goal: ", currentGoals.data?.currentWeightGoal);
+  console.log("current pop goal: ", currentGoals.data?.currentPopGoal);
+  console.log("current user weight: ", currentGoals.data?.currentUserWeight);
+  console.log("me: ", currentGoals.data?.me);
+
+  //const { me } = currentGoals.data
 
   let bmr = 0;
   if (
-    me.data &&
-    currentUserWeight.data &&
-    currentUserWeight.data.currentUserWeight
+    currentGoals.data &&
+    currentGoals.data.me &&
+    currentGoals.data.currentUserWeight
   ) {
     bmr = calculateBMR(
-      me.data.me,
-      currentUserWeight.data.currentUserWeight.weight_in_lbs
+      currentGoals.data.me,
+      currentGoals.data.currentUserWeight.weight_in_lbs
     );
     console.log("my bmr is " + bmr);
   }
@@ -89,6 +85,9 @@ const Home = (props: PropTypesWithRefresh) => {
   //   currentWeightGoal.data?.currentWeightGoal?.goal_in_lbs
   // );
 
+  // const hasError = false
+  // const isLoading =
+  //if ()
   return (
     <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
       <h1>Home</h1>
