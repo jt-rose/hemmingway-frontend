@@ -9,7 +9,7 @@ export const Exercise = (props: PropTypesWithDate) => {
   });
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <h3>Exercises</h3>
       {data?.exercisesByDate.map((ex) => (
         <ExerciseCard gqlClient={props.gqlClient} exercise={ex} />

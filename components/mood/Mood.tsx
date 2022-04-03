@@ -9,7 +9,7 @@ export const Mood = (props: PropTypesWithDate) => {
   });
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <h3>Moods</h3>
       {data?.moodByDate.map((mood) => (
         <MoodCard

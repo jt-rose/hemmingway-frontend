@@ -10,7 +10,7 @@ export const Meals = (props: PropTypesWithDate) => {
   });
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <h3>Meals</h3>
       {data?.mealsByDate.map((meal) => (
         <MealCard meal={meal} gqlClient={props.gqlClient} />

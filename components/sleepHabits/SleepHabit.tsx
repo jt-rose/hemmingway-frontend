@@ -9,7 +9,7 @@ export const SleepHabit = (props: PropTypesWithDate) => {
   });
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <h3>Moods</h3>
       {data?.sleepHabitsByDate.map((sh) => (
         <SleepHabitCard sleepHabit={sh} gqlClient={props.gqlClient} />
