@@ -18,6 +18,8 @@ import {
   ChevronDoubleRightIcon,
 } from "@heroicons/react/outline";
 import { useState } from "react";
+import { getDailyCalorieTarget } from "utils/getDailyCalories";
+import { LoaderStack } from "components/Loader";
 
 const Home = (props: PropTypesWithRefresh) => {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -38,21 +40,6 @@ const Home = (props: PropTypesWithRefresh) => {
   console.log("current pop goal: ", currentGoals.data?.currentPopGoal);
   console.log("current user weight: ", currentGoals.data?.currentUserWeight);
   console.log("me: ", currentGoals.data?.me);
-
-  //const { me } = currentGoals.data
-
-  let bmr = 0;
-  if (
-    currentGoals.data &&
-    currentGoals.data.me &&
-    currentGoals.data.currentUserWeight
-  ) {
-    bmr = calculateBMR(
-      currentGoals.data.me,
-      currentGoals.data.currentUserWeight.weight_in_lbs
-    );
-    console.log("my bmr is " + bmr);
-  }
 
   const mood = useMoodByDateQuery(props.gqlClient, {
     date_of_mood: date,
@@ -80,78 +67,147 @@ const Home = (props: PropTypesWithRefresh) => {
   console.log(date, "moods", mood);
   console.log(date, "sleepHabit", sleepHabit);
 
-  // const target = getDailyCalorieTarget(
-  //   currentUserWeight.data?.currentUserWeight?.weight_in_lbs,
-  //   currentWeightGoal.data?.currentWeightGoal?.goal_in_lbs
-  // );
-
   // const hasError = false
   // const isLoading =
-  //if ()
-  return (
-    <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
-      <h1>Home</h1>
-      <div className="flex w-full justify-around my-8">
-        <ChevronDoubleLeftIcon
-          className="ht-12 w-8 hover:cursor-pointer"
-          onClick={decreaseDate}
-        />
-        <p>Date: {date}</p>
-        <ChevronDoubleRightIcon
-          className={`ht-12 w-8 ${
-            isToday ? "opacity-0" : "hover:cursor-pointer"
-          }`}
-          onClick={isToday ? () => {} : increaseDate}
-        />
-      </div>
+  if (
+    currentGoals.error ||
+    exercise.error ||
+    meals.error ||
+    mood.error ||
+    sleepHabit.error
+  ) {
+    // add later
+    return <p>Uh Oh! Error!</p>;
+  }
 
-      <p>My BMR is {bmr !== 0 ? bmr : "Unknown"}</p>
-      {/* <p>
-        Current: {meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0)}{" "}
-        out of{" "}
-        {bmr +
-          exercise.data?.exercisesByDate.reduce(
-            (a, b) => a + b.calories,
+  if (
+    currentGoals.data &&
+    exercise.data &&
+    meals.data &&
+    mood.data &&
+    sleepHabit.data
+  ) {
+    const {
+      me,
+      currentUserWeight,
+      currentWeightGoal,
+      currentDistanceGoal,
+      currentStepsGoal /** currentPopGoal */,
+    } = currentGoals.data;
+
+    if (!currentUserWeight) {
+      // redirect to enter weight?
+      return <p>something...</p>;
+    }
+
+    const bmr = calculateBMR(me, currentUserWeight.weight_in_lbs);
+    console.log("my bmr is " + bmr);
+
+    let target = 0;
+    if (currentWeightGoal) {
+      target = getDailyCalorieTarget(currentUserWeight, currentWeightGoal);
+    }
+
+    return (
+      <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
+        <h1>Home</h1>
+        <div className="flex w-full justify-around my-8">
+          <ChevronDoubleLeftIcon
+            className="ht-12 w-8 hover:cursor-pointer"
+            onClick={decreaseDate}
+          />
+          <p>Date: {date}</p>
+          <ChevronDoubleRightIcon
+            className={`ht-12 w-8 ${
+              isToday ? "opacity-0" : "hover:cursor-pointer"
+            }`}
+            onClick={isToday ? () => {} : increaseDate}
+          />
+        </div>
+
+        <p>My BMR is {bmr}</p>
+        <p>My target is {target}</p>
+        <p>Aiming for {bmr + target}, but can boost this with exercise</p>
+        {currentDistanceGoal && (
+          <p>
+            My distance goal is {currentDistanceGoal.daily_goal_in_miles} miles
+            per day
+          </p>
+        )}
+        <p>
+          I have currently travelled{" "}
+          {exercise.data.exercisesByDate.reduce(
+            (a, b) => (b.distance_in_miles ? a + b.distance_in_miles : a),
             0
           )}{" "}
-        calories
-      </p>
-      <p>
-        Over by{" "}
-        {meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0) -
-          (bmr +
-            exercise.data?.exercisesByDate.reduce((a, b) => a + b.calories, 0))}
-      </p>
-      <p>Current daily goal: {target} </p>
-      <div className="max-w-xs">
-        <Pie
-          data={[
-            {
-              title: "cal burned",
-              value:
-                bmr +
-                exercise.data?.exercisesByDate.reduce(
+          miles today
+        </p>
+        {currentStepsGoal && (
+          <p>
+            My steps goal is {currentStepsGoal.daily_goal_in_steps} steps per
+            day
+          </p>
+        )}
+        <p>
+          I have currently walked{" "}
+          {exercise.data.exercisesByDate.reduce(
+            (a, b) => (b.steps ? a + b.steps : a),
+            0
+          )}{" "}
+          steps today
+        </p>
+        {/* <p>
+          Current: {meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0)}{" "}
+          out of{" "}
+          {bmr +
+            exercise.data?.exercisesByDate.reduce(
+              (a, b) => a + b.calories,
+              0
+            )}{" "}
+          calories
+        </p>
+        <p>
+          Over by{" "}
+          {meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0) -
+            (bmr +
+              exercise.data?.exercisesByDate.reduce((a, b) => a + b.calories, 0))}
+        </p>
+        <p>Current daily goal: {target} </p>
+        <div className="max-w-xs">
+          <Pie
+            data={[
+              {
+                title: "cal burned",
+                value:
+                  bmr +
+                  exercise.data?.exercisesByDate.reduce(
+                    (a, b) => a + b.calories,
+                    0
+                  ) -
+                  meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0),
+                color: "#E38627",
+              },
+              {
+                title: "cal ate",
+                value: meals.data?.mealsByDate.reduce(
                   (a, b) => a + b.calories,
                   0
-                ) -
-                meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0),
-              color: "#E38627",
-            },
-            {
-              title: "cal ate",
-              value: meals.data?.mealsByDate.reduce(
-                (a, b) => a + b.calories,
-                0
-              ),
-              color: "#C13C37",
-            },
-          ]}
-        />
-      </div> */}
-      <Exercise gqlClient={props.gqlClient} date={date} />
-      <Meals gqlClient={props.gqlClient} date={date} />
-      <Mood gqlClient={props.gqlClient} date={date} />
-      <SleepHabit gqlClient={props.gqlClient} date={date} />
+                ),
+                color: "#C13C37",
+              },
+            ]}
+          />
+        </div> */}
+        <Exercise gqlClient={props.gqlClient} date={date} />
+        <Meals gqlClient={props.gqlClient} date={date} />
+        <Mood gqlClient={props.gqlClient} date={date} />
+        <SleepHabit gqlClient={props.gqlClient} date={date} />
+      </Layout>
+    );
+  }
+  return (
+    <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
+      <LoaderStack />
     </Layout>
   );
 };
