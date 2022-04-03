@@ -20,6 +20,7 @@ import {
 import { useState } from "react";
 import { getDailyCalorieTarget } from "utils/getDailyCalories";
 import { LoaderStack } from "components/Loader";
+import { ProgressBar } from "components/charts/ProgressBar";
 
 const Home = (props: PropTypesWithRefresh) => {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -156,6 +157,7 @@ const Home = (props: PropTypesWithRefresh) => {
           )}{" "}
           steps today
         </p>
+        <ProgressBar percentage={80} label={"hi"} />
         {/* <p>
           Current: {meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0)}{" "}
           out of{" "}
