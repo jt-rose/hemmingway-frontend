@@ -1,12 +1,11 @@
-import {
-  Exercise,
-  Meal,
-  UserWeight,
-  WeightGoal,
-} from "src/generated/graphql-hooks";
+import { UserWeight, WeightGoal } from "src/generated/graphql-hooks";
+import { SimpleExercise, SimpleMeal } from "types/propTypes";
 import { calculateBMR, SimpleUser } from "./BMR";
 
-export const getDailyCalories = (meals: Meal[], exercise: Exercise[]) => {
+export const getDailyCalories = (
+  meals: SimpleMeal[],
+  exercise: SimpleExercise[]
+) => {
   const totalCalFromMeal = meals.reduce(
     (prev, curr) => prev + curr.calories,
     0
@@ -67,9 +66,9 @@ export const getDailyCalorieTarget = (
 
 export const associateCaloriesByDates = (
   user: SimpleUser,
-  weightHistory: UserWeight[],
-  meals: Meal[],
-  exercise: Exercise[]
+  weightHistory: Omit<UserWeight, "created_at" | "updated_at" | "user_id">[],
+  meals: SimpleMeal[],
+  exercise: SimpleExercise[]
 ) => {
   const sortedWeightHistory = weightHistory.sort(
     (a, b) => a.date_of_weight - b.date_of_weight
@@ -79,10 +78,16 @@ export const associateCaloriesByDates = (
   let history = sortedWeightHistory.map((wh) => ({
     weight: wh,
     bmr: calculateBMR(user, wh.weight_in_lbs),
-    meals: [] as Meal[],
-    exercise: [] as Exercise[],
+    meals: [] as SimpleMeal[],
+    exercise: [] as SimpleExercise[],
     dates: [] as string[],
-    dateCalorieTotals: [] as any[],
+    dateCalorieTotals: [] as {
+      bmr: number;
+      totalCalBurned: number;
+      totalCalFromMeal: number;
+      total: number;
+      date: string;
+    }[],
   }));
 
   history.forEach((wh, i) => {
@@ -130,6 +135,7 @@ export const associateCaloriesByDates = (
         totalCalBurned,
         totalCalFromMeal,
         total,
+        date,
       });
     })
   );

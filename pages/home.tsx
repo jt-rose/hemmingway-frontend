@@ -1,5 +1,5 @@
 import { Layout } from "components/Layout";
-import { PropTypes } from "types/propTypes";
+import { PropTypes, PropTypesWithRefresh } from "types/propTypes";
 import dayjs from "dayjs";
 import { Exercise } from "../components/exercise/Exercise";
 import { Meals } from "components/meals/Meals";
@@ -24,7 +24,7 @@ import {
 } from "@heroicons/react/outline";
 import { useState } from "react";
 
-const Home = (props: PropTypes) => {
+const Home = (props: PropTypesWithRefresh) => {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
   const isToday = date === dayjs().format("YYYY-MM-DD");
   const increaseDate = () =>
@@ -90,7 +90,7 @@ const Home = (props: PropTypes) => {
   // );
 
   return (
-    <Layout>
+    <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
       <h1>Home</h1>
       <div className="flex w-full justify-around my-8">
         <ChevronDoubleLeftIcon

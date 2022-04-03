@@ -4,5 +4,6 @@ query ExercisesBetweenDates($dateRange: DateRange!) {
     name
     minutes
     date_of_exercise
+    calories
   }
 }

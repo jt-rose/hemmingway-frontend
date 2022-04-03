@@ -10,10 +10,12 @@ import {
   useMoodsBetweenDatesQuery,
   useSleepHabitsBetweenDatesQuery,
   MoodsBetweenDatesQuery,
+  SleepHabitsBetweenDatesQuery,
+  useMeQuery,
 } from "src/generated/graphql-hooks";
 import { useState } from "react";
 import dayjs from "dayjs";
-import { PropTypes } from "types/propTypes";
+import { PropTypes, PropTypesWithRefresh } from "types/propTypes";
 import { Chart } from "components/Chart";
 import {
   VictoryChart,
@@ -24,6 +26,7 @@ import {
 } from "victory";
 import { Pie } from "components/Pie";
 import { UseQueryResult } from "react-query";
+import { associateCaloriesByDates } from "utils/getDailyCalories";
 
 const countMoodType = (
   moodData: UseQueryResult<MoodsBetweenDatesQuery, unknown>,
@@ -34,7 +37,37 @@ const countMoodType = (
         .length + 1
     : 1;
 
-const Stats = (props: PropTypes) => {
+const countStressLevel = (
+  moodData: UseQueryResult<MoodsBetweenDatesQuery, unknown>,
+  stress_level: string
+) =>
+  moodData.data
+    ? moodData.data?.moodsBetweenDates.filter(
+        (m) => m.stress_level === stress_level
+      ).length + 1
+    : 1;
+
+const countSleepAmount = (
+  sleepData: UseQueryResult<SleepHabitsBetweenDatesQuery, unknown>,
+  amount: string
+) =>
+  sleepData.data
+    ? sleepData.data?.sleepHabitsBetweenDates.filter(
+        (sh) => sh.amount === amount
+      ).length + 1
+    : 1;
+
+const countSleepQuality = (
+  sleepData: UseQueryResult<SleepHabitsBetweenDatesQuery, unknown>,
+  quality: string
+) =>
+  sleepData.data
+    ? sleepData.data?.sleepHabitsBetweenDates.filter(
+        (sh) => sh.quality === quality
+      ).length + 1
+    : 1;
+
+const Stats = (props: PropTypesWithRefresh) => {
   const [from, setFrom] = useState("1900-01-01");
   const [to, setTo] = useState(dayjs().format("YYYY-MM-DD"));
 
@@ -66,30 +99,39 @@ const Stats = (props: PropTypes) => {
     dateRange: { from, to },
   });
 
+  const me = useMeQuery(props.gqlClient);
+
+  type AssocResults = {
+    bmr: number;
+    totalCalBurned: number;
+    totalCalFromMeal: number;
+    total: number;
+    date: string;
+  }[];
+  let assocResults: AssocResults = [];
+  const calorieIntakeDataAvailable =
+    !!me.data && !!exercises.data && !!meals.data && !!weightHistory.data;
+  if (calorieIntakeDataAvailable) {
+    console.log(
+      "cal assoc: ",
+      associateCaloriesByDates(
+        me.data.me,
+        weightHistory.data.weightBetweenDates,
+        meals.data.mealsBetweenDates,
+        exercises.data.exercisesBetweenDates
+      )
+    );
+    assocResults = associateCaloriesByDates(
+      me.data.me,
+      weightHistory.data.weightBetweenDates,
+      meals.data.mealsBetweenDates,
+      exercises.data.exercisesBetweenDates
+    ).flatMap((x) => x.dateCalorieTotals);
+  }
+  console.log("assoc-res: ", assocResults);
   return (
-    <Layout>
+    <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
       <h1>Stats</h1>
-      <h3>Weight Change</h3>
-      <h3>Calorie Intake</h3>
-      <h3>Sleep Quality</h3>
-      <h3>Sleep Amount</h3>
-      <h3>Stress Levels</h3>
-      <h3>Moods</h3>
-      <VictoryChart polar theme={VictoryTheme.material}>
-        <VictoryArea
-          data={[
-            { x: "HAPPY", y: countMoodType(moods, "HAPPY") },
-            { x: "MOTIVATED", y: countMoodType(moods, "MOTIVATED") },
-            { x: "SATISFIED", y: countMoodType(moods, "SATISFIED") },
-            { x: "RELAXED", y: countMoodType(moods, "RELAXED") },
-            { x: "TIRED", y: countMoodType(moods, "TIRED") },
-            { x: "FRUSTRATED", y: countMoodType(moods, "FRUSTRATED") },
-            { x: "SAD", y: countMoodType(moods, "SAD") },
-            { x: "ANXIOUS", y: countMoodType(moods, "ANXIOUS") },
-          ]}
-        />
-        <VictoryPolarAxis />
-      </VictoryChart>
       <label htmlFor="from-date">From: </label>
       <input
         id="from-date"
@@ -113,48 +155,71 @@ const Stats = (props: PropTypes) => {
       Meals: {meals.data?.mealsBetweenDates.length}
       Moods: {moods.data?.moodsBetweenDates.length}
       Sleep Habits: {sleepHabits.data?.sleepHabitsBetweenDates.length}
-      <Pie
-        data={[
-          { title: "High", value: 10, color: "#E38627" },
-          { title: "Moderate", value: 15, color: "#C13C37" },
-          { title: "Low", value: 20, color: "#6A2135" },
-        ]}
-      />
-      <h3>Mood</h3>
-      <Chart />
+      <h3>Weight Change</h3>
       <VictoryChart theme={VictoryTheme.material}>
         <VictoryArea
           style={{ data: { fill: "#c43a31" } }}
-          data={[
-            { x: 1, y: 3 },
-            { x: 2, y: 3 },
-            { x: 3, y: 5 },
-            { x: 4, y: 4 },
-            { x: 5, y: 7 },
-          ]}
+          data={
+            weightHistory.data?.weightBetweenDates.map((wh) => ({
+              x: wh.date_of_weight,
+              y: wh.weight_in_lbs,
+            }))
+            //   [
+            //   { x: 1, y: 3 },
+            //   { x: 2, y: 3 },
+            //   { x: 3, y: 5 },
+            //   { x: 4, y: 4 },
+            //   { x: 5, y: 7 },
+            // ]
+          }
         />
       </VictoryChart>
+      <h3>Calorie Intake</h3>
+      {assocResults.length && (
+        <>
+          <VictoryChart theme={VictoryTheme.material}>
+            <VictoryArea
+              style={{ data: { fill: "#c43a31" } }}
+              data={
+                assocResults.map((item) => ({ x: item.date, y: item.total }))
+                //   [
+                //   { x: 1, y: 3 },
+                //   { x: 2, y: 3 },
+                //   { x: 3, y: 5 },
+                //   { x: 4, y: 4 },
+                //   { x: 5, y: 7 },
+                // ]
+              }
+            />
+          </VictoryChart>
+          <Chart
+            data={assocResults
+              .reverse()
+              .map((item) => ({ x: item.date, y: item.total }))}
+          />
+        </>
+      )}
+      <h3>Sleep Quality</h3>
       <Pie
         data={[
-          { title: "One", value: 10, color: "#E38627" },
-          { title: "Two", value: 15, color: "#C13C37" },
-          { title: "Three", value: 20, color: "#6A2135" },
+          {
+            title: "Good",
+            value: countSleepQuality(sleepHabits, "GOOD"),
+            color: "#E38627",
+          },
+          {
+            title: "Decent",
+            value: countSleepQuality(sleepHabits, "DECENT"),
+            color: "#C13C37",
+          },
+          {
+            title: "Poor",
+            value: countSleepQuality(sleepHabits, "POOR"),
+            color: "#6A2135",
+          },
         ]}
       />
-      <svg width={300} height={300}>
-        <circle cx={150} cy={150} r={50} fill="#c43a31" />
-        <VictoryPie
-          standalone={false}
-          width={300}
-          height={300}
-          innerRadius={75}
-          data={[
-            { x: "Cats", y: 35 },
-            { x: "Dogs", y: 40 },
-            { x: "Birds", y: 55 },
-          ]}
-        />
-      </svg>
+      <h3>Sleep Amount</h3>
       <VictoryPie
         theme={VictoryTheme.material}
         colorScale={["green", "orange", "red", "cyan"]}
@@ -163,27 +228,52 @@ const Stats = (props: PropTypes) => {
         innerRadius={80}
         //padAngle={({ datum }) => datum.y}
         data={[
-          { x: "full", y: 70 },
-          { x: "few", y: 17 },
-          { x: "none", y: 3 },
-          { x: "extra", y: 10 },
+          { x: "full", y: countSleepAmount(sleepHabits, "FULL") },
+          { x: "few", y: countSleepAmount(sleepHabits, "FEW") },
+          { x: "none", y: countSleepAmount(sleepHabits, "NONE") },
+          { x: "extra", y: countSleepAmount(sleepHabits, "EXTRA") },
         ]}
       />
+      <h3>Stress Levels</h3>
+      <svg width={300} height={300}>
+        <circle cx={150} cy={150} r={50} fill="#c43a31" />
+        <VictoryPie
+          standalone={false}
+          width={300}
+          height={300}
+          innerRadius={75}
+          //colorScale={["red", "yellow", "green"]}
+          data={[
+            { x: "High", y: countStressLevel(moods, "HIGH") },
+            { x: "Mid", y: countStressLevel(moods, "MODERATE") },
+            { x: "Low", y: countStressLevel(moods, "LOW") },
+          ]}
+        />
+      </svg>
+      <h3>Moods</h3>
       <VictoryChart polar theme={VictoryTheme.material}>
         <VictoryArea
           data={[
-            { x: "HAPPY", y: 10 },
-            { x: "MOTIVATED", y: 8 },
-            { x: "SATISFIED", y: 6 },
-            { x: "RELAXED", y: 12 },
-            { x: "TIRED", y: 14 },
-            { x: "FRUSTRATED", y: 2 },
-            { x: "SAD", y: 3 },
-            { x: "ANXIOUS", y: 5 },
+            { x: "HAPPY", y: countMoodType(moods, "HAPPY") },
+            { x: "MOTIVATED", y: countMoodType(moods, "MOTIVATED") },
+            { x: "SATISFIED", y: countMoodType(moods, "SATISFIED") },
+            { x: "RELAXED", y: countMoodType(moods, "RELAXED") },
+            { x: "TIRED", y: countMoodType(moods, "TIRED") },
+            { x: "FRUSTRATED", y: countMoodType(moods, "FRUSTRATED") },
+            { x: "SAD", y: countMoodType(moods, "SAD") },
+            { x: "ANXIOUS", y: countMoodType(moods, "ANXIOUS") },
           ]}
         />
         <VictoryPolarAxis />
       </VictoryChart>
+      {/* <Pie
+        data={[
+          { title: "High", value: 10, color: "#E38627" },
+          { title: "Moderate", value: 15, color: "#C13C37" },
+          { title: "Low", value: 20, color: "#6A2135" },
+        ]}
+      />
+      <h3>Mood</h3> */}
     </Layout>
   );
 };

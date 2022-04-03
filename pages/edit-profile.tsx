@@ -12,14 +12,14 @@ const UpdateUser = (props: PropTypesWithRefresh) => {
   // update with proper routing later
   if (!me.data) {
     return (
-      <Layout>
+      <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
         <h3>Login</h3>
         <LoginForm gqlClient={props.gqlClient} setToken={props.setToken} />
       </Layout>
     );
   }
   return (
-    <Layout>
+    <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
       <h3>Update User Account</h3>
       <UpdateUserForm gqlClient={props.gqlClient} user={me.data.me} />
     </Layout>

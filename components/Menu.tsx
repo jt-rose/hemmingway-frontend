@@ -7,8 +7,19 @@ import {
   FireIcon,
 } from "@heroicons/react/outline";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { PropTypesWithRefresh } from "types/propTypes";
+import { useQueryClient } from "react-query";
 
-export const AccountMenu = () => {
+export const AccountMenu = (props: PropTypesWithRefresh) => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const logout = () => {
+    props.setToken("");
+    queryClient.clear();
+    router.push("/login");
+  };
   return (
     <div className="">
       <Menu as="div" className="">
@@ -95,6 +106,7 @@ export const AccountMenu = () => {
               <Menu.Item key="logout-btn">
                 {({ active }) => (
                   <button
+                    onClick={logout}
                     className={`${
                       active ? "bg-teal-500 text-white" : "text-gray-900"
                     } group flex rounded-md items-center w-full px-2 py-2 text-sm`}

@@ -911,7 +911,7 @@ export type ExercisesBetweenDatesQueryVariables = Exact<{
 }>;
 
 
-export type ExercisesBetweenDatesQuery = { __typename?: 'Query', exercisesBetweenDates: Array<{ __typename?: 'Exercise', id: string, name: string, minutes: number, date_of_exercise: any }> };
+export type ExercisesBetweenDatesQuery = { __typename?: 'Query', exercisesBetweenDates: Array<{ __typename?: 'Exercise', id: string, name: string, minutes: number, date_of_exercise: any, calories: number }> };
 
 export type UpdateExerciseMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -1647,6 +1647,7 @@ export const ExercisesBetweenDatesDocument = `
     name
     minutes
     date_of_exercise
+    calories
   }
 }
     `;

@@ -7,13 +7,13 @@ import Link from "next/link";
 
 const Login = (props: PropTypesWithRefresh) => {
   return (
-    <Layout>
+    <>
       <h3>Register</h3>
       <RegisterForm gqlClient={props.gqlClient} setToken={props.setToken} />
       <Link href="/login">
         <a>Login</a>
       </Link>
-    </Layout>
+    </>
   );
 };
 // const Login = (props: PropTypesWithRefresh) => {

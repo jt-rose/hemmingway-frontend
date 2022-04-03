@@ -2,8 +2,9 @@ import Link from "next/link";
 //import { Menu } from "@headlessui/react";
 import { ChartBarIcon, CalendarIcon } from "@heroicons/react/outline";
 import { AccountMenu } from "./Menu";
+import { PropTypesWithRefresh } from "types/propTypes";
 
-export const Navbar = () => {
+export const Navbar = (props: PropTypesWithRefresh) => {
   return (
     <nav className="flex justify-around bg-teal-400 p-2 px-4 rounded-lg m-2">
       {/* <Example /> */}
@@ -26,7 +27,7 @@ export const Navbar = () => {
         </div>
       </Link>
 
-      <AccountMenu />
+      <AccountMenu gqlClient={props.gqlClient} setToken={props.setToken} />
       {/* <Link href="/settings">
         <div className="flex hover:bg-teal-500 rounded-full hover:cursor-pointer">
           <UserCircleIcon
