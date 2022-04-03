@@ -25,7 +25,7 @@ export const ExerciseCard = (props: {
   return (
     <div className="flex flex-col sm:flex-row items-center bg-white rounded-lg border shadow-md max-w-xl md:max-w-2xl lg:max-w-3xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 m-4">
       <img
-        className="sm:block object-cover h-24 sm:h-full w-full rounded-t-lg sm:w-48 sm:rounded-none sm:rounded-l-lg"
+        className="object-cover h-24 sm:h-full w-full rounded-t-lg sm:w-48 sm:rounded-none sm:rounded-l-lg"
         src="/exercise-1.jpg"
         alt=""
       />
