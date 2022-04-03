@@ -18,12 +18,14 @@ export const Mood = (props: PropTypesWithDate) => {
           key={"mood-" + mood.id}
         />
       ))}
-      <ModalForm
-        gqlClient={props.gqlClient}
-        formType="MOOD"
-        addOrUpdate="ADD"
-        date={props.date}
-      />
+      {(!data || !data.moodByDate.length) && (
+        <ModalForm
+          gqlClient={props.gqlClient}
+          formType="MOOD"
+          addOrUpdate="ADD"
+          date={props.date}
+        />
+      )}
     </div>
   );
 };

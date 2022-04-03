@@ -14,13 +14,14 @@ export const SleepHabit = (props: PropTypesWithDate) => {
       {data?.sleepHabitsByDate.map((sh) => (
         <SleepHabitCard sleepHabit={sh} gqlClient={props.gqlClient} />
       ))}
-      {/* <AddSleepHabit gqlClient={props.gqlClient} date={props.date} /> */}
-      <ModalForm
-        gqlClient={props.gqlClient}
-        formType="SLEEPHABIT"
-        addOrUpdate="ADD"
-        date={props.date}
-      />
+      {(!data || !data.sleepHabitsByDate.length) && (
+        <ModalForm
+          gqlClient={props.gqlClient}
+          formType="SLEEPHABIT"
+          addOrUpdate="ADD"
+          date={props.date}
+        />
+      )}
     </div>
   );
 };

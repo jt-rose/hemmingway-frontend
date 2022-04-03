@@ -14,6 +14,7 @@ export const Exercise = (props: PropTypesWithDate) => {
       {data?.exercisesByDate.map((ex) => (
         <ExerciseCard gqlClient={props.gqlClient} exercise={ex} />
       ))}
+
       <ModalForm
         gqlClient={props.gqlClient}
         formType="EXERCISE"
