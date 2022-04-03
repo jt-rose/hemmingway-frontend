@@ -5,10 +5,12 @@ import {
   ChartBarIcon,
   CalendarIcon,
 } from "@heroicons/react/outline";
+import { AccountMenu } from "./Menu";
 
 export const Navbar = () => {
   return (
-    <nav className="flex justify-between bg-teal-400 p-2 px-4 rounded-lg m-2">
+    <nav className="flex justify-around bg-teal-400 p-2 px-4 rounded-lg m-2">
+      {/* <Example /> */}
       <Link href="/home">
         <div className="flex hover:bg-teal-500 rounded-full hover:cursor-pointer">
           <CalendarIcon
@@ -28,7 +30,8 @@ export const Navbar = () => {
         </div>
       </Link>
 
-      <Link href="/settings">
+      <AccountMenu />
+      {/* <Link href="/settings">
         <div className="flex hover:bg-teal-500 rounded-full hover:cursor-pointer">
           <UserCircleIcon
             className="text-slate-50 p-2 ht-10 w-10 hover:bg-teal-500 rounded-full"
@@ -36,7 +39,7 @@ export const Navbar = () => {
           />{" "}
           <p className="text-slate-50 font-bold  pr-2 pt-2">Account</p>
         </div>
-      </Link>
+      </Link> */}
     </nav>
   );
 };
