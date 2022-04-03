@@ -1,5 +1,5 @@
 import { Layout } from "components/Layout";
-import { PropTypes, PropTypesWithRefresh } from "types/propTypes";
+import { PropTypesWithRefresh } from "types/propTypes";
 import dayjs from "dayjs";
 import { Exercise } from "../components/exercise/Exercise";
 import { Meals } from "components/meals/Meals";

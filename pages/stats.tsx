@@ -15,7 +15,7 @@ import {
 } from "src/generated/graphql-hooks";
 import { useState } from "react";
 import dayjs from "dayjs";
-import { PropTypes, PropTypesWithRefresh } from "types/propTypes";
+import { PropTypesWithRefresh } from "types/propTypes";
 import { Chart } from "components/Chart";
 import {
   VictoryChart,

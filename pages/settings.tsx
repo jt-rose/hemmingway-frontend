@@ -1,7 +1,7 @@
 import { Layout } from "components/Layout";
 import { LoaderStack } from "components/Loader";
 import { SettingsData } from "components/SettingsData";
-import { PropTypes, PropTypesWithRefresh } from "types/propTypes";
+import { PropTypesWithRefresh } from "types/propTypes";
 
 import { useCurrentGoalsQuery } from "../src/generated/graphql-hooks";
 
