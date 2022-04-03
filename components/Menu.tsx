@@ -6,8 +6,9 @@ import {
   LogoutIcon,
   FireIcon,
 } from "@heroicons/react/outline";
+import Link from "next/link";
 
-export function AccountMenu() {
+export const AccountMenu = () => {
   return (
     <div className="">
       <Menu as="div" className="">
@@ -30,57 +31,68 @@ export function AccountMenu() {
         >
           <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="px-1 py-1 ">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-teal-500 text-white" : "text-gray-900"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      <FireIcon
-                        className="w-5 h-5 mr-2"
-                        stroke="rgb(248 250 252)"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <FireIcon className="w-5 h-5 mr-2" aria-hidden="true" />
+              <Link href="/settings" key="goals-link">
+                <a>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        className={`${
+                          active ? "bg-teal-500 text-white" : "text-gray-900"
+                        } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                      >
+                        {active ? (
+                          <FireIcon
+                            className="w-5 h-5 mr-2"
+                            stroke="rgb(248 250 252)"
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <FireIcon
+                            className="w-5 h-5 mr-2"
+                            aria-hidden="true"
+                          />
+                        )}
+                        Set Goals
+                      </button>
                     )}
-                    Set Goals
-                  </button>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-teal-500 text-white" : "text-gray-900"
-                    } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      //   <EditActiveIcon
-                      //     className="w-5 h-5 mr-2"
-                      //     aria-hidden="true"
-                      //   />
-                      <PencilAltIcon
-                        className="w-5 h-5 mr-2"
-                        stroke="rgb(248 250 252)"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <PencilAltIcon
-                        className="w-5 h-5 mr-2"
-                        //stroke="rgb(248 250 252)"
-                        aria-hidden="true"
-                      />
+                  </Menu.Item>
+                </a>
+              </Link>
+              <Link href="/edit-profile" key="edit-profile-link">
+                <a>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        className={`${
+                          active ? "bg-teal-500 text-white" : "text-gray-900"
+                        } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                      >
+                        {active ? (
+                          //   <EditActiveIcon
+                          //     className="w-5 h-5 mr-2"
+                          //     aria-hidden="true"
+                          //   />
+                          <PencilAltIcon
+                            className="w-5 h-5 mr-2"
+                            stroke="rgb(248 250 252)"
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <PencilAltIcon
+                            className="w-5 h-5 mr-2"
+                            //stroke="rgb(248 250 252)"
+                            aria-hidden="true"
+                          />
+                        )}
+                        Edit Profile
+                      </button>
                     )}
-                    Edit Profile
-                  </button>
-                )}
-              </Menu.Item>
+                  </Menu.Item>
+                </a>
+              </Link>
             </div>
             <div className="px-1 py-1">
-              <Menu.Item>
+              <Menu.Item key="logout-btn">
                 {({ active }) => (
                   <button
                     className={`${
@@ -106,4 +118,4 @@ export function AccountMenu() {
       </Menu>
     </div>
   );
-}
+};

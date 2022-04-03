@@ -1,10 +1,6 @@
 import Link from "next/link";
 //import { Menu } from "@headlessui/react";
-import {
-  UserCircleIcon,
-  ChartBarIcon,
-  CalendarIcon,
-} from "@heroicons/react/outline";
+import { ChartBarIcon, CalendarIcon } from "@heroicons/react/outline";
 import { AccountMenu } from "./Menu";
 
 export const Navbar = () => {
