@@ -29,7 +29,7 @@ export const MoodCard = (props: {
     >
       <img
         className="object-cover w-full h-96 rounded-t-lg md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
-        src="/docs/images/blog/image-4.jpg"
+        src="/mood-1.jpg"
         alt=""
       />
       <div className="flex flex-col grow justify-between p-4 leading-normal">
