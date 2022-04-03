@@ -48,7 +48,7 @@ export const SetStepsGoal = (props: PropTypesWithDate) => {
   const refetchDirective = {
     onSuccess: () => {
       queryClient.invalidateQueries(["DailyStepsGoals"]);
-      router.push("/home");
+      router.push("/");
     },
   };
   return (

@@ -8,7 +8,7 @@ export const Navbar = (props: PropTypesWithRefresh) => {
   return (
     <nav className="flex justify-around bg-teal-400 p-2 px-4 rounded-lg m-2">
       {/* <Example /> */}
-      <Link href="/home">
+      <Link href="/">
         <div className="flex hover:bg-teal-500 rounded-full hover:cursor-pointer">
           <CalendarIcon
             className="text-slate-50 p-2 ht-10 w-10 "

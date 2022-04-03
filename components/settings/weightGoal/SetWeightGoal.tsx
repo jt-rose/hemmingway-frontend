@@ -48,7 +48,7 @@ export const SetWeightGoal = (props: PropTypesWithDate) => {
   const refetchDirective = {
     onSuccess: () => {
       queryClient.invalidateQueries(["WeightGoals"]);
-      router.push("/home");
+      router.push("/");
     },
   };
   return (

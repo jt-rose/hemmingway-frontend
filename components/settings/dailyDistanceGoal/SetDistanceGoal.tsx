@@ -49,7 +49,7 @@ export const SetDistanceGoal = (props: PropTypesWithDate) => {
   const refetchDirective = {
     onSuccess: () => {
       queryClient.invalidateQueries(["DailyDistanceGoals"]);
-      router.push("/home");
+      router.push("/");
     },
   };
   return (

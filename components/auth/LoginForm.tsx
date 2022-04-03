@@ -27,7 +27,7 @@ export const LoginForm = (props: PropTypesWithRefresh) => {
           setLoginError(false);
           props.setToken(response.login);
           queryClient.invalidateQueries(["Me"]);
-          router.push("/home");
+          router.push("/");
         },
         onError: () => {
           props.setToken("");

@@ -48,7 +48,7 @@ export const SetUserWeight = (props: PropTypesWithDate) => {
   const refetchDirective = {
     onSuccess: () => {
       queryClient.invalidateQueries(["WeightHistory", "CurrentUserWeight"]);
-      router.push("/home");
+      router.push("/");
     },
   };
   return (
