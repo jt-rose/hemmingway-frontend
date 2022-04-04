@@ -212,13 +212,6 @@ const Home = (props: PropTypesWithRefresh) => {
           Adjusted target is {adjustedTarget} of which {caloriesConsumed} have
           already been taken
         </p>
-        {currentDistanceGoal && (
-          <p>
-            My distance goal is {currentDistanceGoal.daily_goal_in_miles} miles
-            per day
-          </p>
-        )}
-        <p>I have currently travelled {currentDistance} miles today</p>
         <ProgressBar
           percentage={
             (currentDistanceGoal
@@ -236,13 +229,7 @@ const Home = (props: PropTypesWithRefresh) => {
           }`}
           title={"Miles"}
         />
-        {currentStepsGoal && (
-          <p>
-            My steps goal is {currentStepsGoal.daily_goal_in_steps} steps per
-            day
-          </p>
-        )}
-        <p>I have currently walked {currentSteps} steps today</p>
+
         <ProgressBar
           percentage={
             (currentStepsGoal
