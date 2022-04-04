@@ -12,7 +12,11 @@ export const SleepHabit = (props: PropTypesWithDate) => {
     <div className="flex flex-col items-center">
       <h3>Sleep</h3>
       {data?.sleepHabitsByDate.map((sh) => (
-        <SleepHabitCard sleepHabit={sh} gqlClient={props.gqlClient} />
+        <SleepHabitCard
+          sleepHabit={sh}
+          gqlClient={props.gqlClient}
+          key={sh.id + "-sleep-card"}
+        />
       ))}
       {(!data || !data.sleepHabitsByDate.length) && (
         <ModalForm
