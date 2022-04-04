@@ -94,6 +94,7 @@ export const RegisterForm = (props: PropTypesWithRefresh) => {
             { displayName: "ENBY", value: "NB" },
           ]}
           name="gender"
+          formtype="register"
         />
       </div>
 

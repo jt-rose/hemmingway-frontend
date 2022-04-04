@@ -73,6 +73,7 @@ export const UpdateUserForm = (props: PropTypesWithUser) => {
             { displayName: "ENBY", value: "NB" },
           ]}
           name="gender"
+          formtype="update"
         />
       </div>
 

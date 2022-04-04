@@ -2,12 +2,16 @@ export const Radio = (props: {
   radioOptions: { displayName: string; value: string }[];
   name: string;
   formConnect: any;
+  formtype: string;
 }) => {
   return (
     <fieldset className="flex justify-around mx-auto max-w-xs">
       <legend className="sr-only">Countries</legend>
       {props.radioOptions.map((ro, index) => (
-        <div className="flex items-center mb-4" key={"radio-" + ro}>
+        <div
+          className="flex items-center mb-4"
+          key={"radio-" + ro.displayName + "-" + props.formtype}
+        >
           <input
             {...props.formConnect}
             id={ro.value + "-radio-" + index}
