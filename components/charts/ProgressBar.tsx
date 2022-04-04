@@ -4,7 +4,7 @@ export const ProgressBar = (props: {
   label: string;
 }) => {
   return (
-    <div className="max-w-sm m-auto">
+    <div className=" w-64 sm:w-80 m-auto">
       <div className="flex justify-between mb-1">
         <span className="text-base font-bold text-teal-500 dark:text-white">
           {props.title}

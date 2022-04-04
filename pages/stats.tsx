@@ -156,8 +156,8 @@ const Stats = (props: PropTypesWithRefresh) => {
       <div className="flex justify-center">
         <div className="w-4/5">
           <h1 className="text-2xl text-center mb-6 mt-4">Stats</h1>
-          <div className="mx-auto max-w-sm flex justify-between w-full">
-            <div className="mb-6">
+          <div className="mx-auto max-w-sm flex justify-between flex-wrap w-full">
+            <div className="mb-6 mx-auto">
               <label
                 htmlFor="from-date"
                 className="block font-bold text-center mb-2 text-sm text-gray-900 dark:text-gray-300"
@@ -176,7 +176,7 @@ const Stats = (props: PropTypesWithRefresh) => {
               />
             </div>
 
-            <div className="mb-6">
+            <div className="mb-6 mx-auto">
               <label
                 htmlFor="to-date"
                 className="block font-bold text-center mb-2 text-sm  text-gray-900 dark:text-gray-300"
@@ -235,7 +235,7 @@ const Stats = (props: PropTypesWithRefresh) => {
           {weightHistory.data &&
           weightHistory.data.weightBetweenDates.length > 1 ? (
             <div className="flex justify-center mb-20">
-              <div className="w-4/5">
+              <div className=" w-full sm:w-4/5">
                 <Chart
                   data={weightHistory.data.weightBetweenDates
                     .sort(
@@ -259,7 +259,7 @@ const Stats = (props: PropTypesWithRefresh) => {
           </p>
           {assocResults.length > 1 ? (
             <div className="flex justify-center mb-20">
-              <div className="w-4/5">
+              <div className="w-full sm:w-4/5">
                 <Chart
                   data={assocResults
                     .sort(
@@ -283,7 +283,7 @@ const Stats = (props: PropTypesWithRefresh) => {
           {sleepHabits.data &&
           sleepHabits.data.sleepHabitsBetweenDates.length ? (
             <div className="flex justify-center mt-8 mb-20">
-              <div className="w-4/5">
+              <div className=" w-full sm:w-4/5">
                 <Pie
                   data={[
                     {
@@ -316,7 +316,7 @@ const Stats = (props: PropTypesWithRefresh) => {
           {sleepHabits.data &&
           sleepHabits.data.sleepHabitsBetweenDates.length ? (
             <div className="flex justify-center mb-20">
-              <div className="w-4/5">
+              <div className=" w-full sm:w-4/5">
                 <VPie
                   data={[
                     { x: "full", y: countSleepAmount(sleepHabits, "FULL") },
@@ -356,7 +356,7 @@ const Stats = (props: PropTypesWithRefresh) => {
           </p>
           {moods.data && moods.data.moodsBetweenDates.length ? (
             <div className="flex justify-center mt-12 mb-8">
-              <div className="w-4/5">
+              <div className=" w-full sm:w-4/5">
                 <VictoryChart polar theme={VictoryTheme.material}>
                   <VictoryArea
                     data={[
