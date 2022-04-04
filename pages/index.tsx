@@ -6,7 +6,8 @@ import { Meals } from "components/meals/Meals";
 import { Mood } from "components/mood/Mood";
 import { SleepHabit } from "components/sleepHabits/SleepHabit";
 import {
-  useCurrentGoalsQuery,
+  //useCurrentGoalsQuery,
+  useGoalsAndSettingsQuery,
   useExercisesByDateQuery,
   useMealsByDateQuery,
   useMoodByDateQuery,
@@ -30,17 +31,19 @@ const Home = (props: PropTypesWithRefresh) => {
   const decreaseDate = () =>
     setDate(dayjs(date).subtract(1, "day").format("YYYY-MM-DD"));
 
-  const currentGoals = useCurrentGoalsQuery(props.gqlClient);
+  const currentSettings = useGoalsAndSettingsQuery(props.gqlClient);
 
   console.log(
     "current distance goal: ",
-    currentGoals.data?.currentDistanceGoal
+    currentSettings.data?.me.daily_distance_goals
   );
-  console.log("current steps goal: ", currentGoals.data?.currentStepsGoal);
-  console.log("current Weight goal: ", currentGoals.data?.currentWeightGoal);
-  console.log("current pop goal: ", currentGoals.data?.currentPopGoal);
-  console.log("current user weight: ", currentGoals.data?.currentUserWeight);
-  console.log("me: ", currentGoals.data?.me);
+  console.log(
+    "current steps goal: ",
+    currentSettings.data?.me.daily_steps_goals
+  );
+  console.log("current Weight goal: ", currentSettings.data?.me.weight_goals);
+  console.log("current user weight: ", currentSettings.data?.me.user_weights);
+  console.log("me: ", currentSettings.data?.me);
 
   const mood = useMoodByDateQuery(props.gqlClient, {
     date_of_mood: date,
@@ -71,7 +74,7 @@ const Home = (props: PropTypesWithRefresh) => {
   // const hasError = false
   // const isLoading =
   if (
-    currentGoals.error ||
+    currentSettings.error ||
     exercise.error ||
     meals.error ||
     mood.error ||
@@ -82,24 +85,77 @@ const Home = (props: PropTypesWithRefresh) => {
   }
 
   if (
-    currentGoals.data &&
+    currentSettings.data &&
     exercise.data &&
     meals.data &&
     mood.data &&
     sleepHabit.data
   ) {
+    const me = currentSettings.data.me;
     const {
-      me,
-      currentUserWeight,
-      currentWeightGoal,
-      currentDistanceGoal,
-      currentStepsGoal /** currentPopGoal */,
-    } = currentGoals.data;
+      user_weights,
+      weight_goals,
+      daily_distance_goals,
+      daily_steps_goals /** currentPopGoal */,
+    } = me;
 
-    if (!currentUserWeight) {
+    if (!user_weights.length) {
       // redirect to enter weight?
       return <p>something...</p>;
     }
+    // ! GET CURRENT WEIGHT, GOAL, DISTANCE AND STEPS
+    // what if none? - handle earlier with redirect
+    const sortedUserWeights = user_weights
+      .filter((w) => w.date_of_weight <= date)
+      .sort(
+        (a, b) =>
+          (new Date(b.date_of_weight) as any) -
+          (new Date(a.date_of_weight) as any)
+      );
+
+    const currentUserWeight = sortedUserWeights.length
+      ? sortedUserWeights[0]
+      : user_weights.sort(
+          (a, b) =>
+            (new Date(b.date_of_weight) as any) -
+            (new Date(a.date_of_weight) as any)
+        )[0];
+
+    const sortedWeightGoals = weight_goals
+      .filter((w) => w.goal_start_date <= date)
+      .sort(
+        (a, b) =>
+          (new Date(b.goal_start_date) as any) -
+          (new Date(a.goal_start_date) as any)
+      );
+
+    const currentWeightGoal = sortedWeightGoals.length
+      ? sortedWeightGoals[0]
+      : null;
+
+    const sortedDistanceGoals = daily_distance_goals
+      .filter((w) => w.goal_start_date <= date)
+      .sort(
+        (a, b) =>
+          (new Date(b.goal_start_date) as any) -
+          (new Date(a.goal_start_date) as any)
+      );
+
+    const currentDistanceGoal = sortedDistanceGoals.length
+      ? sortedDistanceGoals[0]
+      : null;
+
+    const sortedStepsGoals = daily_steps_goals
+      .filter((w) => w.goal_start_date <= date)
+      .sort(
+        (a, b) =>
+          (new Date(b.goal_start_date) as any) -
+          (new Date(a.goal_start_date) as any)
+      );
+
+    const currentStepsGoal = sortedStepsGoals.length
+      ? sortedStepsGoals[0]
+      : null;
 
     const bmr = calculateBMR(me, currentUserWeight.weight_in_lbs);
     console.log("my bmr is " + bmr);

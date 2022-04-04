@@ -70,10 +70,21 @@ export const associateCaloriesByDates = (
   meals: SimpleMeal[],
   exercise: SimpleExercise[]
 ) => {
-  const sortedWeightHistory = weightHistory.sort(
+  let sortedWeightHistory = weightHistory.sort(
     (a, b) => a.date_of_weight - b.date_of_weight
   );
   // double check
+  const sortedExercise = exercise.map((x) => x.date_of_exercise).sort();
+
+  const sortedMeals = meals.map((x) => x.date_of_meal).sort();
+
+  const earliestDate = [
+    sortedWeightHistory[0].date_of_weight,
+    ...sortedExercise,
+    ...sortedMeals,
+  ].sort()[0];
+
+  sortedWeightHistory[0].date_of_weight = earliestDate;
 
   let history = sortedWeightHistory.map((wh) => ({
     weight: wh,

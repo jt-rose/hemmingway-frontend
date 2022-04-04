@@ -134,6 +134,7 @@ const Stats = (props: PropTypesWithRefresh) => {
       exercises.data.exercisesBetweenDates
     ).flatMap((x) => x.dateCalorieTotals);
   }
+
   console.log("assoc-res: ", assocResults);
   return (
     <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
@@ -198,71 +199,90 @@ const Stats = (props: PropTypesWithRefresh) => {
       Moods: {moods.data?.moodsBetweenDates.length}
       Sleep Habits: {sleepHabits.data?.sleepHabitsBetweenDates.length}
       <h3 className="text-2xl pl-8">Weight Change</h3>
-      <VictoryChart theme={VictoryTheme.material}>
-        <VictoryArea
-          style={{ data: { fill: "#c43a31" } }}
-          data={
-            weightHistory.data?.weightBetweenDates.map((wh) => ({
-              x: wh.date_of_weight,
+      {weightHistory.data && weightHistory.data.weightBetweenDates.length > 1 && (
+        <Chart
+          data={weightHistory.data.weightBetweenDates
+            .sort(
+              (a, b) =>
+                (new Date(a.date_of_weight) as any) -
+                (new Date(b.date_of_weight) as any)
+            )
+            .map((wh) => ({
+              x: dayjs(wh.date_of_weight).format("MMM - DD - YY"),
               y: wh.weight_in_lbs,
-            }))
-            //   [
-            //   { x: 1, y: 3 },
-            //   { x: 2, y: 3 },
-            //   { x: 3, y: 5 },
-            //   { x: 4, y: 4 },
-            //   { x: 5, y: 7 },
-            // ]
-          }
+            }))}
         />
-      </VictoryChart>
+      )}
       <h3 className="text-2xl pl-8">Calorie Intake</h3>
-      {assocResults.length && (
-        <>
-          <VictoryChart theme={VictoryTheme.material}>
-            <VictoryArea
-              style={{ data: { fill: "#c43a31" } }}
-              data={
-                assocResults.map((item) => ({ x: item.date, y: item.total }))
-                //   [
-                //   { x: 1, y: 3 },
-                //   { x: 2, y: 3 },
-                //   { x: 3, y: 5 },
-                //   { x: 4, y: 4 },
-                //   { x: 5, y: 7 },
-                // ]
-              }
+      {exercises.data?.exercisesBetweenDates.length && (
+        <div className="flex justify-center">
+          <div className="w-4/5">
+            <Chart
+              // data={[
+              //   ...new Set(
+              //     exercises.data?.exercisesBetweenDates.map(
+              //       (x) => x.date_of_exercise
+              //     )
+              //   ),
+              // ]
+              //   .sort()
+              //   .map((x) => ({
+              //     x: dayjs(x).format("M/D"),
+              //     y: exercises.data?.exercisesBetweenDates
+              //       .filter((ex) => ex.date_of_exercise === x)
+              //       .reduce((a, b) => a + b.calories, 0),
+              //   }))}
+              data={assocResults
+                .sort(
+                  (a, b) =>
+                    (new Date(a.date) as any) - (new Date(b.date) as any)
+                )
+                .map((item) => ({
+                  x: dayjs(item.date).format("M/D"),
+                  y: item.total,
+                }))}
             />
-          </VictoryChart>
-          <Chart
-            data={assocResults
-              .reverse()
-              .map((item) => ({ x: item.date, y: item.total }))}
-          />
-        </>
+          </div>
+        </div>
       )}
       <h3 className="text-2xl pl-8">Sleep Quality</h3>
-      <Pie
-        data={[
-          {
-            title: "Good",
-            value: countSleepQuality(sleepHabits, "GOOD"),
-            color: "#E38627",
-          },
-          {
-            title: "Decent",
-            value: countSleepQuality(sleepHabits, "DECENT"),
-            color: "#C13C37",
-          },
-          {
-            title: "Poor",
-            value: countSleepQuality(sleepHabits, "POOR"),
-            color: "#6A2135",
-          },
-        ]}
-      />
+      <div className="flex justify-center">
+        <div className="w-4/5">
+          <Pie
+            data={[
+              {
+                title: "Good",
+                value: countSleepQuality(sleepHabits, "GOOD"),
+                color: "#E38627",
+              },
+              {
+                title: "Decent",
+                value: countSleepQuality(sleepHabits, "DECENT"),
+                color: "#C13C37",
+              },
+              {
+                title: "Poor",
+                value: countSleepQuality(sleepHabits, "POOR"),
+                color: "#6A2135",
+              },
+            ]}
+          />
+        </div>
+      </div>
       <h3 className="text-2xl pl-8">Sleep Amount</h3>
-      <VictoryPie
+      <div className="flex justify-center">
+        <div className="w-4/5">
+          <VPie
+            data={[
+              { x: "full", y: countSleepAmount(sleepHabits, "FULL") },
+              { x: "few", y: countSleepAmount(sleepHabits, "FEW") },
+              { x: "none", y: countSleepAmount(sleepHabits, "NONE") },
+              { x: "extra", y: countSleepAmount(sleepHabits, "EXTRA") },
+            ]}
+          />
+        </div>
+      </div>
+      {/* <VictoryPie
         theme={VictoryTheme.material}
         colorScale={["green", "orange", "red", "cyan"]}
         //innerRadius={({ datum }) => datum.y + 10}
@@ -275,9 +295,9 @@ const Stats = (props: PropTypesWithRefresh) => {
           { x: "none", y: countSleepAmount(sleepHabits, "NONE") },
           { x: "extra", y: countSleepAmount(sleepHabits, "EXTRA") },
         ]}
-      />
+      /> */}
       <h3 className="text-2xl pl-8">Stress Levels</h3>
-      <svg width={300} height={300}>
+      {/* <svg width={300} height={300}>
         <circle cx={150} cy={150} r={50} fill="#c43a31" />
         <VictoryPie
           standalone={false}
@@ -291,24 +311,37 @@ const Stats = (props: PropTypesWithRefresh) => {
             { x: "Low", y: countStressLevel(moods, "LOW") },
           ]}
         />
-      </svg>
-      <h3 className="text-2xl pl-8">Moods</h3>
-      {/* list top three */}
-      <VictoryChart polar theme={VictoryTheme.material}>
-        <VictoryArea
+      </svg> */}
+      <div className="flex flex-col items-center">
+        <VPieFull
           data={[
-            { x: "RELAX", y: countMoodType(moods, "RELAXED") },
-            { x: "MOTIVATED", y: countMoodType(moods, "MOTIVATED") },
-            { x: "HAPPY", y: countMoodType(moods, "HAPPY") },
-            { x: "SATISFIED", y: countMoodType(moods, "SATISFIED") },
-            { x: "TIRED", y: countMoodType(moods, "TIRED") },
-            { x: "FRUSTRATED", y: countMoodType(moods, "FRUSTRATED") },
-            { x: "SAD", y: countMoodType(moods, "SAD") },
-            { x: "ANXIOUS", y: countMoodType(moods, "ANXIOUS") },
+            { x: "High", y: countStressLevel(moods, "HIGH") },
+            { x: "Mid", y: countStressLevel(moods, "MODERATE") },
+            { x: "Low", y: countStressLevel(moods, "LOW") },
           ]}
         />
-        <VictoryPolarAxis />
-      </VictoryChart>
+      </div>
+      <h3 className="text-2xl pl-8">Moods</h3>
+      {/* list top three */}
+      <div className="flex justify-center">
+        <div className="w-4/5">
+          <VictoryChart polar theme={VictoryTheme.material}>
+            <VictoryArea
+              data={[
+                { x: "RELAX", y: countMoodType(moods, "RELAXED") },
+                { x: "MOTIVATED", y: countMoodType(moods, "MOTIVATED") },
+                { x: "HAPPY", y: countMoodType(moods, "HAPPY") },
+                { x: "SATISFIED", y: countMoodType(moods, "SATISFIED") },
+                { x: "TIRED", y: countMoodType(moods, "TIRED") },
+                { x: "FRUSTRATED", y: countMoodType(moods, "FRUSTRATED") },
+                { x: "SAD", y: countMoodType(moods, "SAD") },
+                { x: "ANXIOUS", y: countMoodType(moods, "ANXIOUS") },
+              ]}
+            />
+            <VictoryPolarAxis />
+          </VictoryChart>
+        </div>
+      </div>
       {/* <Pie
         data={[
           { title: "High", value: 10, color: "#E38627" },

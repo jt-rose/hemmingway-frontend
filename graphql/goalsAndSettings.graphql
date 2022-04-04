@@ -1,0 +1,36 @@
+query GoalsAndSettings {
+  me {
+    id
+    name
+    email
+    gender
+    birthday
+    height_in_inches
+    user_weights {
+      id
+      weight_in_lbs
+      date_of_weight
+      note
+    }
+    weight_goals {
+      id
+      goal_start_date
+      goal_in_lbs
+      note
+      goal_pace
+      active
+    }
+    daily_steps_goals {
+      id
+      daily_goal_in_steps
+      goal_start_date
+      active
+    }
+    daily_distance_goals {
+      id
+      daily_goal_in_miles
+      goal_start_date
+      active
+    }
+  }
+}

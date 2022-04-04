@@ -921,6 +921,11 @@ export type UpdateExerciseMutationVariables = Exact<{
 
 export type UpdateExerciseMutation = { __typename?: 'Mutation', updateExercise?: { __typename?: 'Exercise', id: string, name: string, date_of_exercise: any, minutes: number, calories: number, steps?: number | null, distance_in_miles?: number | null } | null };
 
+export type GoalsAndSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GoalsAndSettingsQuery = { __typename?: 'Query', me: { __typename?: 'User', id: string, name: string, email: string, gender: Gender, birthday: any, height_in_inches: number, user_weights: Array<{ __typename?: 'UserWeight', id: string, weight_in_lbs: number, date_of_weight: any, note?: string | null }>, weight_goals: Array<{ __typename?: 'WeightGoal', id: string, goal_start_date: any, goal_in_lbs: number, note?: string | null, goal_pace: Goal_Pace, active: boolean }>, daily_steps_goals: Array<{ __typename?: 'DailyStepsGoal', id: string, daily_goal_in_steps: number, goal_start_date: any, active: boolean }>, daily_distance_goals: Array<{ __typename?: 'DailyDistanceGoal', id: string, daily_goal_in_miles: number, goal_start_date: any, active: boolean }> } };
+
 export type CreateMealMutationVariables = Exact<{
   input: MealInput;
 }>;
@@ -1689,6 +1694,58 @@ export const useUpdateExerciseMutation = <
     useMutation<UpdateExerciseMutation, TError, UpdateExerciseMutationVariables, TContext>(
       ['UpdateExercise'],
       (variables?: UpdateExerciseMutationVariables) => fetcher<UpdateExerciseMutation, UpdateExerciseMutationVariables>(client, UpdateExerciseDocument, variables, headers)(),
+      options
+    );
+export const GoalsAndSettingsDocument = `
+    query GoalsAndSettings {
+  me {
+    id
+    name
+    email
+    gender
+    birthday
+    height_in_inches
+    user_weights {
+      id
+      weight_in_lbs
+      date_of_weight
+      note
+    }
+    weight_goals {
+      id
+      goal_start_date
+      goal_in_lbs
+      note
+      goal_pace
+      active
+    }
+    daily_steps_goals {
+      id
+      daily_goal_in_steps
+      goal_start_date
+      active
+    }
+    daily_distance_goals {
+      id
+      daily_goal_in_miles
+      goal_start_date
+      active
+    }
+  }
+}
+    `;
+export const useGoalsAndSettingsQuery = <
+      TData = GoalsAndSettingsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GoalsAndSettingsQueryVariables,
+      options?: UseQueryOptions<GoalsAndSettingsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GoalsAndSettingsQuery, TError, TData>(
+      variables === undefined ? ['GoalsAndSettings'] : ['GoalsAndSettings', variables],
+      fetcher<GoalsAndSettingsQuery, GoalsAndSettingsQueryVariables>(client, GoalsAndSettingsDocument, variables, headers),
       options
     );
 export const CreateMealDocument = `

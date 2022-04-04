@@ -10,6 +10,10 @@ export const VPie = (props: { data: { x: string; y: number }[] }) => {
       innerRadius={80}
       //padAngle={({ datum }) => datum.y}
       data={props.data}
+      //   animate={{
+      //     duration: 2000,
+      //     onLoad: { duration: 1000 }
+      //   }}
     />
   );
 };
