@@ -32,11 +32,13 @@ export const MoodCard = (props: {
       <div className="flex grow w-full">
         <div className="flex grow flex-col w-full justify-between p-4 leading-normal">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Note: {props.mood.note}
+            {props.mood.mood_type
+              .toLowerCase()
+              .replace(/^./, props.mood.mood_type[0])}
           </h5>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            Meditated: {props.mood.meditated} | Mood: {props.mood.mood_type} |{" "}
-            Stress: {props.mood.stress_level} | {props.mood.date_of_mood}
+            Stress: {props.mood.stress_level.toLowerCase()} | Note:{" "}
+            {props.mood.note}
           </p>
         </div>
         <div className="m-8">

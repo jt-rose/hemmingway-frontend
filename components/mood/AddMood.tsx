@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "components/forms/Form";
 import { Input } from "components/forms/Input";
 import { Select } from "components/forms/Select";
-import { Checkbox } from "components/forms/Checkbox";
+//import { Checkbox } from "components/forms/Checkbox";
 
 export const AddMood = (props: PropTypesWithModal) => {
   const queryClient = useQueryClient();
@@ -14,7 +14,7 @@ export const AddMood = (props: PropTypesWithModal) => {
   const onSubmit = (data: any) =>
     addMood.mutate(
       {
-        input: { ...data, date_of_mood: props.date },
+        input: { ...data, date_of_mood: props.date, meditated: false },
       },
       refetchDirective
     );
@@ -34,13 +34,13 @@ export const AddMood = (props: PropTypesWithModal) => {
         submitButtonName="Add Mood"
         closeModal={props.closeModal}
       >
-        <Checkbox
+        {/* <Checkbox
           id="meditated-input"
           placeholder=""
           label="meditated"
           checked={false}
           formConnect={register("meditated")}
-        />
+        /> */}
 
         <Select
           id="mood-type-input"
