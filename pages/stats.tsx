@@ -16,7 +16,7 @@ import {
 import { useState } from "react";
 import dayjs from "dayjs";
 import { PropTypesWithRefresh } from "types/propTypes";
-import { Chart } from "components/Chart";
+import { Chart } from "components/charts/Chart";
 import {
   VictoryChart,
   VictoryTheme,
@@ -24,7 +24,10 @@ import {
   VictoryArea,
   VictoryPolarAxis,
 } from "victory";
-import { Pie } from "components/Pie";
+import { VChart } from "components/charts/VChart";
+import { VPie } from "components/charts/VPie";
+import { VPieFull } from "components/charts/VPieFull";
+import { Pie } from "components/charts/Pie";
 import { UseQueryResult } from "react-query";
 import { associateCaloriesByDates } from "utils/getDailyCalories";
 
@@ -254,10 +257,10 @@ const Stats = (props: PropTypesWithRefresh) => {
       <VictoryChart polar theme={VictoryTheme.material}>
         <VictoryArea
           data={[
-            { x: "HAPPY", y: countMoodType(moods, "HAPPY") },
+            { x: "RELAX", y: countMoodType(moods, "RELAXED") },
             { x: "MOTIVATED", y: countMoodType(moods, "MOTIVATED") },
+            { x: "HAPPY", y: countMoodType(moods, "HAPPY") },
             { x: "SATISFIED", y: countMoodType(moods, "SATISFIED") },
-            { x: "RELAXED", y: countMoodType(moods, "RELAXED") },
             { x: "TIRED", y: countMoodType(moods, "TIRED") },
             { x: "FRUSTRATED", y: countMoodType(moods, "FRUSTRATED") },
             { x: "SAD", y: countMoodType(moods, "SAD") },
