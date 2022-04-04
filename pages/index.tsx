@@ -34,18 +34,6 @@ const Home = (props: PropTypesWithRefresh) => {
 
   const currentSettings = useGoalsAndSettingsQuery(props.gqlClient);
 
-  console.log(
-    "current distance goal: ",
-    currentSettings.data?.me.daily_distance_goals
-  );
-  console.log(
-    "current steps goal: ",
-    currentSettings.data?.me.daily_steps_goals
-  );
-  console.log("current Weight goal: ", currentSettings.data?.me.weight_goals);
-  console.log("current user weight: ", currentSettings.data?.me.user_weights);
-  console.log("me: ", currentSettings.data?.me);
-
   const mood = useMoodByDateQuery(props.gqlClient, {
     date_of_mood: date,
   });
@@ -59,21 +47,6 @@ const Home = (props: PropTypesWithRefresh) => {
     date_of_sleep: date,
   });
 
-  console.log(
-    date,
-    "meals",
-    meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0)
-  );
-  console.log(
-    date,
-    "exercise",
-    exercise.data?.exercisesByDate.reduce((a, b) => a + b.calories, 0)
-  );
-  console.log(date, "moods", mood);
-  console.log(date, "sleepHabit", sleepHabit);
-
-  // const hasError = false
-  // const isLoading =
   if (
     currentSettings.error ||
     exercise.error ||
@@ -178,6 +151,10 @@ const Home = (props: PropTypesWithRefresh) => {
 
     const adjustedTarget = bmr + caloriesBurned + target;
 
+    const isOverTarget = caloriesConsumed > adjustedTarget;
+
+    let overageAmount = isOverTarget ? caloriesConsumed - adjustedTarget : 0;
+
     const currentDistance = exercise.data.exercisesByDate.reduce(
       (a, b) => (b.distance_in_miles ? a + b.distance_in_miles : a),
       0
@@ -220,13 +197,15 @@ const Home = (props: PropTypesWithRefresh) => {
               data={[
                 {
                   title: "Good",
-                  value: 85,
-                  color: "rgb(20 184 166)",
+                  value: isOverTarget ? overageAmount : caloriesConsumed,
+                  color: isOverTarget ? "red" : "rgb(20 184 166)",
                 },
                 {
                   title: "Decent",
-                  value: 15,
-                  color: "rgb(229 231 235)",
+                  value: isOverTarget
+                    ? caloriesConsumed
+                    : adjustedTarget - caloriesConsumed,
+                  color: isOverTarget ? "rgb(20 184 166)" : "rgb(229 231 235)",
                 },
               ]}
             />
