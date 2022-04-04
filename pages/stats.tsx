@@ -134,7 +134,7 @@ const Stats = (props: PropTypesWithRefresh) => {
   console.log("assoc-res: ", assocResults);
   return (
     <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
-      <h1>Stats</h1>
+      <h1 className="text-2xl pl-8">Stats</h1>
       <label htmlFor="from-date">From: </label>
       <input
         id="from-date"
@@ -158,7 +158,7 @@ const Stats = (props: PropTypesWithRefresh) => {
       Meals: {meals.data?.mealsBetweenDates.length}
       Moods: {moods.data?.moodsBetweenDates.length}
       Sleep Habits: {sleepHabits.data?.sleepHabitsBetweenDates.length}
-      <h3>Weight Change</h3>
+      <h3 className="text-2xl pl-8">Weight Change</h3>
       <VictoryChart theme={VictoryTheme.material}>
         <VictoryArea
           style={{ data: { fill: "#c43a31" } }}
@@ -177,7 +177,7 @@ const Stats = (props: PropTypesWithRefresh) => {
           }
         />
       </VictoryChart>
-      <h3>Calorie Intake</h3>
+      <h3 className="text-2xl pl-8">Calorie Intake</h3>
       {assocResults.length && (
         <>
           <VictoryChart theme={VictoryTheme.material}>
@@ -202,7 +202,7 @@ const Stats = (props: PropTypesWithRefresh) => {
           />
         </>
       )}
-      <h3>Sleep Quality</h3>
+      <h3 className="text-2xl pl-8">Sleep Quality</h3>
       <Pie
         data={[
           {
@@ -222,7 +222,7 @@ const Stats = (props: PropTypesWithRefresh) => {
           },
         ]}
       />
-      <h3>Sleep Amount</h3>
+      <h3 className="text-2xl pl-8">Sleep Amount</h3>
       <VictoryPie
         theme={VictoryTheme.material}
         colorScale={["green", "orange", "red", "cyan"]}
@@ -237,7 +237,7 @@ const Stats = (props: PropTypesWithRefresh) => {
           { x: "extra", y: countSleepAmount(sleepHabits, "EXTRA") },
         ]}
       />
-      <h3>Stress Levels</h3>
+      <h3 className="text-2xl pl-8">Stress Levels</h3>
       <svg width={300} height={300}>
         <circle cx={150} cy={150} r={50} fill="#c43a31" />
         <VictoryPie
@@ -253,7 +253,8 @@ const Stats = (props: PropTypesWithRefresh) => {
           ]}
         />
       </svg>
-      <h3>Moods</h3>
+      <h3 className="text-2xl pl-8">Moods</h3>
+      {/* list top three */}
       <VictoryChart polar theme={VictoryTheme.material}>
         <VictoryArea
           data={[
