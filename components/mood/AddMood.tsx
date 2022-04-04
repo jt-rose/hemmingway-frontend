@@ -67,7 +67,7 @@ export const AddMood = (props: PropTypesWithModal) => {
 
         <Input
           id="mood-note-input"
-          label="Note"
+          label="Summary"
           placeholder="some text..."
           required={false}
           type="text"

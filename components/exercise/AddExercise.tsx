@@ -52,7 +52,7 @@ export const AddExercise = (props: PropTypesWithModal) => {
 
         <Input
           id="exercise-miles-input"
-          label="Miles"
+          label="Miles (Optional)"
           placeholder=""
           required={false}
           type="number"
@@ -61,7 +61,7 @@ export const AddExercise = (props: PropTypesWithModal) => {
 
         <Input
           id="exercise-steps-input"
-          label="Steps"
+          label="Steps (Optional)"
           placeholder=""
           required={false}
           type="number"

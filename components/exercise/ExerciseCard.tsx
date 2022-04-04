@@ -36,8 +36,11 @@ export const ExerciseCard = (props: {
           </h5>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
             {props.exercise.calories} Calories | {props.exercise.minutes}{" "}
-            Minutes | {props.exercise.distance_in_miles} Miles |{" "}
-            {props.exercise.steps} Steps
+            Minutes
+            {props.exercise.distance_in_miles
+              ? ` | ${props.exercise.distance_in_miles} Miles`
+              : ""}
+            {props.exercise.steps ? ` | ${props.exercise.steps} Steps` : ""}
           </p>
         </div>
         <div className="m-8">
