@@ -2,7 +2,6 @@ import { GraphQLClient } from "graphql-request";
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { Navbar } from "./Navbar";
 import { AiFillLinkedin, AiFillGithub } from "react-icons/ai";
-import Link from "next/link";
 
 // add Head
 
@@ -12,9 +11,10 @@ export const Layout = (props: {
   setToken: Dispatch<SetStateAction<string>>;
 }) => {
   return (
-    <main>
+    <main className="min-h-screen flex flex-col">
       <Navbar gqlClient={props.gqlClient} setToken={props.setToken} />
       {props.children}
+      <div className="flex-grow"></div>
       <footer className=" bg-teal-500  mt-8 border-t-2 border-teal-600 py-2">
         <p className="text-center text-slate-50">Designed by Jeff Rose, 2022</p>
         <div className="flex justify-center mt-1">
