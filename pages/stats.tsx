@@ -120,7 +120,11 @@ const Stats = (props: PropTypesWithRefresh) => {
   }[];
   let assocResults: AssocResults = [];
   const calorieIntakeDataAvailable =
-    !!me.data && !!exercises.data && !!meals.data && !!weightHistory.data;
+    !!me.data &&
+    !!exercises.data &&
+    !!meals.data &&
+    !!weightHistory.data &&
+    weightHistory.data.weightBetweenDates.length;
   if (calorieIntakeDataAvailable) {
     console.log(
       "cal assoc: ",
