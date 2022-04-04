@@ -133,7 +133,6 @@ const Home = (props: PropTypesWithRefresh) => {
 
     return (
       <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
-        <h1>Home</h1>
         <div className="flex w-full justify-around my-8">
           <ChevronDoubleLeftIcon
             className="ht-12 w-8 hover:cursor-pointer"
