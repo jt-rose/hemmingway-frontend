@@ -22,6 +22,7 @@ import { useState } from "react";
 import { getDailyCalorieTarget } from "utils/getDailyCalories";
 import { LoaderStack } from "components/Loader";
 import { ProgressBar } from "components/charts/ProgressBar";
+import { Pie } from "components/charts/Pie";
 
 const Home = (props: PropTypesWithRefresh) => {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -212,39 +213,66 @@ const Home = (props: PropTypesWithRefresh) => {
           Adjusted target is {adjustedTarget} of which {caloriesConsumed} have
           already been taken
         </p>
-        <ProgressBar
-          percentage={
-            (currentDistanceGoal
-              ? (currentDistance / currentDistanceGoal.daily_goal_in_miles) *
-                100
-              : (currentDistance / 5) * 100) > 100
-              ? 100
-              : currentDistanceGoal
-              ? (currentDistance / currentDistanceGoal.daily_goal_in_miles) *
-                100
-              : (currentDistance / 5) * 100
-          }
-          label={`${currentDistance} / ${
-            currentDistanceGoal ? currentDistanceGoal.daily_goal_in_miles : "5"
-          }`}
-          title={"Miles"}
-        />
 
-        <ProgressBar
-          percentage={
-            (currentStepsGoal
-              ? (currentSteps / currentStepsGoal.daily_goal_in_steps) * 100
-              : (currentSteps / 10000) * 100) > 100
-              ? 100
-              : currentStepsGoal
-              ? (currentSteps / currentStepsGoal.daily_goal_in_steps) * 100
-              : (currentSteps / 10000) * 100
-          }
-          label={`${currentSteps} / ${
-            currentStepsGoal ? currentStepsGoal.daily_goal_in_steps : "10000"
-          }`}
-          title={"Steps"}
-        />
+        <div className="flex flex-wrap justify-around">
+          <div className="w-28">
+            <Pie
+              data={[
+                {
+                  title: "Good",
+                  value: 85,
+                  color: "rgb(20 184 166)",
+                },
+                {
+                  title: "Decent",
+                  value: 15,
+                  color: "rgb(229 231 235)",
+                },
+              ]}
+            />
+          </div>
+          <div className="pt-2.5">
+            <ProgressBar
+              percentage={
+                (currentDistanceGoal
+                  ? (currentDistance /
+                      currentDistanceGoal.daily_goal_in_miles) *
+                    100
+                  : (currentDistance / 5) * 100) > 100
+                  ? 100
+                  : currentDistanceGoal
+                  ? (currentDistance /
+                      currentDistanceGoal.daily_goal_in_miles) *
+                    100
+                  : (currentDistance / 5) * 100
+              }
+              label={`${currentDistance} / ${
+                currentDistanceGoal
+                  ? currentDistanceGoal.daily_goal_in_miles
+                  : "5"
+              }`}
+              title={"Miles"}
+            />
+
+            <ProgressBar
+              percentage={
+                (currentStepsGoal
+                  ? (currentSteps / currentStepsGoal.daily_goal_in_steps) * 100
+                  : (currentSteps / 10000) * 100) > 100
+                  ? 100
+                  : currentStepsGoal
+                  ? (currentSteps / currentStepsGoal.daily_goal_in_steps) * 100
+                  : (currentSteps / 10000) * 100
+              }
+              label={`${currentSteps} / ${
+                currentStepsGoal
+                  ? currentStepsGoal.daily_goal_in_steps
+                  : "10000"
+              }`}
+              title={"Steps"}
+            />
+          </div>
+        </div>
         {/* <p>
           Current: {meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0)}{" "}
           out of{" "}
