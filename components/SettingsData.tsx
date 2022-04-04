@@ -55,13 +55,15 @@ export const SettingsData = (props: {
         Target Weight: {currentWeightGoal?.goal_in_lbs} lbs
       </p>
       <Tab.Group>
-        <Tab.List>
+        <Tab.List className="flex w-full justify-center my-6">
           {["Weight", "Goal", "Daily Miles", "Daily Steps"].map((tabName) => (
             <Tab as={Fragment} key={"tab-" + tabName}>
               {({ selected }) => (
                 <button
                   className={
-                    selected ? "bg-blue-500 text-white" : "bg-white text-black"
+                    selected
+                      ? "bg-teal-400 rounded-lg border-2 border-teal-400 text-slate-50 p-2 m-2"
+                      : "border-teal-400 border-2 rounded-lg text-teal-400 p-2 m-2 "
                   }
                 >
                   {tabName}
@@ -72,16 +74,14 @@ export const SettingsData = (props: {
         </Tab.List>
         <Tab.Panels>
           {[SetUserWeight, SetWeightGoal, SetDistanceGoal, SetStepsGoal].map(
-            (Child) => (
-              <Tab.Panel>
+            (Child, index) => (
+              <Tab.Panel key={"tab-panel-" + index}>
                 <Child gqlClient={props.gqlClient} date={date} />
               </Tab.Panel>
             )
           )}
         </Tab.Panels>
       </Tab.Group>
-
-      {/*<PopGoal gqlClient={props.gqlClient} date={date} />*/}
     </div>
   );
 };
