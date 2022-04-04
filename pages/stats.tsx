@@ -4,7 +4,6 @@ import {
   useWeightGoalsBetweenDatesQuery,
   useDistanceGoalsBetweenDatesQuery,
   useStepsGoalsBetweenDatesQuery,
-  usePopGoalsBetweenDatesQuery,
   useExercisesBetweenDatesQuery,
   useMealsBetweenDatesQuery,
   useMoodsBetweenDatesQuery,
@@ -20,17 +19,25 @@ import { Chart } from "components/charts/Chart";
 import {
   VictoryChart,
   VictoryTheme,
-  VictoryPie,
   VictoryArea,
   VictoryPolarAxis,
 } from "victory";
-import { VChart } from "components/charts/VChart";
 import { VPie } from "components/charts/VPie";
 import { VPieFull } from "components/charts/VPieFull";
 import { Pie } from "components/charts/Pie";
 import { UseQueryResult } from "react-query";
 import { associateCaloriesByDates } from "utils/getDailyCalories";
-import { useForm } from "react-hook-form";
+
+const getEntryCount = (arr: any[] | undefined) => {
+  if (!arr || arr.length === 0) {
+    return "N/A";
+  }
+  if (arr.length === 1) {
+    return "1 entry";
+  }
+
+  return `${arr.length} entries`;
+};
 
 const countMoodType = (
   moodData: UseQueryResult<MoodsBetweenDatesQuery, unknown>,
@@ -88,9 +95,6 @@ const Stats = (props: PropTypesWithRefresh) => {
     dateRange: { from, to },
   });
   const stepsGoals = useStepsGoalsBetweenDatesQuery(props.gqlClient, {
-    dateRange: { from, to },
-  });
-  const popGoals = usePopGoalsBetweenDatesQuery(props.gqlClient, {
     dateRange: { from, to },
   });
   const exercises = useExercisesBetweenDatesQuery(props.gqlClient, {
@@ -181,31 +185,31 @@ const Stats = (props: PropTypesWithRefresh) => {
           <div className="flex flex-wrap justify-around mt-4 mb-12">
             <div>
               <p>
-                Weights: {weightHistory.data?.weightBetweenDates.length} entries
+                Weights: {getEntryCount(weightHistory.data?.weightBetweenDates)}
               </p>
               <p>
-                Weight Goals: {weightGoals.data?.weightGoalsBetweenDates.length}{" "}
-                entries
+                Weight Goals:{" "}
+                {getEntryCount(weightGoals.data?.weightGoalsBetweenDates)}
               </p>
               <p>
                 Miles Goals:{" "}
-                {distanceGoals.data?.distanceGoalsBetweenDates.length} entries
+                {getEntryCount(distanceGoals.data?.distanceGoalsBetweenDates)}
               </p>
               <p>
-                Steps Goals: {stepsGoals.data?.stepsGoalsBetweenDates.length}{" "}
-                entries
+                Steps Goals:{" "}
+                {getEntryCount(stepsGoals.data?.stepsGoalsBetweenDates)}
               </p>
             </div>
             <div>
               <p>
-                Exercises: {exercises.data?.exercisesBetweenDates.length}{" "}
-                entries
+                Exercises:{" "}
+                {getEntryCount(exercises.data?.exercisesBetweenDates)}
               </p>
-              <p>Meals: {meals.data?.mealsBetweenDates.length} entries</p>
-              <p>Moods: {moods.data?.moodsBetweenDates.length} entries</p>
+              <p>Meals: {getEntryCount(meals.data?.mealsBetweenDates)}</p>
+              <p>Moods: {getEntryCount(moods.data?.moodsBetweenDates)}</p>
               <p>
-                Sleep Habits: {sleepHabits.data?.sleepHabitsBetweenDates.length}{" "}
-                entries
+                Sleep Habits:{" "}
+                {getEntryCount(sleepHabits.data?.sleepHabitsBetweenDates)}
               </p>
             </div>
           </div>
