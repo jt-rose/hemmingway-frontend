@@ -32,11 +32,11 @@ export const SleepHabitCard = (props: {
       <div className="flex grow w-full">
         <div className="flex grow flex-col w-full justify-between p-4 leading-normal">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Note: {props.sleepHabit.note}
+            Last Night's Rest
           </h5>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
             Amount: {props.sleepHabit.amount} | Quality:{" "}
-            {props.sleepHabit.quality} | {props.sleepHabit.date_of_sleep}
+            {props.sleepHabit.quality}
           </p>
         </div>
         <div className="m-8">

@@ -3,7 +3,7 @@ import { PropTypesWithModal } from "types/propTypes";
 import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import { Form } from "components/forms/Form";
-import { Input } from "../forms/Input";
+//import { Input } from "../forms/Input";
 import { Select } from "components/forms/Select";
 
 export const AddSleepHabit = (props: PropTypesWithModal) => {
@@ -13,7 +13,7 @@ export const AddSleepHabit = (props: PropTypesWithModal) => {
   const onSubmit = (data: any) =>
     addSleepHabit.mutate(
       {
-        input: { ...data, date_of_sleep: props.date },
+        input: { ...data, date_of_sleep: props.date, note: "note" },
       },
       refetchDirective
     );
@@ -47,14 +47,14 @@ export const AddSleepHabit = (props: PropTypesWithModal) => {
           label="Sleep Amount"
         />
 
-        <Input
+        {/* <Input
           id="sleep-note-input"
           label="Note"
           placeholder="some text..."
           required={false}
           type="text"
           formConnect={register("note")}
-        />
+        /> */}
       </Form>
     </div>
   );

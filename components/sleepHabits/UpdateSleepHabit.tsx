@@ -24,7 +24,7 @@ export const UpdateSleepHabit = (props: PropTypesWithSleepHabitAndModal) => {
     updateSleepHabit.mutate(
       {
         id,
-        input: data,
+        input: { ...data, note: "note" },
       },
       refetchDirective
     );
@@ -57,14 +57,14 @@ export const UpdateSleepHabit = (props: PropTypesWithSleepHabitAndModal) => {
           label="Sleep Amount"
         />
 
-        <Input
+        {/* <Input
           id="sleep-note-input"
           label="Note"
           placeholder="some text..."
           required={false}
           type="text"
           formConnect={register("note")}
-        />
+        /> */}
       </Form>
     </div>
   );
