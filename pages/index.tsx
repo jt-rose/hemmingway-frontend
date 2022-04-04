@@ -139,7 +139,7 @@ const Home = (props: PropTypesWithRefresh) => {
             className="ht-12 w-8 hover:cursor-pointer"
             onClick={decreaseDate}
           />
-          <p>Date: {date}</p>
+          <p className="text-2xl">{dayjs(date).format("MMM - D - YYYY")}</p>
           <ChevronDoubleRightIcon
             className={`ht-12 w-8 ${
               isToday ? "opacity-0" : "hover:cursor-pointer"
