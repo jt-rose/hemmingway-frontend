@@ -1,17 +1,21 @@
-export const ProgressBar = (props: { percentage: number; label: string }) => {
+export const ProgressBar = (props: {
+  percentage: number;
+  title: string;
+  label: string;
+}) => {
   return (
-    <div>
+    <div className="max-w-sm m-auto">
       <div className="flex justify-between mb-1">
-        <span className="text-base font-medium text-blue-700 dark:text-white">
-          Flowbite
+        <span className="text-base font-bold text-teal-500 dark:text-white">
+          {props.title}
         </span>
-        <span className="text-sm font-medium text-blue-700 dark:text-white">
+        <span className="text-sm font-bold text-teal-500 dark:text-white">
           {props.label}
         </span>
       </div>
       <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
         <div
-          className="bg-blue-600 h-2.5 rounded-full"
+          className="bg-teal-400 h-2.5 rounded-full"
           style={{ width: `${props.percentage}%` }}
         ></div>
       </div>

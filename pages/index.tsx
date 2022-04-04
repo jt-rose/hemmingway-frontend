@@ -109,6 +109,16 @@ const Home = (props: PropTypesWithRefresh) => {
       target = getDailyCalorieTarget(currentUserWeight, currentWeightGoal);
     }
 
+    const caloriesConsumed = meals.data.mealsByDate.reduce(
+      (a, b) => a + b.calories,
+      0
+    );
+
+    const caloriesBurned = exercise.data.exercisesByDate.reduce(
+      (a, b) => a + b.calories,
+      0
+    );
+
     return (
       <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
         <h1>Home</h1>
@@ -129,6 +139,12 @@ const Home = (props: PropTypesWithRefresh) => {
         <p>My BMR is {bmr}</p>
         <p>My target is {target}</p>
         <p>Aiming for {bmr + target}, but can boost this with exercise</p>
+        <p>So far have gained {caloriesConsumed} calories through meals</p>
+        <p>So far, have burned {caloriesBurned} calories through exercise</p>
+        <p>
+          Adjusted target is {bmr + caloriesBurned + target} of which{" "}
+          {caloriesConsumed} have already been taken
+        </p>
         {currentDistanceGoal && (
           <p>
             My distance goal is {currentDistanceGoal.daily_goal_in_miles} miles
@@ -157,7 +173,7 @@ const Home = (props: PropTypesWithRefresh) => {
           )}{" "}
           steps today
         </p>
-        <ProgressBar percentage={80} label={"hi"} />
+        <ProgressBar percentage={80} label={"8450 / 10000"} title={"Steps"} />
         {/* <p>
           Current: {meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0)}{" "}
           out of{" "}
