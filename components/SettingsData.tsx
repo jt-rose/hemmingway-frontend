@@ -31,7 +31,7 @@ export const SettingsData = (props: {
 
   return (
     <div>
-      <h1 className="text-3xl">Settings</h1>
+      <h1 className="text-2xl text-center mb-6 mt-4">Settings</h1>
       <h2 className="text-3xl">Goals</h2>
       <p className="text-2xl">
         Daily Calorie Goal:{" "}
