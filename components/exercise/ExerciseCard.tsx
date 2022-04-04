@@ -46,7 +46,7 @@ export const ExerciseCard = (props: {
             exercise={props.exercise}
           />
           <TrashIcon
-            className="ht-8 w-6 hover:bg-red-500 rounded-lg"
+            className="ht-8 w-6 hover:bg-red-500 hover:cursor-pointer rounded-lg"
             onClick={handleDelete}
           />
         </div>

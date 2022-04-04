@@ -44,7 +44,7 @@ export const MoodCard = (props: {
         <div className="m-8">
           <UpdateMoodModal gqlClient={props.gqlClient} mood={props.mood} />
           <TrashIcon
-            className="ht-8 w-6 hover:bg-red-500 rounded-lg"
+            className="ht-8 w-6 hover:bg-red-500 rounded-lg hover:cursor-pointer"
             onClick={handleDelete}
           />
         </div>

@@ -41,7 +41,7 @@ export const MealCard = (props: {
         <div className="m-8">
           <UpdateMealModal gqlClient={props.gqlClient} meal={props.meal} />
           <TrashIcon
-            className="ht-8 w-6 hover:bg-red-500 rounded-lg"
+            className="ht-8 w-6 hover:bg-red-500 rounded-lg hover:cursor-pointer"
             onClick={handleDelete}
           />
         </div>

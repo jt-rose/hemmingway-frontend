@@ -4,7 +4,7 @@ export const Form = (props: {
   submitButtonName: string;
   onSubmit: any;
   children: ReactNode;
-  closeModal: () => void;
+  closeModal?: () => void;
 }) => {
   return (
     <div className="flex justify-center">

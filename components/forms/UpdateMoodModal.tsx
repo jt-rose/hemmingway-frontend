@@ -19,7 +19,7 @@ export function UpdateMoodModal(props: PropTypesWithMood) {
     <>
       <div className="inset-0 flex items-center justify-center">
         <PencilAltIcon
-          className="ht-8 w-6 hover:bg-yellow-500 rounded-lg mb-2"
+          className="ht-8 w-6 hover:bg-yellow-500 rounded-lg mb-2 hover:cursor-pointer"
           onClick={openModal}
         />
       </div>

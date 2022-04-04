@@ -4,7 +4,6 @@ import { useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import { Form } from "../forms/Form";
 import { Select } from "components/forms/Select";
-import { Input } from "components/forms/Input";
 
 export const UpdateSleepHabit = (props: PropTypesWithSleepHabitAndModal) => {
   const { id, quality, date_of_sleep, amount, note } = props.sleepHabit;

@@ -45,7 +45,7 @@ export const SleepHabitCard = (props: {
             sleepHabit={props.sleepHabit}
           />
           <TrashIcon
-            className="ht-8 w-6 hover:bg-red-500 rounded-lg"
+            className="ht-8 w-6 hover:bg-red-500 rounded-lg hover:cursor-pointer"
             onClick={handleDelete}
           />
         </div>
