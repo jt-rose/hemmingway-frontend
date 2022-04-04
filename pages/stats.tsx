@@ -154,6 +154,7 @@ const Stats = (props: PropTypesWithRefresh) => {
               </label>
               <input
                 type="date"
+                max={dayjs(to).subtract(1, "day").format("YYYY-MM-DD")}
                 id="from-date"
                 className="bg-gray-50 text-center border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="..."
@@ -172,6 +173,7 @@ const Stats = (props: PropTypesWithRefresh) => {
               </label>
               <input
                 type="date"
+                min={dayjs(from).add(1, "day").format("YYYY-MM-DD")}
                 id="to-date"
                 className="bg-gray-50 text-center border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="..."
