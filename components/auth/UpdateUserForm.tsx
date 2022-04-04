@@ -4,8 +4,8 @@ import { useQueryClient } from "react-query";
 import { useUpdateUserMutation } from "src/generated/graphql-hooks";
 import { Form } from "components/forms/Form";
 import { Input } from "components/forms/Input";
-import { Select } from "components/forms/Select";
 import { useRouter } from "next/router";
+import { Radio } from "components/forms/Radio";
 
 export const UpdateUserForm = (props: PropTypesWithUser) => {
   const { name, email, gender, birthday, height_in_inches } = props.user;
@@ -64,12 +64,17 @@ export const UpdateUserForm = (props: PropTypesWithUser) => {
         formConnect={register("birthday")}
       />
 
-      <Select
-        id="update-gender-input"
-        selectOptions={["MALE", "FEMALE", "NB"]}
-        formConnect={register("gender")}
-        label="Gender"
-      />
+      <div>
+        <Radio
+          formConnect={register("gender")}
+          radioOptions={[
+            { displayName: "MALE", value: "MALE" },
+            { displayName: "FEMALE", value: "FEMALE" },
+            { displayName: "ENBY", value: "NB" },
+          ]}
+          name="gender"
+        />
+      </div>
 
       <Input
         required

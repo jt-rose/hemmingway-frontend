@@ -7,7 +7,7 @@ import {
 } from "src/generated/graphql-hooks";
 import { Form } from "components/forms/Form";
 import { Input } from "components/forms/Input";
-import { Select } from "components/forms/Select";
+import { Radio } from "components/forms/Radio";
 import { useRouter } from "next/router";
 
 export const RegisterForm = (props: PropTypesWithRefresh) => {
@@ -85,12 +85,17 @@ export const RegisterForm = (props: PropTypesWithRefresh) => {
         formConnect={register("birthday")}
       />
 
-      <Select
-        id="register-gender-input"
-        selectOptions={["MALE", "FEMALE", "NB"]}
-        formConnect={register("gender")}
-        label="Gender"
-      />
+      <div>
+        <Radio
+          formConnect={register("gender")}
+          radioOptions={[
+            { displayName: "MALE", value: "MALE" },
+            { displayName: "FEMALE", value: "FEMALE" },
+            { displayName: "ENBY", value: "NB" },
+          ]}
+          name="gender"
+        />
+      </div>
 
       <Input
         required

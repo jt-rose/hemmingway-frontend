@@ -13,14 +13,14 @@ const UpdateUser = (props: PropTypesWithRefresh) => {
   if (!me.data) {
     return (
       <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
-        <h3>Login</h3>
+        <h3 className="text-2xl text-center mb-6 mt-4">Login</h3>
         <LoginForm gqlClient={props.gqlClient} setToken={props.setToken} />
       </Layout>
     );
   }
   return (
     <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
-      <h3>Update User Account</h3>
+      <h3 className="text-2xl text-center mb-6 mt-4">Update Profile</h3>
       <UpdateUserForm gqlClient={props.gqlClient} user={me.data.me} />
     </Layout>
   );
