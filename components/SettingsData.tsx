@@ -31,32 +31,10 @@ export const SettingsData = (props: {
 
   return (
     <div>
-      <h1 className="text-2xl text-center mb-6 mt-4">Settings</h1>
-      <h2 className="text-3xl">Goals</h2>
-      <p className="text-2xl">
-        Daily Calorie Goal:{" "}
-        {currentUserWeight && currentWeightGoal
-          ? `${getDailyCalorieTarget(
-              currentUserWeight,
-              currentWeightGoal
-            )} Per Day`
-          : "No Target Set"}
-      </p>
-      <p className="text-2xl">
-        {currentStepsGoal?.daily_goal_in_steps} Steps Daily
-      </p>
-      <p className="text-2xl">
-        {currentDistanceGoal?.daily_goal_in_miles} Miles Daily
-      </p>
-      <p className="text-2xl">
-        Current Weight: {currentUserWeight?.weight_in_lbs} lbs
-      </p>
-      <p className="text-2xl">
-        Target Weight: {currentWeightGoal?.goal_in_lbs} lbs
-      </p>
+      <h1 className="text-2xl text-center mb-6 mt-4">Settings & Goals</h1>
       <Tab.Group>
-        <Tab.List className="flex w-full justify-center my-6">
-          {["Weight", "Goal", "Daily Miles", "Daily Steps"].map((tabName) => (
+        <Tab.List className="flex flex-wrap w-full justify-center my-6">
+          {["Weight", "Target", "Daily Miles", "Daily Steps"].map((tabName) => (
             <Tab as={Fragment} key={"tab-" + tabName}>
               {({ selected }) => (
                 <button
@@ -76,6 +54,41 @@ export const SettingsData = (props: {
           {[SetUserWeight, SetWeightGoal, SetDistanceGoal, SetStepsGoal].map(
             (Child, index) => (
               <Tab.Panel key={"tab-panel-" + index}>
+                <div className="flex flex-col items-center mb-8">
+                  <h2>
+                    {index === 0
+                      ? "Current Weight"
+                      : index === 1
+                      ? "Target Weight"
+                      : "Current Goal"}
+                  </h2>
+
+                  {index === 0 ? (
+                    <p className="text-2xl">
+                      {currentUserWeight
+                        ? `${currentUserWeight.weight_in_lbs} lbs`
+                        : "Not Set"}
+                    </p>
+                  ) : index === 1 ? (
+                    <p className="text-2xl">
+                      {currentWeightGoal
+                        ? `${currentWeightGoal.goal_in_lbs} lbs`
+                        : "Not Set"}
+                    </p>
+                  ) : index === 2 ? (
+                    <p className="text-2xl">
+                      {currentDistanceGoal
+                        ? `${currentDistanceGoal.daily_goal_in_miles} Miles Daily`
+                        : "Not Set"}
+                    </p>
+                  ) : (
+                    <p className="text-2xl">
+                      {currentStepsGoal
+                        ? `${currentStepsGoal.daily_goal_in_steps} Steps Daily`
+                        : "Not Set"}
+                    </p>
+                  )}
+                </div>
                 <Child gqlClient={props.gqlClient} date={date} />
               </Tab.Panel>
             )
