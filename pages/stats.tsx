@@ -28,6 +28,14 @@ import { Pie } from "components/charts/Pie";
 import { UseQueryResult } from "react-query";
 import { associateCaloriesByDates } from "utils/getDailyCalories";
 
+const NoDataMessage = () => {
+  return (
+    <p className="w-full text-center my-12 text-red-500">
+      -- Not enough recorded data yet! --
+    </p>
+  );
+};
+
 const getEntryCount = (arr: any[] | undefined) => {
   if (!arr || arr.length === 0) {
     return "N/A";
@@ -225,46 +233,34 @@ const Stats = (props: PropTypesWithRefresh) => {
             shows how your recorded weight has changed over time
           </p>
           {weightHistory.data &&
-            weightHistory.data.weightBetweenDates.length > 1 && (
-              <div className="flex justify-center mb-20">
-                <div className="w-4/5">
-                  <Chart
-                    data={weightHistory.data.weightBetweenDates
-                      .sort(
-                        (a, b) =>
-                          (new Date(a.date_of_weight) as any) -
-                          (new Date(b.date_of_weight) as any)
-                      )
-                      .map((wh) => ({
-                        x: dayjs(wh.date_of_weight).format("MMM - DD - YY"),
-                        y: wh.weight_in_lbs,
-                      }))}
-                  />
-                </div>
+          weightHistory.data.weightBetweenDates.length > 1 ? (
+            <div className="flex justify-center mb-20">
+              <div className="w-4/5">
+                <Chart
+                  data={weightHistory.data.weightBetweenDates
+                    .sort(
+                      (a, b) =>
+                        (new Date(a.date_of_weight) as any) -
+                        (new Date(b.date_of_weight) as any)
+                    )
+                    .map((wh) => ({
+                      x: dayjs(wh.date_of_weight).format("MMM - DD - YY"),
+                      y: wh.weight_in_lbs,
+                    }))}
+                />
               </div>
-            )}
+            </div>
+          ) : (
+            <NoDataMessage />
+          )}
           <h3 className="text-2xl text-center">Daily Net Calories</h3>
           <p className="text-center">
             shows your daily net calorie gain / loss over time
           </p>
-          {assocResults.length && (
+          {assocResults.length > 1 ? (
             <div className="flex justify-center mb-20">
               <div className="w-4/5">
                 <Chart
-                  // data={[
-                  //   ...new Set(
-                  //     exercises.data?.exercisesBetweenDates.map(
-                  //       (x) => x.date_of_exercise
-                  //     )
-                  //   ),
-                  // ]
-                  //   .sort()
-                  //   .map((x) => ({
-                  //     x: dayjs(x).format("M/D"),
-                  //     y: exercises.data?.exercisesBetweenDates
-                  //       .filter((ex) => ex.date_of_exercise === x)
-                  //       .reduce((a, b) => a + b.calories, 0),
-                  //   }))}
                   data={assocResults
                     .sort(
                       (a, b) =>
@@ -277,88 +273,113 @@ const Stats = (props: PropTypesWithRefresh) => {
                 />
               </div>
             </div>
+          ) : (
+            <NoDataMessage />
           )}
           <h3 className="text-2xl text-center">Sleep Quality</h3>
           <p className="text-center">
             a breakdown of the recorded quality of your sleep
           </p>
-          <div className="flex justify-center mt-8 mb-20">
-            <div className="w-4/5">
-              <Pie
-                data={[
-                  {
-                    title: "Good",
-                    value: countSleepQuality(sleepHabits, "GOOD"),
-                    color: "#E38627",
-                  },
-                  {
-                    title: "Decent",
-                    value: countSleepQuality(sleepHabits, "DECENT"),
-                    color: "#C13C37",
-                  },
-                  {
-                    title: "Poor",
-                    value: countSleepQuality(sleepHabits, "POOR"),
-                    color: "#6A2135",
-                  },
-                ]}
-              />
+          {sleepHabits.data &&
+          sleepHabits.data.sleepHabitsBetweenDates.length ? (
+            <div className="flex justify-center mt-8 mb-20">
+              <div className="w-4/5">
+                <Pie
+                  data={[
+                    {
+                      title: "Good",
+                      value: countSleepQuality(sleepHabits, "GOOD"),
+                      color: "#E38627",
+                    },
+                    {
+                      title: "Decent",
+                      value: countSleepQuality(sleepHabits, "DECENT"),
+                      color: "#C13C37",
+                    },
+                    {
+                      title: "Poor",
+                      value: countSleepQuality(sleepHabits, "POOR"),
+                      color: "#6A2135",
+                    },
+                  ]}
+                />
+              </div>
             </div>
-          </div>
+          ) : (
+            <NoDataMessage />
+          )}
+
           <h3 className="text-2xl text-center">Sleep Amount</h3>
           <p className="text-center">
             a breakdown of the recorded quantity of your sleep
           </p>
-          <div className="flex justify-center mb-20">
-            <div className="w-4/5">
-              <VPie
-                data={[
-                  { x: "full", y: countSleepAmount(sleepHabits, "FULL") },
-                  { x: "few", y: countSleepAmount(sleepHabits, "FEW") },
-                  { x: "none", y: countSleepAmount(sleepHabits, "NONE") },
-                  { x: "extra", y: countSleepAmount(sleepHabits, "EXTRA") },
-                ]}
-              />
+          {sleepHabits.data &&
+          sleepHabits.data.sleepHabitsBetweenDates.length ? (
+            <div className="flex justify-center mb-20">
+              <div className="w-4/5">
+                <VPie
+                  data={[
+                    { x: "full", y: countSleepAmount(sleepHabits, "FULL") },
+                    { x: "few", y: countSleepAmount(sleepHabits, "FEW") },
+                    { x: "none", y: countSleepAmount(sleepHabits, "NONE") },
+                    { x: "extra", y: countSleepAmount(sleepHabits, "EXTRA") },
+                  ]}
+                />
+              </div>
             </div>
-          </div>
+          ) : (
+            <NoDataMessage />
+          )}
+
           <h3 className="text-2xl text-center">Stress Levels</h3>
           <p className="text-center">
             an average of your recorded stress levels over time
           </p>
           <p className="text-center"> - hang in there!</p>
-          <div className="flex flex-col items-center mb-20">
-            <VPieFull
-              data={[
-                { x: "High", y: countStressLevel(moods, "HIGH") },
-                { x: "Mid", y: countStressLevel(moods, "MODERATE") },
-                { x: "Low", y: countStressLevel(moods, "LOW") },
-              ]}
-            />
-          </div>
+          {moods.data && moods.data.moodsBetweenDates.length ? (
+            <div className="flex flex-col items-center mb-20">
+              <VPieFull
+                data={[
+                  { x: "High", y: countStressLevel(moods, "HIGH") },
+                  { x: "Mid", y: countStressLevel(moods, "MODERATE") },
+                  { x: "Low", y: countStressLevel(moods, "LOW") },
+                ]}
+              />
+            </div>
+          ) : (
+            <NoDataMessage />
+          )}
+
           <h3 className="text-2xl text-center">Well Being</h3>
           <p className="text-center">
             shows a ratio of your different moods over time
           </p>
-          {/* list top three */}
-          <div className="flex justify-center mt-12 mb-8">
-            <div className="w-4/5">
-              <VictoryChart polar theme={VictoryTheme.material}>
-                <VictoryArea
-                  data={[
-                    { x: "RELAX", y: countMoodType(moods, "RELAXED") },
-                    { x: "MOTIVATED", y: countMoodType(moods, "MOTIVATED") },
-                    { x: "HAPPY", y: countMoodType(moods, "HAPPY") },
-                    { x: "SATISFIED", y: countMoodType(moods, "SATISFIED") },
-                    { x: "TIRED", y: countMoodType(moods, "TIRED") },
-                    { x: "FRUSTRATED", y: countMoodType(moods, "FRUSTRATED") },
-                    { x: "SAD", y: countMoodType(moods, "SAD") },
-                    { x: "ANXIOUS", y: countMoodType(moods, "ANXIOUS") },
-                  ]}
-                />
-                <VictoryPolarAxis />
-              </VictoryChart>
+          {moods.data && moods.data.moodsBetweenDates.length ? (
+            <div className="flex justify-center mt-12 mb-8">
+              <div className="w-4/5">
+                <VictoryChart polar theme={VictoryTheme.material}>
+                  <VictoryArea
+                    data={[
+                      { x: "RELAX", y: countMoodType(moods, "RELAXED") },
+                      { x: "MOTIVATED", y: countMoodType(moods, "MOTIVATED") },
+                      { x: "HAPPY", y: countMoodType(moods, "HAPPY") },
+                      { x: "SATISFIED", y: countMoodType(moods, "SATISFIED") },
+                      { x: "TIRED", y: countMoodType(moods, "TIRED") },
+                      {
+                        x: "FRUSTRATED",
+                        y: countMoodType(moods, "FRUSTRATED"),
+                      },
+                      { x: "SAD", y: countMoodType(moods, "SAD") },
+                      { x: "ANXIOUS", y: countMoodType(moods, "ANXIOUS") },
+                    ]}
+                  />
+                  <VictoryPolarAxis />
+                </VictoryChart>
+              </div>
             </div>
-          </div>
+          ) : (
+            <NoDataMessage />
+          )}
         </div>
       </div>
     </Layout>
