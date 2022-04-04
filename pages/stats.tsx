@@ -233,9 +233,9 @@ const Stats = (props: PropTypesWithRefresh) => {
                 </div>
               </div>
             )}
-          <h3 className="text-2xl text-center">Calorie Intake</h3>
+          <h3 className="text-2xl text-center">Daily Net Calories</h3>
           <p className="text-center">
-            shows your daily net calorie gain / loss across over time
+            shows your daily net calorie gain / loss over time
           </p>
           {assocResults.length && (
             <div className="flex justify-center mb-20">
