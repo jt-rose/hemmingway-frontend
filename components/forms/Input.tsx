@@ -10,7 +10,7 @@ export const Input = (props: {
     <div className="mb-6">
       <label
         htmlFor={props.id}
-        className="block font-bold text-center mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        className="block font-bold text-center mb-2 text-sm text-gray-900 dark:text-gray-300"
       >
         {props.label}
       </label>
