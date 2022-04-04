@@ -119,6 +119,18 @@ const Home = (props: PropTypesWithRefresh) => {
       0
     );
 
+    const adjustedTarget = bmr + caloriesBurned + target;
+
+    const currentDistance = exercise.data.exercisesByDate.reduce(
+      (a, b) => (b.distance_in_miles ? a + b.distance_in_miles : a),
+      0
+    );
+
+    const currentSteps = exercise.data.exercisesByDate.reduce(
+      (a, b) => (b.steps ? a + b.steps : a),
+      0
+    );
+
     return (
       <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
         <h1>Home</h1>
@@ -142,8 +154,8 @@ const Home = (props: PropTypesWithRefresh) => {
         <p>So far have gained {caloriesConsumed} calories through meals</p>
         <p>So far, have burned {caloriesBurned} calories through exercise</p>
         <p>
-          Adjusted target is {bmr + caloriesBurned + target} of which{" "}
-          {caloriesConsumed} have already been taken
+          Adjusted target is {adjustedTarget} of which {caloriesConsumed} have
+          already been taken
         </p>
         {currentDistanceGoal && (
           <p>
@@ -151,29 +163,46 @@ const Home = (props: PropTypesWithRefresh) => {
             per day
           </p>
         )}
-        <p>
-          I have currently travelled{" "}
-          {exercise.data.exercisesByDate.reduce(
-            (a, b) => (b.distance_in_miles ? a + b.distance_in_miles : a),
-            0
-          )}{" "}
-          miles today
-        </p>
+        <p>I have currently travelled {currentDistance} miles today</p>
+        <ProgressBar
+          percentage={
+            (currentDistanceGoal
+              ? (currentDistance / currentDistanceGoal.daily_goal_in_miles) *
+                100
+              : (currentDistance / 5) * 100) > 100
+              ? 100
+              : currentDistanceGoal
+              ? (currentDistance / currentDistanceGoal.daily_goal_in_miles) *
+                100
+              : (currentDistance / 5) * 100
+          }
+          label={`${currentDistance} / ${
+            currentDistanceGoal ? currentDistanceGoal.daily_goal_in_miles : "5"
+          }`}
+          title={"Miles"}
+        />
         {currentStepsGoal && (
           <p>
             My steps goal is {currentStepsGoal.daily_goal_in_steps} steps per
             day
           </p>
         )}
-        <p>
-          I have currently walked{" "}
-          {exercise.data.exercisesByDate.reduce(
-            (a, b) => (b.steps ? a + b.steps : a),
-            0
-          )}{" "}
-          steps today
-        </p>
-        <ProgressBar percentage={80} label={"8450 / 10000"} title={"Steps"} />
+        <p>I have currently walked {currentSteps} steps today</p>
+        <ProgressBar
+          percentage={
+            (currentStepsGoal
+              ? (currentSteps / currentStepsGoal.daily_goal_in_steps) * 100
+              : (currentSteps / 10000) * 100) > 100
+              ? 100
+              : currentStepsGoal
+              ? (currentSteps / currentStepsGoal.daily_goal_in_steps) * 100
+              : (currentSteps / 10000) * 100
+          }
+          label={`${currentSteps} / ${
+            currentStepsGoal ? currentStepsGoal.daily_goal_in_steps : "10000"
+          }`}
+          title={"Steps"}
+        />
         {/* <p>
           Current: {meals.data?.mealsByDate.reduce((a, b) => a + b.calories, 0)}{" "}
           out of{" "}
