@@ -9,22 +9,22 @@ export const Navbar = (props: PropTypesWithRefresh) => {
     <nav className="flex justify-around bg-teal-400 p-2 px-4 rounded-lg m-2">
       {/* <Example /> */}
       <Link href="/">
-        <div className="flex hover:bg-teal-500 rounded-full hover:cursor-pointer">
+        <button className="flex hover:bg-teal-500 rounded-full hover:cursor-pointer">
           <CalendarIcon
-            className="text-slate-50 p-2 ht-10 w-10 "
+            className="text-slate-50 p-2 ht-10 w-10 hover:bg-teal-500 rounded-full"
             stroke="rgb(248 250 252)"
           />{" "}
           <p className="text-slate-50 font-bold  pr-2 pt-2">Daily</p>
-        </div>
+        </button>
       </Link>
       <Link href="/stats">
-        <div className="flex hover:bg-teal-500 rounded-full hover:cursor-pointer">
+        <button className="flex hover:bg-teal-500 rounded-full hover:cursor-pointer">
           <ChartBarIcon
             className="text-slate-50 p-2 ht-10 w-10 hover:bg-teal-500 rounded-full"
             stroke="rgb(248 250 252)"
           />{" "}
           <p className="text-slate-50 font-bold  pr-2 pt-2">Stats</p>
-        </div>
+        </button>
       </Link>
 
       <AccountMenu gqlClient={props.gqlClient} setToken={props.setToken} />
