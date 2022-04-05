@@ -253,7 +253,11 @@ const Home = (props: PropTypesWithRefresh) => {
                         {target} calories makes today's total calorie goal{" "}
                         <span className="text-teal-500">
                           {Math.round(adjustedTarget)}
-                          {target < 0 ? " or less" : " or more"}
+                          {target === 0
+                            ? ""
+                            : target < 0
+                            ? " or less"
+                            : " or more"}
                         </span>
                       </p>
                     </div>
