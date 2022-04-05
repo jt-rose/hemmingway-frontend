@@ -262,6 +262,7 @@ const Home = (props: PropTypesWithRefresh) => {
                 </Popover>
               </div>
               <Pie
+                showTitles={false}
                 data={[
                   {
                     title: "Good",

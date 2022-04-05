@@ -300,6 +300,7 @@ const Stats = (props: PropTypesWithRefresh) => {
             <div className="flex justify-center mt-8 mb-20">
               <div className=" w-full sm:w-4/5">
                 <Pie
+                  showTitles={true}
                   data={[
                     {
                       title: "Good",

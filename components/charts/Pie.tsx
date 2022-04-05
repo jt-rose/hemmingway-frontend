@@ -3,6 +3,7 @@ import { PieChart } from "react-minimal-pie-chart";
 
 type PieProps = {
   data: ComponentProps<typeof PieChart>["data"];
+  showTitles: boolean;
 };
 
 export const Pie = (props: PieProps) => {
@@ -34,12 +35,17 @@ export const Pie = (props: PieProps) => {
       segmentsStyle={{ transition: "stroke .3s", cursor: "pointer" }}
       segmentsShift={(index) => (index === selected ? 6 : 1)}
       animate
-      label={({ dataEntry }) => Math.round(dataEntry.percentage) + "%"}
+      label={({ dataEntry }) =>
+        props.showTitles
+          ? dataEntry.title
+          : Math.round(dataEntry.percentage) + "%"
+      }
       labelPosition={100 - lineWidth / 2}
       labelStyle={{
         fill: "#fff",
         opacity: 0.75,
         pointerEvents: "none",
+        fontSize: "5px",
       }}
       onClick={(_, index) => {
         setSelected(index === selected ? undefined : index);
