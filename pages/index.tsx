@@ -64,11 +64,12 @@ const Home = (props: PropTypesWithRefresh) => {
   // }, []);
 
   if (
-    currentSettings.error ||
-    exercise.error ||
-    meals.error ||
-    mood.error ||
-    sleepHabit.error
+    !currentSettings.isLoading &&
+    (currentSettings.error ||
+      exercise.error ||
+      meals.error ||
+      mood.error ||
+      sleepHabit.error)
   ) {
     router.push("/login");
     // return (
