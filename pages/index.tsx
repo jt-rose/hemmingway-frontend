@@ -26,7 +26,7 @@ import { ProgressBar } from "components/charts/ProgressBar";
 import { Pie } from "components/charts/Pie";
 import { Popover } from "@headlessui/react";
 import Link from "next/link";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 const Home = (props: PropTypesWithRefresh) => {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
