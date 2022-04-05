@@ -1,29 +1,40 @@
-# framer-motion example
+# Hemmingway-Frontend
 
-Framer [`Motion`](https://github.com/framer/motion) is a production-ready animation library. By using a custom [`<App>`](https://nextjs.org/docs/advanced-features/custom-app) along with Motion's [`AnimatePresence`](https://www.framer.com/api/motion/animate-presence/) component, transitions between Next pages becomes simple and declarative.
+This is the frontend of a fullstack app for fitness and health tracking. Users can track their weight, fitness goals, and daily exercise, meals, sleep, and mental well-being. Changes to user's weights are stored as unique entries to allow users to analyze their progress over time with lots of data visualization on the frontend. 
 
-When using Next's `<Link>` component, you will likely want to [disable the default scroll behavior](https://nextjs.org/docs/api-reference/next/link#disable-scrolling-to-the-top-of-the-page) for a more seamless navigation experience. Scrolling to the top of a page can be re-enabled by adding a `onExitComplete` callback on the `AnimatePresence` component.
+The site can be visited [here].
 
-## Preview
+### Core Dependencies
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+- [react] - reactive SPA library
+- [typescript] - type-safe superset of JavaScript
+- [nextjs] - React Framework
+- [react-query] - Query and Cache manager
+- [tailwind-css] - CSS-styling library
+- [headless-ui] - unstyled component library for use with Tailwind
+- [hero-icons] - icon library
+- [react-icons] - icon library
+- [victory] - data visualization library
+- [dayjs] - datetime utilities library
+- [react-hook-form] - React form management library
+- [graphql-codegen] - GraphQL code generator to produce custom React hooks
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-framer-motion)
+### Launching the app
 
-## Deploy your own
+The frontend is currently working and hosted via Vercel.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-framer-motion&project-name=with-framer-motion&repository-name=with-framer-motion)
+[here]: https://hemmingway.app/
+[react]: https://reactjs.org
+[typescript]: https://www.typescriptlang.org
+[nextjs]: https://nextjs.org
+[react-query]: https://react-query.tanstack.com
+[tailwind-css]: https://tailwindcss.com
+[headless-ui]: https://headlessui.dev
+[hero-icons]: https://heroicons.com
+[react-icons]: https://react-icons.github.io/react-icons/
+[victory]: https://formidable.com/open-source/victory/
+[dayjs]: https://day.js.org
+[react-hook-form]: https://react-hook-form.com
+[graphql-codegen]: https://www.graphql-code-generator.com
 
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-framer-motion with-framer-motion-app
-# or
-yarn create next-app --example with-framer-motion with-framer-motion-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
