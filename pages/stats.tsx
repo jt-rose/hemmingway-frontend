@@ -27,6 +27,8 @@ import { VPieFull } from "components/charts/VPieFull";
 import { Pie } from "components/charts/Pie";
 import { UseQueryResult } from "react-query";
 import { associateCaloriesByDates } from "utils/getDailyCalories";
+import { useRouter } from "next/router";
+import { LoaderStack } from "components/Loader";
 
 const NoDataMessage = () => {
   return (
@@ -92,6 +94,7 @@ const Stats = (props: PropTypesWithRefresh) => {
     dayjs().subtract(1, "month").format("YYYY-MM-DD")
   );
   const [to, setTo] = useState(today);
+  const router = useRouter();
 
   const weightHistory = useWeightsBetweenDatesQuery(props.gqlClient, {
     dateRange: { from, to },
@@ -117,7 +120,7 @@ const Stats = (props: PropTypesWithRefresh) => {
   const sleepHabits = useSleepHabitsBetweenDatesQuery(props.gqlClient, {
     dateRange: { from, to },
   });
-  const me = useMeQuery(props.gqlClient);
+  const me = useMeQuery(props.gqlClient, {}, { retry: 1 });
 
   type AssocResults = {
     bmr: number;
@@ -149,6 +152,18 @@ const Stats = (props: PropTypesWithRefresh) => {
       meals.data.mealsBetweenDates,
       exercises.data.exercisesBetweenDates
     ).flatMap((x) => x.dateCalorieTotals);
+  }
+
+  if (!me.isLoading && !me.data?.me) {
+    router.push("/login");
+  }
+
+  if (me.isLoading) {
+    return (
+      <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
+        <LoaderStack />
+      </Layout>
+    );
   }
 
   return (
