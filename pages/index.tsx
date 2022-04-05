@@ -25,6 +25,7 @@ import { LoaderStack } from "components/Loader";
 import { ProgressBar } from "components/charts/ProgressBar";
 import { Pie } from "components/charts/Pie";
 import { Popover } from "@headlessui/react";
+import Link from "next/link";
 
 const Home = (props: PropTypesWithRefresh) => {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -57,7 +58,12 @@ const Home = (props: PropTypesWithRefresh) => {
     sleepHabit.error
   ) {
     // add later
-    return <p>Uh Oh! Error!</p>;
+    return (
+      <p className="text-red-500 font-bold">
+        Uh Oh! It appears we have encountered an internal server error. Our
+        apologies! Please refresh the page or try again at a later time.
+      </p>
+    );
   }
 
   if (
@@ -77,7 +83,18 @@ const Home = (props: PropTypesWithRefresh) => {
 
     if (!user_weights.length) {
       // redirect to enter weight?
-      return <p>something...</p>;
+      return (
+        <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
+          <p>
+            In order to use the calorie tracking features, you will first need
+            to register your weight on the{" "}
+            <Link href="/settings">
+              <a>settings</a>
+            </Link>{" "}
+            page.
+          </p>
+        </Layout>
+      );
     }
     // ! GET CURRENT WEIGHT, GOAL, DISTANCE AND STEPS
     // what if none? - handle earlier with redirect
