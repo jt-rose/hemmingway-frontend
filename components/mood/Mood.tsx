@@ -9,8 +9,8 @@ export const Mood = (props: PropTypesWithDate) => {
   });
 
   return (
-    <div className="flex flex-col items-center">
-      <h3>Moods</h3>
+    <div className="flex flex-col items-center mb-12">
+      <h3 className="text-3xl">Moods</h3>
       {data?.moodByDate.map((mood) => (
         <MoodCard
           gqlClient={props.gqlClient}

@@ -9,8 +9,8 @@ export const SleepHabit = (props: PropTypesWithDate) => {
   });
 
   return (
-    <div className="flex flex-col items-center">
-      <h3>Sleep</h3>
+    <div className="flex flex-col items-center mb-12">
+      <h3 className="text-3xl">Sleep</h3>
       {data?.sleepHabitsByDate.map((sh) => (
         <SleepHabitCard
           sleepHabit={sh}
