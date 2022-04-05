@@ -1,10 +1,5 @@
 import { CurrentGoalsQuery } from "src/generated/graphql-hooks";
-// import { DailyDistanceGoals } from "components/settings/dailyDistanceGoal/DistanceGoal";
-// import { DailyStepsGoals } from "components/settings/dailyStepsGoal/StepsGoals";
-// import { PopGoal } from "components/settings/popGoal/PopGoal";
-// import { UserWeight } from "components/settings/userWeight/UserWeight";
 import { GraphQLClient } from "graphql-request";
-// import { WeightGoal } from "components/settings/weightGoal/WeightGoal";
 import dayjs from "dayjs";
 import { Fragment } from "react";
 import { Tab } from "@headlessui/react";
@@ -12,14 +7,12 @@ import { SetUserWeight } from "./settings/userWeight/SetUserWeight";
 import { SetWeightGoal } from "./settings/weightGoal/SetWeightGoal";
 import { SetDistanceGoal } from "./settings/dailyDistanceGoal/SetDistanceGoal";
 import { SetStepsGoal } from "./settings/dailyStepsGoal/SetStepsGoal";
-import { getDailyCalorieTarget } from "utils/getDailyCalories";
 
 export const SettingsData = (props: {
   data: CurrentGoalsQuery;
   gqlClient: GraphQLClient;
 }) => {
   const {
-    //me,
     currentDistanceGoal,
     //currentPopGoal,
     currentStepsGoal,

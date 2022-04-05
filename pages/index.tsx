@@ -17,12 +17,14 @@ import { calculateBMR } from "utils/BMR";
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
+  InformationCircleIcon,
 } from "@heroicons/react/outline";
 import { useState } from "react";
 import { getDailyCalorieTarget } from "utils/getDailyCalories";
 import { LoaderStack } from "components/Loader";
 import { ProgressBar } from "components/charts/ProgressBar";
 import { Pie } from "components/charts/Pie";
+import { Popover } from "@headlessui/react";
 
 const Home = (props: PropTypesWithRefresh) => {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -181,19 +183,50 @@ const Home = (props: PropTypesWithRefresh) => {
           />
         </div>
 
-        <p>My BMR is {bmr}</p>
-        <p>My target is {target}</p>
-        <p>Aiming for {bmr + target}, but can boost this with exercise</p>
-        <p>So far have gained {caloriesConsumed} calories through meals</p>
-        <p>So far, have burned {caloriesBurned} calories through exercise</p>
-        <p>
-          Adjusted target is {adjustedTarget} of which {caloriesConsumed} have
-          already been taken
-        </p>
-
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-8">
           <div className="flex flex-wrap justify-around w-10/12 max-w-xl md:max-w-2xl lg:max-w-3xl">
-            <div className="w-28">
+            <div className="w-32 mx-4">
+              <div className="flex justify-between">
+                <p className="text-teal-500 text-center">
+                  <span
+                    className={
+                      isOverTarget && target < 0
+                        ? "text-red-500"
+                        : "text-teal-500"
+                    }
+                  >
+                    {Math.round(caloriesConsumed)}
+                  </span>{" "}
+                  / {Math.round(adjustedTarget)}
+                </p>
+                <Popover className="relative">
+                  <Popover.Button>
+                    <div className="w-5 ">
+                      <InformationCircleIcon
+                        fill="rgb(248 250 252)"
+                        stroke="rgb(20 184 166)"
+                      />
+                    </div>
+                  </Popover.Button>
+
+                  <Popover.Panel
+                    style={{ left: -180 }}
+                    className=" border absolute z-10 w-72 bg-slate-50 p-6 rounded-lg "
+                  >
+                    <div className="grid">
+                      <p>
+                        {Math.round(bmr)} BMR + {caloriesBurned} calories burned
+                        with daily target of {target > 0 && "+"}
+                        {target} calories makes today's total calorie goal{" "}
+                        <span className="text-teal-500">
+                          {Math.round(adjustedTarget)}
+                          {target < 0 ? " or less" : " or more"}
+                        </span>
+                      </p>
+                    </div>
+                  </Popover.Panel>
+                </Popover>
+              </div>
               <Pie
                 data={[
                   {
@@ -213,7 +246,7 @@ const Home = (props: PropTypesWithRefresh) => {
                 ]}
               />
             </div>
-            <div className="pt-2.5">
+            <div className="pt-12 ">
               <ProgressBar
                 percentage={
                   (currentDistanceGoal
