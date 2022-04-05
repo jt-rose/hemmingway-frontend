@@ -160,7 +160,7 @@ const Stats = (props: PropTypesWithRefresh) => {
             <div className="mb-6 mx-auto">
               <label
                 htmlFor="from-date"
-                className="block font-bold text-center mb-2 text-sm text-gray-900 dark:text-gray-300"
+                className="block font-bold text-center mb-2 text-sm text-gray-900"
               >
                 From
               </label>
@@ -168,7 +168,7 @@ const Stats = (props: PropTypesWithRefresh) => {
                 type="date"
                 max={dayjs(to).subtract(1, "day").format("YYYY-MM-DD")}
                 id="from-date"
-                className="bg-gray-50 text-center border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 text-center border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 placeholder="..."
                 required
                 value={from}
@@ -179,7 +179,7 @@ const Stats = (props: PropTypesWithRefresh) => {
             <div className="mb-6 mx-auto">
               <label
                 htmlFor="to-date"
-                className="block font-bold text-center mb-2 text-sm  text-gray-900 dark:text-gray-300"
+                className="block font-bold text-center mb-2 text-sm  text-gray-900"
               >
                 To
               </label>
@@ -187,7 +187,7 @@ const Stats = (props: PropTypesWithRefresh) => {
                 type="date"
                 min={dayjs(from).add(1, "day").format("YYYY-MM-DD")}
                 id="to-date"
-                className="bg-gray-50 text-center border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 text-center border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 placeholder="..."
                 required
                 value={to}

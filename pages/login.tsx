@@ -25,7 +25,7 @@ const Login = (props: PropTypesWithRefresh) => {
       </p>
       <Link href="/register">
         <div className="flex justify-center mt-8">
-          <a className="text-white font-bold hover:cursor-pointer bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <a className="text-white font-bold hover:cursor-pointer bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
             Register
           </a>
         </div>

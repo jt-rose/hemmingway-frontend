@@ -15,7 +15,7 @@ export const Form = (props: {
         {props.children}
         <button
           type="submit"
-          className="text-white font-bold bg-teal-400 hover:bg-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white font-bold bg-teal-400 hover:bg-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  "
         >
           {props.submitButtonName}
         </button>
@@ -23,7 +23,7 @@ export const Form = (props: {
           <div className="mt-4 flex justify-center">
             <button
               type="button"
-              className="text-white font-bold bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white font-bold bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  "
               onClick={props.closeModal}
             >
               Cancel
