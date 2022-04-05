@@ -19,16 +19,19 @@ import {
   ChevronDoubleRightIcon,
   InformationCircleIcon,
 } from "@heroicons/react/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getDailyCalorieTarget } from "utils/getDailyCalories";
 import { LoaderStack } from "components/Loader";
 import { ProgressBar } from "components/charts/ProgressBar";
 import { Pie } from "components/charts/Pie";
 import { Popover } from "@headlessui/react";
 import Link from "next/link";
+import Router, { useRouter } from "next/router";
 
 const Home = (props: PropTypesWithRefresh) => {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [redirect, setRedirect] = useState(false);
+  const router = useRouter();
   const isToday = date === dayjs().format("YYYY-MM-DD");
   const increaseDate = () =>
     setDate(dayjs(date).add(1, "day").format("YYYY-MM-DD"));
@@ -50,6 +53,12 @@ const Home = (props: PropTypesWithRefresh) => {
     date_of_sleep: date,
   });
 
+  useEffect(() => {
+    if (redirect) {
+      router.push("/login");
+    }
+  }, [redirect]);
+
   if (
     currentSettings.error ||
     exercise.error ||
@@ -57,7 +66,7 @@ const Home = (props: PropTypesWithRefresh) => {
     mood.error ||
     sleepHabit.error
   ) {
-    // add later
+    setRedirect(true);
     return (
       <p className="text-red-500 font-bold">
         Uh Oh! It appears we have encountered an internal server error. Our
