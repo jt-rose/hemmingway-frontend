@@ -12,6 +12,8 @@ export const SleepHabitCard = (props: {
   const queryClient = useQueryClient();
   const deleteSleepHabit = useDeleteSleepHabitMutation(props.gqlClient);
 
+  const randomPhoto = `/sleep-${(Number(props.sleepHabit.id) % 3) + 1}.jpg`;
+
   const refetchDirective = {
     onSuccess: () => {
       queryClient.invalidateQueries(["SleepHabitsByDate"]);
@@ -26,7 +28,7 @@ export const SleepHabitCard = (props: {
     <div className="flex flex-col sm:flex-row items-center bg-white rounded-lg  shadow-md w-10/12 max-w-xl sm:h-28 md:max-w-2xl lg:max-w-3xl hover:bg-gray-100  m-4">
       <img
         className="object-cover h-28 sm:h-full w-full rounded-t-lg sm:w-48 sm:rounded-none sm:rounded-l-lg"
-        src="/sleep-1.jpg"
+        src={randomPhoto}
         alt=""
       />
       <div className="flex grow w-full">

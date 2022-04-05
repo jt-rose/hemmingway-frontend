@@ -12,6 +12,8 @@ export const ExerciseCard = (props: {
   const queryClient = useQueryClient();
   const deleteExercise = useDeleteExerciseMutation(props.gqlClient);
 
+  const randomPhoto = `/exercise-${(Number(props.exercise.id) % 6) + 1}.jpg`;
+
   const refetchDirective = {
     onSuccess: () => {
       queryClient.invalidateQueries(["ExercisesByDate"]);
@@ -26,7 +28,7 @@ export const ExerciseCard = (props: {
     <div className="flex flex-col justify-center sm:flex-row items-center bg-white rounded-lg  shadow-md w-10/12 max-w-xl sm:h-28 md:max-w-2xl lg:max-w-3xl hover:bg-gray-100    m-4">
       <img
         className="object-cover h-28 sm:h-full w-full rounded-t-lg sm:w-48 sm:rounded-none sm:rounded-l-lg"
-        src="/exercise-1.jpg"
+        src={randomPhoto}
         alt=""
       />
       <div className="flex grow w-full">

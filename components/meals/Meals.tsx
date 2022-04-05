@@ -13,7 +13,11 @@ export const Meals = (props: PropTypesWithDate) => {
     <div className="flex flex-col items-center mb-12">
       <h3 className="text-3xl">Meals</h3>
       {data?.mealsByDate.map((meal) => (
-        <MealCard meal={meal} gqlClient={props.gqlClient} />
+        <MealCard
+          meal={meal}
+          gqlClient={props.gqlClient}
+          key={"meal-card-" + meal.id}
+        />
         // <div key={"meal-" + meal.id}>
         //   <h3
         //     onClick={() => deleteMeal.mutate({ id: meal.id }, refetchDirective)}

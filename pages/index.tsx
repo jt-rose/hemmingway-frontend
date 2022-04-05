@@ -168,7 +168,6 @@ const Home = (props: PropTypesWithRefresh) => {
       : null;
 
     const bmr = calculateBMR(me, currentUserWeight.weight_in_lbs);
-    console.log("my bmr is " + bmr);
 
     let target = 0;
     if (currentWeightGoal) {
