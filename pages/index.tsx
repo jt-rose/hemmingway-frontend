@@ -185,8 +185,8 @@ const Home = (props: PropTypesWithRefresh) => {
 
         <div className="flex justify-center mb-8">
           <div className="flex flex-wrap justify-around w-10/12 max-w-xl md:max-w-2xl lg:max-w-3xl">
-            <div className="w-32 mx-4">
-              <div className="flex justify-between">
+            <div className="w-52  mx-4">
+              <div className="flex justify-center gap-2">
                 <p className="text-teal-500 text-center">
                   <span
                     className={
@@ -246,7 +246,7 @@ const Home = (props: PropTypesWithRefresh) => {
                 ]}
               />
             </div>
-            <div className="pt-12 ">
+            <div className="py-4 gap-6 md:gap-0 flex flex-col justify-around ">
               <ProgressBar
                 percentage={
                   (currentDistanceGoal
