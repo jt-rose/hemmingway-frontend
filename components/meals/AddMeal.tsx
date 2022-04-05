@@ -62,7 +62,7 @@ export const AddMeal = (props: PropTypesWithModal) => {
 
         <Input
           id="meal-name-input"
-          label="working"
+          label="Meal Name"
           placeholder="some text..."
           required={true}
           type="text"

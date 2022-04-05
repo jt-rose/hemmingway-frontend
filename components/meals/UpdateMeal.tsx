@@ -60,7 +60,7 @@ export const UpdateMeal = (props: PropTypesWithMealAndModal) => {
         <Input
           id="meal-name-input"
           label="Meal Name"
-          placeholder="some text..."
+          placeholder="name of meal..."
           required={true}
           type="text"
           formConnect={register("name")}
