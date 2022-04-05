@@ -19,18 +19,18 @@ import {
   ChevronDoubleRightIcon,
   InformationCircleIcon,
 } from "@heroicons/react/outline";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getDailyCalorieTarget } from "utils/getDailyCalories";
 import { LoaderStack } from "components/Loader";
 import { ProgressBar } from "components/charts/ProgressBar";
 import { Pie } from "components/charts/Pie";
 import { Popover } from "@headlessui/react";
 import Link from "next/link";
+//import { LoginForm } from "components/auth/LoginForm";
 import { useRouter } from "next/router";
 
 const Home = (props: PropTypesWithRefresh) => {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
-  const [redirect, setRedirect] = useState(false);
   const router = useRouter();
   const isToday = date === dayjs().format("YYYY-MM-DD");
   const increaseDate = () =>
@@ -38,7 +38,11 @@ const Home = (props: PropTypesWithRefresh) => {
   const decreaseDate = () =>
     setDate(dayjs(date).subtract(1, "day").format("YYYY-MM-DD"));
 
-  const currentSettings = useGoalsAndSettingsQuery(props.gqlClient);
+  const currentSettings = useGoalsAndSettingsQuery(
+    props.gqlClient,
+    {},
+    { retry: 1 }
+  );
 
   const mood = useMoodByDateQuery(props.gqlClient, {
     date_of_mood: date,
@@ -53,11 +57,11 @@ const Home = (props: PropTypesWithRefresh) => {
     date_of_sleep: date,
   });
 
-  useEffect(() => {
-    if (redirect) {
-      router.push("/login");
-    }
-  }, [redirect]);
+  // useEffect(() => {
+  //   if (redirect || !currentSettings.data?.me) {
+  //     router.push("/login");
+  //   }
+  // }, []);
 
   if (
     currentSettings.error ||
@@ -66,13 +70,16 @@ const Home = (props: PropTypesWithRefresh) => {
     mood.error ||
     sleepHabit.error
   ) {
-    setRedirect(true);
-    return (
-      <p className="text-red-500 font-bold">
-        Uh Oh! It appears we have encountered an internal server error. Our
-        apologies! Please refresh the page or try again at a later time.
-      </p>
-    );
+    router.push("/login");
+    // return (
+    //   <Layout gqlClient={props.gqlClient} setToken={props.setToken}>
+    //     <LoginForm gqlClient={props.gqlClient} setToken={props.setToken} />
+    //   </Layout>
+    //   // <p className="text-red-500 font-bold">
+    //   //   Uh Oh! It appears we have encountered an internal server error. Our
+    //   //   apologies! Please refresh the page or try again at a later time.
+    //   // </p>
+    // );
   }
 
   if (
